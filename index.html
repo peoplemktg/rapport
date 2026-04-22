@@ -1,1026 +1,1324 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
-<title>Kit de Crecimiento Financiero | David Muñoz × Luque Academy</title>
-<meta name="description" content="Tu kit gratuito de 4 semanas para liberarte de deudas, crecer tus ventas y reprogramar tu mentalidad financiera."/>
-
-<!-- Tailwind -->
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- React -->
-<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<!-- Babel -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<!-- Firebase -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, doc, setDoc, getDoc, updateDoc, serverTimestamp }
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey:            "AIzaSyAUELLNqYoaBEKSHKta3fpj_w0kTSYJA0s",
-    authDomain:        "nurturing-b5547.firebaseapp.com",
-    projectId:         "nurturing-b5547",
-    storageBucket:     "nurturing-b5547.firebasestorage.app",
-    messagingSenderId: "631844420704",
-    appId:             "1:631844420704:web:60857c99c3876218cdd705",
-    measurementId:     "G-9XY5RYG5D1"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
-
-  // Exposed globally so the React app can call them
-  window.__fb = {
-    saveUser: async (uid, data) => {
-      await setDoc(doc(db, "leads", uid), { ...data, createdAt: serverTimestamp() }, { merge: true });
-    },
-    saveProgress: async (uid, data) => {
-      await updateDoc(doc(db, "leads", uid), { ...data, updatedAt: serverTimestamp() });
-    },
-    loadUser: async (uid) => {
-      const snap = await getDoc(doc(db, "leads", uid));
-      return snap.exists() ? snap.data() : null;
-    }
-  };
-  window.__fbReady = true;
-  document.dispatchEvent(new Event("fbReady"));
-</script>
-
+<meta charset="UTF-8">
+<title>Calculadora Evergreen + LBS — David Muñoz</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ── RESET & BASE ─────────────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --gold:       #C9A84C;
-  --gold-light: #E8C96B;
-  --gold-dim:   rgba(201,168,76,0.12);
-  --gold-bdr:   rgba(201,168,76,0.28);
-  --bg:         #09090f;
-  --bg2:        #0f0f18;
-  --surface:    #141420;
-  --surface2:   #1a1a28;
-  --border:     #1e1e2e;
-  --border2:    #242438;
-  --text:       #ebebf5;
-  --muted:      #7070a0;
-  --dim:        #3a3a58;
-  --teal:       #2dd4bf;
-  --rose:       #f87171;
-  --amber:      #f59e0b;
-}
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-button { cursor: pointer; font-family: inherit; }
-input, select { font-family: inherit; }
-input:focus, select:focus { outline: none; }
-select option { background: var(--surface); color: var(--text); }
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
-.no-scroll::-webkit-scrollbar { display: none; }
-.no-scroll { scrollbar-width: none; }
+  :root {
+    --ink: #0F1729; --navy: #1F3864; --gold: #C9A84C; --gold-light: #F5EDD4;
+    --cream: #FAF7F0; --cream-dark: #F2EDE0; --gray: #6B7280; --gray-light: #E5E7EB;
+    --white: #FFFFFF; --green: #2D7A3B; --green-bg: #E8F5EA; --red: #9B3939;
+    --blue-soft: #E3EDF7; --navy-soft: #4A5F8A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--cream); color: var(--ink);
+    line-height: 1.5; padding: 32px 20px;
+  }
+  .page { max-width: 1280px; margin: 0 auto; }
 
-/* ── ANIMATIONS ───────────────────────────────────────────────────────────── */
-.fade { animation: fadeUp .38s cubic-bezier(.22,1,.36,1) both; }
-@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
-.scale-in { animation: scaleIn .3s cubic-bezier(.34,1.56,.64,1) both; }
-@keyframes scaleIn { from { opacity:0; transform:scale(.94); } to { opacity:1; transform:scale(1); } }
+  .header { text-align: center; margin-bottom: 40px; position: relative; padding-bottom: 28px; }
+  .header::after {
+    content: ''; position: absolute; bottom: 0; left: 50%;
+    transform: translateX(-50%); width: 120px; height: 2px; background: var(--gold);
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif; font-size: 44px; font-weight: 700;
+    color: var(--navy); letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 8px;
+  }
+  h1 em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .subtitle { font-size: 15px; color: var(--gray); max-width: 680px; margin: 0 auto; }
 
-/* ── TYPOGRAPHY HELPERS ──────────────────────────────────────────────────── */
-.h-display { font-size: clamp(26px,7vw,32px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
-.h-section  { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
-.label-xs   { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-.body-sm    { font-size: 13px; line-height: 1.65; }
-.body-xs    { font-size: 12px; line-height: 1.6; }
+  /* SCENARIOS */
+  .scenarios {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    margin-bottom: 28px;
+  }
+  .scenario-btn {
+    padding: 14px 18px; background: var(--white); border: 2px solid var(--gray-light);
+    border-radius: 6px; cursor: pointer; transition: all 0.2s;
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--ink); text-align: left;
+  }
+  .scenario-btn:hover { border-color: var(--gold); background: var(--gold-light); }
+  .scenario-btn.active { border-color: var(--navy); background: var(--navy); color: white; }
+  .scenario-btn.active .scenario-desc { color: #D0D4DE; }
+  .scenario-name {
+    font-weight: 700; font-size: 14px; margin-bottom: 3px;
+    font-family: 'Fraunces', serif;
+  }
+  .scenario-desc { font-size: 11px; color: var(--gray); line-height: 1.4; }
 
-/* ── GOLD GRADIENT TEXT ───────────────────────────────────────────────────── */
-.gold-text {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+  /* LAYOUT */
+  .main-layout {
+    display: grid; grid-template-columns: 380px 1fr; gap: 28px;
+    margin-bottom: 40px;
+  }
 
-/* ── BUTTONS ──────────────────────────────────────────────────────────────── */
-.btn-gold {
-  display: block; width: 100%;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #09090f; font-weight: 700; font-size: 13px;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 16px 20px; border-radius: 14px; border: none;
-  transition: opacity .2s, transform .15s;
-}
-.btn-gold:hover  { opacity: .9; transform: translateY(-1px); }
-.btn-gold:active { transform: translateY(0); opacity: .85; }
-.btn-ghost {
-  display: block; width: 100%;
-  background: transparent; color: var(--muted); font-size: 13px;
-  padding: 13px; border-radius: 14px; border: 1px solid var(--border2);
-  transition: all .2s;
-}
-.btn-ghost:hover { border-color: var(--dim); color: var(--text); }
+  /* CONTROLS PANEL */
+  .controls {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 6px; padding: 24px; position: sticky; top: 20px;
+    height: fit-content; max-height: calc(100vh - 40px); overflow-y: auto;
+  }
+  .controls h2 {
+    font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy);
+    margin-bottom: 4px; font-weight: 600;
+  }
+  .controls .hint {
+    font-size: 11px; color: var(--gray); margin-bottom: 20px; font-style: italic;
+  }
 
-/* ── GLASS CARD ───────────────────────────────────────────────────────────── */
-.glass {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-}
-.glass-sm {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-}
+  .control-group {
+    margin-bottom: 22px; padding-bottom: 22px;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .control-group:last-child { border-bottom: none; margin-bottom: 0; }
+  .control-group-title {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin-bottom: 14px;
+  }
 
-/* ── FORM FIELDS ──────────────────────────────────────────────────────────── */
-.field-wrap { position: relative; }
-.field-input {
-  width: 100%; padding: 14px 14px 14px 44px;
-  background: var(--bg2); border: 1.5px solid var(--border);
-  border-radius: 12px; color: var(--text); font-size: 14px;
-  transition: border-color .2s, box-shadow .2s;
-}
-.field-input:focus {
-  border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
-}
-.field-input.err { border-color: var(--rose); }
-.field-input.err:focus { box-shadow: 0 0 0 3px rgba(248,113,113,0.12); }
-.field-icon {
-  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-  color: var(--dim); pointer-events: none;
-}
-.field-label {
-  display: block; font-size: 11px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 8px;
-}
-.err-msg { font-size: 11px; color: var(--rose); margin-top: 5px; }
+  .control {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px; gap: 12px;
+  }
+  .control-label {
+    flex: 1; font-size: 13px; color: var(--ink);
+  }
+  .control-label small { color: var(--gray); font-size: 11px; display: block; margin-top: 2px; }
+  .control-input-wrap {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--cream); padding: 4px 8px; border-radius: 4px;
+    border: 1px solid var(--gray-light);
+  }
+  .control-input {
+    width: 56px; border: none; background: transparent;
+    font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600;
+    color: var(--navy); text-align: center; outline: none;
+  }
+  .control-input:focus { color: var(--gold); }
+  .control-unit { font-size: 11px; color: var(--gray); }
 
-/* ── ONBOARDING DOTS ──────────────────────────────────────────────────────── */
-.dot { height: 6px; border-radius: 3px; transition: all .35s; background: var(--border2); }
-.dot.active { background: var(--gold); }
-.dot.done   { background: rgba(201,168,76,.4); }
+  /* RESULTS */
+  .results { display: flex; flex-direction: column; gap: 24px; }
 
-/* ── PROGRESS RING ────────────────────────────────────────────────────────── */
-.ring-wrap { position: relative; display: inline-flex; }
-.ring-label {
-  position: absolute; inset: 0; display: flex;
-  flex-direction: column; align-items: center; justify-content: center;
-}
+  .hero-metric {
+    background: linear-gradient(135deg, var(--navy) 0%, #2D4A7A 100%);
+    color: white; padding: 32px 36px; border-radius: 6px; position: relative;
+    overflow: hidden;
+  }
+  .hero-metric::before {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 200px; height: 100%;
+    background: radial-gradient(circle at top right, rgba(201,168,76,0.15), transparent 70%);
+  }
+  .hero-label {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; margin-bottom: 8px;
+  }
+  .hero-value {
+    font-family: 'Fraunces', serif; font-size: 56px; font-weight: 700;
+    line-height: 1; margin-bottom: 6px; color: white;
+  }
+  .hero-sub {
+    font-size: 14px; color: #D0D4DE;
+  }
+  .hero-breakdown {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .hero-cell { padding: 0 16px; border-right: 1px solid rgba(255,255,255,0.1); }
+  .hero-cell:first-child { padding-left: 0; }
+  .hero-cell:last-child { border-right: none; padding-right: 0; }
+  .hero-cell-val {
+    font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700;
+    color: white; line-height: 1; margin-bottom: 4px;
+  }
+  .hero-cell-lbl { font-size: 10px; color: #A0A8B8; letter-spacing: 1px; text-transform: uppercase; }
 
-/* ── WEEK PILLS ───────────────────────────────────────────────────────────── */
-.week-pill {
-  flex-shrink: 0; padding: 7px 18px; border-radius: 24px;
-  font-size: 12px; font-weight: 700; letter-spacing: .03em;
-  transition: all .2s; border: 1.5px solid var(--border);
-  background: transparent; color: var(--dim);
-}
-.week-pill.active { color: #09090f; border-color: transparent; }
-.week-pill.done   { color: var(--teal); border-color: rgba(45,212,191,.3); background: rgba(45,212,191,.07); }
+  /* FUNNEL VIZ */
+  .funnel-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .funnel-card {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-left: 4px solid var(--gold); border-radius: 6px; padding: 20px 22px;
+  }
+  .funnel-card h3 {
+    font-family: 'Fraunces', serif; font-size: 17px; color: var(--navy);
+    margin-bottom: 14px; font-weight: 600;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .funnel-card h3 .commission-tag {
+    font-size: 11px; background: var(--gold-light); color: #7A6614;
+    padding: 3px 8px; border-radius: 3px; font-weight: 600;
+    font-family: 'Inter', sans-serif;
+  }
 
-/* ── TASK CHECK ──────────────────────────────────────────────────────────── */
-.task-check {
-  width: 22px; height: 22px; border-radius: 7px; flex-shrink: 0;
-  border: 2px solid var(--border2); background: transparent;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .2s;
-}
-.task-check.done { border-color: transparent; }
+  .funnel-steps { display: flex; flex-direction: column; gap: 8px; }
+  .funnel-step {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 12px; background: var(--cream); border-radius: 4px;
+    font-size: 13px; border-left: 3px solid transparent;
+  }
+  .funnel-step.result {
+    background: var(--gold-light); border-left-color: var(--gold);
+    font-weight: 600;
+  }
+  .funnel-step-label { color: var(--gray); }
+  .funnel-step.result .funnel-step-label { color: var(--navy); font-weight: 700; }
+  .funnel-step-value {
+    font-family: 'Fraunces', serif; font-weight: 600; color: var(--navy);
+    font-size: 15px;
+  }
+  .funnel-step.result .funnel-step-value { color: var(--gold); font-size: 18px; }
 
-/* ── INSIGHT BOX ─────────────────────────────────────────────────────────── */
-.insight-box {
-  background: var(--bg2);
-  border-radius: 14px;
-  padding: 16px;
-}
+  /* MONTHLY PROJECTION */
+  .projection {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 6px; overflow: hidden;
+  }
+  .projection-header {
+    padding: 20px 24px; background: var(--navy); color: white;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .projection-header h2 {
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
+  }
+  .projection-header .total {
+    font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--gold);
+  }
 
-/* ── NAV BAR ─────────────────────────────────────────────────────────────── */
-.bottom-nav {
-  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 100%; max-width: 480px; z-index: 300;
-  background: rgba(9,9,15,.97); backdrop-filter: blur(24px) saturate(180%);
-  border-top: 1px solid var(--border);
-}
-.nav-btn {
-  flex: 1; display: flex; flex-direction: column;
-  align-items: center; gap: 4px; padding: 11px 8px;
-  background: none; border: none; color: var(--dim);
-  font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-  transition: color .2s;
-}
-.nav-btn.active { color: var(--gold); }
+  .month-table { width: 100%; border-collapse: collapse; }
+  .month-table th, .month-table td {
+    padding: 12px 16px; text-align: left; font-size: 13px;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .month-table th {
+    background: var(--cream-dark); color: var(--gray);
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 600; text-align: center;
+  }
+  .month-table th:first-child { text-align: left; }
+  .month-table td.num {
+    text-align: center; font-family: 'Fraunces', serif; font-weight: 600;
+    color: var(--navy);
+  }
+  .month-table td.edit {
+    background: #FFFEF4;
+  }
+  .month-table td.total-cell {
+    font-family: 'Fraunces', serif; font-weight: 700; color: var(--gold);
+    text-align: center; font-size: 15px;
+  }
+  .month-table tr.milestone td {
+    background: var(--gold-light); font-weight: 700; color: var(--navy);
+    border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
+  }
+  .month-table tr.milestone td.total-cell { color: #7A6614; font-size: 17px; }
+  .month-table tr.totals td {
+    background: var(--navy); color: white; font-weight: 700;
+    border-bottom: none;
+  }
+  .month-table tr.totals td.total-cell { color: var(--gold); font-size: 18px; }
+  .month-table td.month-label { font-weight: 600; color: var(--ink); }
+  .month-table td.month-label small {
+    font-weight: 400; color: var(--gray); font-size: 11px; display: block;
+  }
+  .month-table input[type="number"] {
+    width: 50px; padding: 4px 6px; border: 1px solid var(--gold-light);
+    border-radius: 3px; background: white; font-family: 'Fraunces', serif;
+    font-size: 13px; font-weight: 600; text-align: center; color: var(--navy);
+    outline: none; transition: all 0.15s;
+  }
+  .month-table input[type="number"]:focus {
+    border-color: var(--gold); background: #FFFBEB;
+  }
 
-/* ── WHATSAPP FLOAT ─────────────────────────────────────────────────────── */
-.wa-float {
-  position: fixed; right: 18px; bottom: 82px; z-index: 400;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: #25D366; border: none;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(37,211,102,.45);
-  transition: transform .2s, box-shadow .2s;
-}
-.wa-float:hover  { transform: scale(1.08); box-shadow: 0 6px 28px rgba(37,211,102,.55); }
-.wa-float:active { transform: scale(.96); }
+  /* CHART */
+  .chart-wrap {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 6px; padding: 24px 28px;
+  }
+  .chart-wrap h2 {
+    font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy);
+    margin-bottom: 6px; font-weight: 600;
+  }
+  .chart-wrap .chart-sub {
+    font-size: 12px; color: var(--gray); margin-bottom: 20px;
+  }
+  .chart {
+    display: flex; gap: 6px; height: 220px; align-items: flex-end;
+    padding: 20px 0 0 0; position: relative;
+  }
+  .chart::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    border-top: 1px dashed var(--gray-light);
+  }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .bar-wrap {
+    flex: 1; width: 100%; display: flex; align-items: flex-end;
+    justify-content: center; position: relative;
+  }
+  .bar {
+    width: 85%; background: linear-gradient(180deg, var(--gold) 0%, #AD8F3A 100%);
+    border-radius: 4px 4px 0 0; position: relative;
+    transition: height 0.3s ease;
+    min-height: 4px;
+  }
+  .bar.milestone {
+    background: linear-gradient(180deg, var(--navy) 0%, #3A5478 100%);
+  }
+  .bar-value {
+    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+    font-family: 'Fraunces', serif; font-size: 11px; font-weight: 700;
+    color: var(--navy); white-space: nowrap;
+  }
+  .bar-label {
+    font-size: 11px; color: var(--gray); font-weight: 500; text-align: center;
+  }
+  .bar-label.milestone { color: var(--navy); font-weight: 700; }
 
-/* ── GLOW BG ─────────────────────────────────────────────────────────────── */
-.glow-top {
-  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: 340px; height: 220px; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,.13) 0%, transparent 70%);
-}
+  /* MONTHLY CALENDAR VIEW */
+  .calendar-wrap {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 6px; padding: 24px 28px;
+  }
+  .calendar-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 20px; gap: 20px; flex-wrap: wrap;
+  }
+  .calendar-header h2 {
+    font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy);
+    margin-bottom: 4px; font-weight: 600;
+  }
+  .cal-month-selector {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--cream); padding: 8px 14px; border-radius: 4px;
+    border: 1px solid var(--gray-light);
+  }
+  .cal-month-selector label {
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--gray); font-weight: 600;
+  }
+  .cal-month-selector select {
+    border: none; background: transparent; font-family: 'Fraunces', serif;
+    font-size: 15px; font-weight: 600; color: var(--navy); cursor: pointer;
+    outline: none; padding: 2px 6px;
+  }
+
+  .cal-summary {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin-bottom: 20px;
+  }
+  .cal-sum-item {
+    background: var(--cream); padding: 14px 16px; border-radius: 4px;
+    text-align: center; border-left: 3px solid var(--gray-light);
+  }
+  .cal-sum-item.highlight {
+    background: var(--gold-light); border-left-color: var(--gold);
+  }
+  .cal-sum-val {
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700;
+    color: var(--navy); line-height: 1; margin-bottom: 4px;
+  }
+  .cal-sum-item.highlight .cal-sum-val { color: var(--gold); font-size: 24px; }
+  .cal-sum-lbl {
+    font-size: 10px; color: var(--gray); letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  .cal-header-row {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    background: var(--navy); color: white;
+    border-radius: 4px 4px 0 0; overflow: hidden;
+  }
+  .cal-header-row div {
+    padding: 10px; text-align: center; font-size: 11px;
+    letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .cal-header-row div:last-child { border-right: none; }
+
+  .cal-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    border: 1px solid var(--gray-light); border-top: none; border-radius: 0 0 4px 4px;
+    overflow: hidden;
+  }
+  .cal-day {
+    min-height: 110px; padding: 10px 12px;
+    border-right: 1px solid var(--gray-light);
+    border-bottom: 1px solid var(--gray-light);
+    position: relative; background: white;
+  }
+  .cal-day:nth-child(5n) { border-right: none; }
+  .cal-day.empty { background: var(--cream-dark); }
+  .cal-day.victory { background: #FCF9EA; }
+  .cal-day.zoom-live {
+    background: linear-gradient(135deg, #FAF7F0 0%, #F5EDD4 100%);
+    border-left: 3px solid var(--gold);
+  }
+  .cal-day.zoom-lbs {
+    background: linear-gradient(135deg, #E8F0E5 0%, #C8E0BC 100%);
+    border-left: 3px solid #2D7A3B;
+  }
+  .cal-day.lbs-push {
+    background: #E8F0E5;
+  }
+  .cal-day-num {
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
+    color: var(--navy); line-height: 1; margin-bottom: 6px;
+  }
+  .cal-day-standup {
+    font-size: 9px; color: var(--gold); font-weight: 700;
+    letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px;
+  }
+  .cal-day-routine {
+    font-size: 10px; color: var(--gray); line-height: 1.3;
+  }
+  .cal-day-tag {
+    display: inline-block; padding: 2px 6px; border-radius: 3px;
+    font-size: 9px; font-weight: 700; margin-top: 5px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .tag-live {
+    background: var(--navy); color: var(--gold);
+    border: 1px solid var(--gold);
+  }
+  .tag-live-inv {
+    background: #4A2668; color: #F5EDD4;
+    border: 1px solid #C9A84C;
+  }
+  .tag-live-lbs {
+    background: #2D7A3B; color: white;
+    border: 1px solid #2D7A3B;
+  }
+  .tag-lbs {
+    background: #2D7A3B; color: white;
+  }
+
+  .cal-legend {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    margin-top: 16px; padding: 14px; background: var(--cream);
+    border-radius: 4px; justify-content: center;
+  }
+  .cal-legend-item {
+    display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--ink);
+  }
+  .cal-swatch {
+    width: 14px; height: 14px; border-radius: 2px;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  /* COMPARISON vs Q1 */
+  .comparison-card {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 6px; padding: 24px 28px; border-left: 4px solid var(--navy);
+  }
+  .comparison-card h2 {
+    font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy);
+    margin-bottom: 18px; font-weight: 600;
+  }
+  .comparison-row {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--gray-light);
+    align-items: center; font-size: 13px;
+  }
+  .comparison-row:last-child { border-bottom: none; }
+  .comparison-row.header {
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--gray); font-weight: 600; padding-bottom: 10px;
+  }
+  .comparison-label { color: var(--gray); }
+  .comparison-val {
+    font-family: 'Fraunces', serif; font-weight: 600;
+    text-align: center; font-size: 16px; color: var(--navy);
+  }
+  .comparison-val.q1 { color: var(--red); }
+  .comparison-val.proj { color: var(--green); }
+  .comparison-val.delta {
+    background: var(--green-bg); color: var(--green); padding: 4px 8px;
+    border-radius: 3px; font-size: 13px;
+  }
+  .comparison-val.delta.neg {
+    background: #FBF0EE; color: var(--red);
+  }
+
+  /* RESET BTN */
+  .reset-wrap { text-align: center; margin-top: 28px; }
+  .reset-btn {
+    background: transparent; border: 1px solid var(--gray-light);
+    padding: 10px 20px; border-radius: 4px; color: var(--gray);
+    font-size: 12px; cursor: pointer; transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .reset-btn:hover { border-color: var(--navy); color: var(--navy); }
+
+  .footer {
+    text-align: center; margin-top: 48px; padding-top: 28px;
+    border-top: 1px solid var(--gray-light); font-size: 12px; color: var(--gray);
+  }
+  .footer em { color: var(--gold); font-style: italic; }
+
+  @media (max-width: 1100px) {
+    .main-layout { grid-template-columns: 1fr; }
+    .controls { position: static; max-height: none; }
+    .funnel-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
-<div id="root"></div>
+<div class="page">
 
-<script type="text/babel">
-const { useState, useEffect, useRef, useCallback } = React;
+  <div class="header">
+    <div class="eyebrow">Plan Q2–Q4 · Proyección Interactiva</div>
+    <h1>Calculadora <em>Evergreen + LBS</em></h1>
+    <p class="subtitle">Ajusta las métricas en el panel de la izquierda y observa el impacto en vivo. Proyección mayo a noviembre incluyendo Luque Business Summit.</p>
+  </div>
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
-const uid = () => { // simple persistent uid
-  let id = localStorage.getItem("dmkit_uid");
-  if(!id){ id = "u_" + Date.now() + "_" + Math.random().toString(36).slice(2,8); localStorage.setItem("dmkit_uid",id); }
-  return id;
+  <!-- SCENARIOS -->
+  <div class="scenarios">
+    <button class="scenario-btn" data-scenario="conservador">
+      <div class="scenario-name">Conservador</div>
+      <div class="scenario-desc">Mitad de las palancas. Caso pesimista.</div>
+    </button>
+    <button class="scenario-btn active" data-scenario="objetivo">
+      <div class="scenario-name">Objetivo</div>
+      <div class="scenario-desc">Todas las palancas al 100%. Caso base.</div>
+    </button>
+    <button class="scenario-btn" data-scenario="optimista">
+      <div class="scenario-name">Optimista</div>
+      <div class="scenario-desc">Sistema aceitado + upside en LBS.</div>
+    </button>
+  </div>
+
+  <div class="main-layout">
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <h2>Variables del sistema</h2>
+      <p class="hint">Edita cualquier número. Todo se recalcula al instante.</p>
+
+      <!-- MÁQUINA -->
+      <div class="control-group">
+        <div class="control-group-title">Máquina del Dinero</div>
+        <div class="control">
+          <div class="control-label">Citas agendadas/mes</div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="maq_citas" value="60" min="0" max="200">
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Show-up<small>% que llega al zoom</small></div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="maq_showup" value="75" min="0" max="100">
+            <span class="control-unit">%</span>
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Close rate<small>sobre efectivas</small></div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="maq_close" value="15" min="0" max="100">
+            <span class="control-unit">%</span>
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Comisión/venta</div>
+          <div class="control-input-wrap">
+            <span class="control-unit">$</span>
+            <input type="number" class="control-input" id="maq_com" value="90" min="0">
+          </div>
+        </div>
+      </div>
+
+      <!-- MAESTRÍA -->
+      <div class="control-group">
+        <div class="control-group-title">Maestría del Dinero</div>
+        <div class="control">
+          <div class="control-label">Citas agendadas/mes</div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="mst_citas" value="40" min="0" max="200">
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Show-up</div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="mst_showup" value="80" min="0" max="100">
+            <span class="control-unit">%</span>
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Close rate</div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="mst_close" value="18" min="0" max="100">
+            <span class="control-unit">%</span>
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Comisión/venta</div>
+          <div class="control-input-wrap">
+            <span class="control-unit">$</span>
+            <input type="number" class="control-input" id="mst_com" value="300" min="0">
+          </div>
+        </div>
+      </div>
+
+      <!-- CÓDIGOS -->
+      <div class="control-group">
+        <div class="control-group-title">Códigos del Dinero (desde FUP)</div>
+        <div class="control">
+          <div class="control-label">Ventas/mes<small>desde tibios activados</small></div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="cdd_ventas" value="3" min="0" max="50">
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Comisión/venta</div>
+          <div class="control-input-wrap">
+            <span class="control-unit">$</span>
+            <input type="number" class="control-input" id="cdd_com" value="30" min="0">
+          </div>
+        </div>
+      </div>
+
+      <!-- REFERIDOS -->
+      <div class="control-group">
+        <div class="control-group-title">Programa de Referidos</div>
+        <div class="control">
+          <div class="control-label">Clientes activos base<small>acumulados que pueden referir</small></div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="ref_clientes" value="30" min="0" max="500">
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Tasa referidos<small>% clientes que refieren/mes</small></div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="ref_tasa" value="10" min="0" max="100">
+            <span class="control-unit">%</span>
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Close rate referido<small>convierten mejor que quiz</small></div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="ref_close" value="25" min="0" max="100">
+            <span class="control-unit">%</span>
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Comisión Máquina (referido)</div>
+          <div class="control-input-wrap">
+            <span class="control-unit">$</span>
+            <input type="number" class="control-input" id="ref_com_maq" value="30" min="0">
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Comisión Maestría (referido)</div>
+          <div class="control-input-wrap">
+            <span class="control-unit">$</span>
+            <input type="number" class="control-input" id="ref_com_mst" value="100" min="0">
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Mix % Maestría<small>resto es Máquina</small></div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="ref_mix_mst" value="20" min="0" max="100">
+            <span class="control-unit">%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ZOOM LIVES -->
+      <div class="control-group">
+        <div class="control-group-title">Zoom Lives (todos los miércoles)</div>
+        <p style="font-size:11px; color:var(--gray); margin-bottom:12px; line-height:1.5;">
+          Rotación mensual: <strong>Mié 1</strong> Máquina · <strong>Mié 2</strong> Invitado · <strong>Mié 3</strong> Maestría · <strong>Mié 4</strong> Invitado/Caso éxito
+        </p>
+        <div class="control">
+          <div class="control-label">Lives Máquina/mes<small>asistentes × conversión</small></div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="live_maq_ventas" value="1" min="0" max="10" step="0.5">
+            <span class="control-unit">vtas</span>
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Lives Maestría/mes</div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="live_mst_ventas" value="1" min="0" max="10" step="0.5">
+            <span class="control-unit">vtas</span>
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Lives Invitado/mes<small>2 lives · mix</small></div>
+          <div class="control-input-wrap">
+            <input type="number" class="control-input" id="live_inv_ventas" value="3" min="0" max="20" step="0.5">
+            <span class="control-unit">vtas</span>
+          </div>
+        </div>
+        <div class="control">
+          <div class="control-label">Comisión promedio/venta live<small>mix Máq + MST</small></div>
+          <div class="control-input-wrap">
+            <span class="control-unit">$</span>
+            <input type="number" class="control-input" id="live_com" value="150" min="0">
+          </div>
+        </div>
+      </div>
+
+      <!-- LBS -->
+      <div class="control-group">
+        <div class="control-group-title">Luque Business Summit · Nov 2026</div>
+        <p style="font-size:11px; color:var(--gray); margin-bottom:12px;">La venta se concentra Oct–Nov. Edita boletos por mes en la tabla abajo.</p>
+        <div class="control">
+          <div class="control-label">Comisión promedio por boleto<small>(mix 1/2/3 entradas)</small></div>
+          <div class="control-input-wrap">
+            <span class="control-unit">$</span>
+            <input type="number" class="control-input" id="lbs_com" value="40" min="0">
+          </div>
+        </div>
+      </div>
+
+      <div class="reset-wrap">
+        <button class="reset-btn" onclick="resetDefaults()">↻ Reset a valores base</button>
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results">
+
+      <!-- HERO METRIC -->
+      <div class="hero-metric">
+        <div class="hero-label">Ingreso proyectado · Mes evergreen (May–Sep)</div>
+        <div class="hero-value" id="hero-monthly">$0</div>
+        <div class="hero-sub" id="hero-sub">Comisión total esperada con las variables actuales</div>
+
+        <div class="hero-breakdown">
+          <div class="hero-cell">
+            <div class="hero-cell-val" id="hero-ventas">0</div>
+            <div class="hero-cell-lbl">Ventas/mes</div>
+          </div>
+          <div class="hero-cell">
+            <div class="hero-cell-val" id="hero-citas">0</div>
+            <div class="hero-cell-lbl">Citas/mes</div>
+          </div>
+          <div class="hero-cell">
+            <div class="hero-cell-val" id="hero-total">$0</div>
+            <div class="hero-cell-lbl">Total May–Nov</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FUNNEL VIZ -->
+      <div class="funnel-grid">
+        <div class="funnel-card">
+          <h3>Máquina <span class="commission-tag" id="maq-tag">$90/v</span></h3>
+          <div class="funnel-steps">
+            <div class="funnel-step">
+              <div class="funnel-step-label">Citas agendadas</div>
+              <div class="funnel-step-value" id="f-maq-citas">60</div>
+            </div>
+            <div class="funnel-step">
+              <div class="funnel-step-label">Efectivas (show-up 75%)</div>
+              <div class="funnel-step-value" id="f-maq-efe">45</div>
+            </div>
+            <div class="funnel-step result">
+              <div class="funnel-step-label">Ventas · Comisión</div>
+              <div class="funnel-step-value"><span id="f-maq-vta">7</span> · <span id="f-maq-com">$630</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="funnel-card">
+          <h3>Maestría <span class="commission-tag" id="mst-tag">$300/v</span></h3>
+          <div class="funnel-steps">
+            <div class="funnel-step">
+              <div class="funnel-step-label">Citas agendadas</div>
+              <div class="funnel-step-value" id="f-mst-citas">40</div>
+            </div>
+            <div class="funnel-step">
+              <div class="funnel-step-label">Efectivas (show-up 80%)</div>
+              <div class="funnel-step-value" id="f-mst-efe">32</div>
+            </div>
+            <div class="funnel-step result">
+              <div class="funnel-step-label">Ventas · Comisión</div>
+              <div class="funnel-step-value"><span id="f-mst-vta">6</span> · <span id="f-mst-com">$1,800</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROJECTION TABLE -->
+      <div class="projection">
+        <div class="projection-header">
+          <h2>Proyección mes a mes · Mayo a Noviembre</h2>
+          <div class="total" id="grand-total">$0</div>
+        </div>
+        <table class="month-table">
+          <thead>
+            <tr>
+              <th>Mes</th>
+              <th>Máquina</th>
+              <th>Maestría</th>
+              <th>Códigos</th>
+              <th>Referidos</th>
+              <th>Zoom Lives</th>
+              <th>Boletos LBS</th>
+              <th>Total mes</th>
+            </tr>
+          </thead>
+          <tbody id="month-rows">
+            <!-- dinámico -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CHART -->
+      <div class="chart-wrap">
+        <h2>Curva de ingreso mensual</h2>
+        <div class="chart-sub">Azul oscuro = mes LBS (noviembre)</div>
+        <div class="chart" id="chart"></div>
+      </div>
+
+      <!-- MONTHLY CALENDAR VIEW -->
+      <div class="calendar-wrap">
+        <div class="calendar-header">
+          <div>
+            <h2>Cómo se ve el mes operativamente</h2>
+            <div class="chart-sub">Vista L–V · standup diario con Juanjo + citas + Zoom Lives según tus variables</div>
+          </div>
+          <div class="cal-month-selector">
+            <label>Mes:</label>
+            <select id="cal-month-select">
+              <option value="mayo">Mayo</option>
+              <option value="junio">Junio</option>
+              <option value="julio">Julio</option>
+              <option value="agosto">Agosto</option>
+              <option value="septiembre">Septiembre</option>
+              <option value="octubre" selected>Octubre</option>
+              <option value="noviembre">Noviembre ⭐</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cal-summary">
+          <div class="cal-sum-item">
+            <div class="cal-sum-val" id="cal-citas">100</div>
+            <div class="cal-sum-lbl">Citas del mes</div>
+          </div>
+          <div class="cal-sum-item">
+            <div class="cal-sum-val" id="cal-lives">2</div>
+            <div class="cal-sum-lbl">Zoom Lives</div>
+          </div>
+          <div class="cal-sum-item">
+            <div class="cal-sum-val" id="cal-lbs-mes">0</div>
+            <div class="cal-sum-lbl">Boletos LBS (mes)</div>
+          </div>
+          <div class="cal-sum-item highlight">
+            <div class="cal-sum-val" id="cal-income">$0</div>
+            <div class="cal-sum-lbl">Ingreso del mes</div>
+          </div>
+        </div>
+
+        <div class="cal-header-row">
+          <div>Lunes</div>
+          <div>Martes</div>
+          <div>Miércoles</div>
+          <div>Jueves</div>
+          <div>Viernes</div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+
+        <div class="cal-legend">
+          <div class="cal-legend-item"><span class="cal-swatch" style="background:#2D1B45;border:1px solid #C9A84C;"></span>Standup Juanjo</div>
+          <div class="cal-legend-item"><span class="cal-swatch" style="background:#E3EDF7;"></span>3 Máquina · 2 Maestría</div>
+          <div class="cal-legend-item"><span class="cal-swatch" style="background:linear-gradient(135deg, #FAF7F0 0%, #F5EDD4 100%);border-left:3px solid #C9A84C;"></span>Live Máq/MST (sin invitado)</div>
+          <div class="cal-legend-item"><span class="cal-swatch" style="background:#4A2668;"></span>Live con Invitado/Caso</div>
+          <div class="cal-legend-item"><span class="cal-swatch" style="background:linear-gradient(135deg, #E8F0E5 0%, #C8E0BC 100%);border-left:3px solid #2D7A3B;"></span>Live LBS (ago–nov)</div>
+          <div class="cal-legend-item"><span class="cal-swatch" style="background:#FCF9EA;"></span>Viernes Victory</div>
+        </div>
+      </div>
+
+      <!-- COMPARISON Q1 -->
+      <div class="comparison-card">
+        <h2>vs. Q1 real (enero–abril)</h2>
+        <div class="comparison-row header">
+          <div>Métrica</div>
+          <div style="text-align:center">Q1 real</div>
+          <div style="text-align:center">Proyección</div>
+          <div style="text-align:center">Delta</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-label">Comisión mensual (evergreen)</div>
+          <div class="comparison-val q1">$647</div>
+          <div class="comparison-val proj" id="cmp-mensual">$0</div>
+          <div class="comparison-val delta" id="cmp-mensual-delta">—</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-label">Ventas totales/mes</div>
+          <div class="comparison-val q1">~16</div>
+          <div class="comparison-val proj" id="cmp-ventas">0</div>
+          <div class="comparison-val delta" id="cmp-ventas-delta">—</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-label">Comisión total periodo</div>
+          <div class="comparison-val q1">$2,590<br><small style="color:var(--gray);font-weight:400;font-size:10px;">(ene-abr)</small></div>
+          <div class="comparison-val proj" id="cmp-total">$0<br><small style="color:var(--gray);font-weight:400;font-size:10px;">(may-nov)</small></div>
+          <div class="comparison-val delta" id="cmp-total-delta">—</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    David Muñoz · Closer Luque Academy · <em>Calculadora interactiva Q2–Q4 2026</em>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// LBS MONTHLY TICKET CURVE (editable en tabla)
+// Venta se concentra últimos 2-3 meses antes del evento
+// ============================================================
+const DEFAULT_LBS = {
+  'mayo': 1,
+  'junio': 2,
+  'julio': 3,
+  'agosto': 4,
+  'septiembre': 6,
+  'octubre': 12,
+  'noviembre': 10
 };
-const fb = () => window.__fb || null;
 
-// ─── COUNTRIES ───────────────────────────────────────────────────────────────
-const COUNTRIES = [
-  {c:"+1",f:"🇺🇸",n:"USA / Canadá"},{c:"+52",f:"🇲🇽",n:"México"},{c:"+57",f:"🇨🇴",n:"Colombia"},
-  {c:"+54",f:"🇦🇷",n:"Argentina"},{c:"+51",f:"🇵🇪",n:"Perú"},{c:"+56",f:"🇨🇱",n:"Chile"},
-  {c:"+58",f:"🇻🇪",n:"Venezuela"},{c:"+593",f:"🇪🇨",n:"Ecuador"},{c:"+502",f:"🇬🇹",n:"Guatemala"},
-  {c:"+503",f:"🇸🇻",n:"El Salvador"},{c:"+34",f:"🇪🇸",n:"España"},{c:"+55",f:"🇧🇷",n:"Brasil"},
-];
+const MONTHS = ['mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre'];
+const MONTH_LABELS = {
+  mayo: 'Mayo', junio: 'Junio', julio: 'Julio',
+  agosto: 'Agosto', septiembre: 'Septiembre',
+  octubre: 'Octubre', noviembre: 'Noviembre'
+};
+const MONTH_SUBS = {
+  mayo: 'Arranque Q2', junio: '', julio: 'Cierre Q2',
+  agosto: 'Siembra LBS', septiembre: '',
+  octubre: 'Pico LBS', noviembre: '⭐ Mes LBS'
+};
 
-// ─── DIAGNOSTIC ──────────────────────────────────────────────────────────────
-const DIAG = [
-  { q:"¿Qué describe mejor tu situación financiera hoy?", opts:[
-    {label:"Tengo deudas que me quitan el sueño y poco margen para moverme",icon:"😰",type:"deudas"},
-    {label:"Mis ingresos son inconsistentes — algunos meses bien, otros mal",icon:"🌊",type:"ventas"},
-    {label:"Gano dinero pero algo mental me bloquea para crecer",icon:"🔄",type:"mentalidad"},
-  ]},
-  { q:"Si resuelves UNA cosa en los próximos 60 días, ¿cuál sería?", opts:[
-    {label:"Salir de deudas y tener respiración financiera real",icon:"🌬️",type:"deudas"},
-    {label:"Tener un flujo constante de clientes y ventas predecibles",icon:"🎯",type:"ventas"},
-    {label:"Creer en mí mismo y tomar decisiones con más confianza",icon:"💎",type:"mentalidad"},
-  ]},
-  { q:"¿Qué te frena más en este momento?", opts:[
-    {label:"El dinero que le debo a bancos, tarjetas o personas",icon:"⛓️",type:"deudas"},
-    {label:"No sé cómo conseguir clientes de forma consistente",icon:"🧩",type:"ventas"},
-    {label:"El miedo, la duda, o no creerme capaz de lograrlo",icon:"🌫️",type:"mentalidad"},
-  ]},
-];
-
-// ─── MODULE DATA ──────────────────────────────────────────────────────────────
-const MODS = {
-  deudas:{
-    id:"deudas",icon:"🔓",color:"#f87171",dim:"rgba(248,113,113,0.1)",bdr:"rgba(248,113,113,0.25)",
-    title:"Liberación de Deudas",subtitle:"De la presión financiera a la libertad",
-    desc:"Un sistema de 4 semanas para liquidar deudas, liberar flujo de caja y recuperar el control de tu vida financiera.",
-    weeks:[
-      {title:"Conoce tu enemigo con exactitud",
-       insight:"La mayoría subestima sus deudas reales en un 30–40%. La razón: nunca las han visto todas juntas. La claridad duele, pero también libera. Hoy miramos todo de frente — sin excusas.",
-       dm:"💬 David: Cuando empecé a trabajar con dueños de negocio, el primer ejercicio era este. El 90% me decía 'más o menos sé lo que debo' — pero cuando lo escribían todo, el número real siempre era mayor. Y curiosamente, verlo claro los calmaba más de lo que los asustaba.",
-       principle:"No puedes resolver lo que no mides. El primer acto de poder financiero es ver la realidad sin filtros.",
-       tasks:[
-         {title:"Inventario total — sin omitir nada",detail:"Abre una hoja en blanco ahora mismo. Escribe cada deuda: nombre del acreedor, saldo actual, tasa de interés y pago mínimo. Tarjetas, préstamos, familia, todo. El total real puede ser incómodo — eso es bueno. Esa incomodidad es tu combustible de arranque.",result:"Tu número exacto de deuda total. La mayoría siente alivio al verlo escrito, porque la incertidumbre siempre duele más que la realidad."},
-         {title:"Calcula tu 'impuesto personal' mensual",detail:"Suma solo los intereses de todas tus deudas — no los capitales. Ese número es lo que el sistema financiero te cobra cada mes por estar endeudado. Para la mayoría es entre $200 y $800 mensuales.",result:"Tu impuesto personal mensual. Este número te va a motivar más que cualquier discurso motivacional."},
-         {title:"Encuentra $150 eliminables esta semana",detail:"Revisa tus últimos 30 días de gastos. Busca: suscripciones que no usas, comidas fuera evitables 2 días por semana, servicios duplicados. No es vivir como monje — es redirigir dinero que ya estás gastando sin pensarlo.",result:"Un listado de 3+ gastos que puedes eliminar esta semana, liberando $150+ para atacar deudas."},
-         {title:"Llama a tu acreedor más caro — hoy",detail:"Llama al banco o tarjeta con la tasa más alta. Di: 'Soy cliente desde hace X años, quiero seguir pagando pero necesito que me ayuden con la tasa. ¿Qué pueden hacer?' El 60% logra una reducción. Nadie lo sabe porque nadie llama.",result:"Una reducción de tasa o plan más favorable. Si dicen no, tienes dato. Si dicen sí, te ahorras cientos de dólares."},
-       ]},
-      {title:"El método que acelera tu salida",
-       insight:"Existen dos métodos probados: Bola de nieve (menor a mayor saldo) y Avalancha (mayor a menor tasa). La neurociencia del comportamiento dice que la bola de nieve funciona mejor para el 80% — las victorias rápidas generan el momentum que la disciplina sola no puede sostener.",
-       dm:"💬 David: Lo que nadie te dice es que la deuda no es solo un problema de números — es un problema de energía mental. Cada deuda activa ocupa espacio en tu cabeza. Cuando cierras la primera, aunque sea pequeña, algo cambia adentro. Eso no lo enseñan en los cursos de finanzas.",
-       principle:"La deuda más cara no siempre es la que primero debes atacar. Ataca la que puedes matar rápido — esa victoria te da poder para las demás.",
-       tasks:[
-         {title:"Ordena tus deudas y elige tu método",detail:"Si necesitas victorias rápidas: ordena de menor a mayor saldo (Bola de nieve). Si eres disciplinado y quieres ahorrar más en intereses: ordena de mayor a menor tasa (Avalancha). Haz pagos mínimos en todas excepto en la primera.",result:"Una lista ordenada con monto claro de ataque para tu deuda #1 esta semana."},
-         {title:"Genera $200 extra esta semana — inmediatamente",detail:"No esperes el próximo salario. Vende algo que tengas en casa, ofrece un servicio extra a alguien conocido, cobra una deuda personal. El dinero extra no tiene que venir de tu trabajo principal.",result:"$200 adicionales aplicados a tu deuda #1. Pequeño en dinero, enorme en momentum psicológico."},
-         {title:"Automatiza tu pago extra",detail:"Configura una transferencia automática el día que cobras — aunque sea $50 — directo a tu deuda prioritaria. Los sistemas siempre ganan a la motivación.",result:"Un sistema automático que trabaja incluso cuando no tienes energía ni motivación."},
-       ]},
-      {title:"Crea tu segunda fuente de ingreso",
-       insight:"Reducir gastos tiene un límite físico. Generar ingresos no tiene techo. La forma más rápida de salir de deudas no es apretarse más — es crear una fuente adicional que vaya directo al ataque de deudas.",
-       dm:"💬 David: En mis años de consultoría vi el mismo patrón: los que salen de deudas rápido no son los que más recortan — son los que encuentran una habilidad que ya tienen y la monetizan. Tú probablemente ya sabes hacer algo que alguien más pagaría. Solo que nunca lo viste como negocio.",
-       principle:"Cada $100 extra al mes que generes acorta tu salida de deudas entre 3 y 6 meses. No necesitas un empleo — necesitas una habilidad activada.",
-       tasks:[
-         {title:"Identifica tu habilidad monetizable en 20 minutos",detail:"¿Qué sé hacer que otros no saben? ¿Por qué te piden ayuda tus amigos? ¿Qué harías aunque no te pagaran? Escribe 5 respuestas. Elige la que más rápido puede convertirse en dinero.",result:"Una habilidad clara y un servicio concreto que puedes ofrecer esta semana — sin sitio web ni tarjeta de presentación."},
-         {title:"Define tu oferta simple y ponle precio",detail:"Formula: 'Ayudo a [quién] a [qué resultado] en [cuánto tiempo] por [$X].' Ponle precio que valga tu tiempo. Luego manda ese mensaje a 3 personas.",result:"Tu primera oferta lista para enviar. El objetivo es recibir al menos 1 respuesta interesada esta semana."},
-         {title:"Abre tu Cuenta Libertad",detail:"Crea una cuenta separada donde deposites exclusivamente el dinero extra para deudas. Nómbrala 'Cuenta Libertad'. Cuando ves el saldo crecer ahí, la deuda deja de ser una amenaza y se convierte en un objetivo conquistable.",result:"Una cuenta con al menos $50 depositados esta semana. El monto no importa — el hábito sí."},
-       ]},
-      {title:"Mide, celebra y prepara el salto",
-       insight:"Llegaste a la semana 4. La mayoría no llega — no porque sea difícil, sino porque nadie los acompaña. Este mes fue el más importante de tu vida financiera reciente: cambiaste el patrón.",
-       dm:"💬 David: Hay un momento que noto en cada persona que trabajo — cuando dejan de verse como 'alguien con deudas' y empiezan a verse como alguien construyendo libertad. Ese cambio de identidad vale más que cualquier técnica. Si llegaste aquí, ya ocurrió en ti.",
-       principle:"El dinero sigue a las personas que saben manejarlo. Este mes aprendiste a manejarlo. Ahora hay que aprender a multiplicarlo.",
-       tasks:[
-         {title:"Calcula tu avance real del mes",detail:"Regresa a tu inventario inicial. ¿Cuánto debes ahora vs hace 4 semanas? Escribe el número exacto y el porcentaje de reducción. También anota: ¿cuánto generaste extra? ¿Qué hábito nuevo construiste?",result:"Un número concreto de reducción y lista de hábitos nuevos. Este documento será tu evidencia de que eres capaz."},
-         {title:"Proyecta tu fecha de libertad financiera",detail:"Con el ritmo que llevas: Deuda total ÷ Pago mensual extra = Meses para liquidar. Pon esa fecha en tu calendario. El cerebro trabaja mejor con objetivos con fecha que con deseos abstractos.",result:"Una fecha concreta: el día que terminas de pagar tu última deuda. Márcala. Celébra ya que existe."},
-         {title:"Identifica qué necesitas para acelerar x3",detail:"¿Qué te falta para triplicar tu velocidad? Las respuestas más comunes: más ingresos, un sistema de ventas, aprender a cerrar clientes, entender cómo escalar un negocio.",result:"Claridad sobre tu próxima restricción — el eslabón que, si lo resuelves, acelera todo lo demás."},
-       ]},
-    ]
+// ============================================================
+// SCENARIO PRESETS
+// ============================================================
+const SCENARIOS = {
+  conservador: {
+    maq_citas: 60, maq_showup: 60, maq_close: 10, maq_com: 90,
+    mst_citas: 30, mst_showup: 70, mst_close: 12, mst_com: 300,
+    cdd_ventas: 1, cdd_com: 30,
+    ref_clientes: 20, ref_tasa: 5, ref_close: 20, ref_com_maq: 30, ref_com_mst: 100, ref_mix_mst: 15,
+    live_maq_ventas: 0.5, live_mst_ventas: 0.5, live_inv_ventas: 1.5, live_com: 130,
+    lbs_com: 35,
+    lbs_tickets: { mayo: 0, junio: 1, julio: 2, agosto: 3, septiembre: 4, octubre: 8, noviembre: 6 }
   },
-  ventas:{
-    id:"ventas",icon:"📈",color:"#2dd4bf",dim:"rgba(45,212,191,0.1)",bdr:"rgba(45,212,191,0.25)",
-    title:"Primeras Ventas",subtitle:"De la incertidumbre a ingresos predecibles",
-    desc:"Un sistema de 4 semanas para conseguir clientes consistentes, cerrar con confianza y construir las bases de un negocio real.",
-    weeks:[
-      {title:"Claridad antes de prospectar",
-       insight:"El 90% de los vendedores nuevos fracasa no por falta de esfuerzo sino por falta de claridad. Intentan venderle a todos y terminan vendiendo a nadie.",
-       dm:"💬 David: Trabajé con docenas de negocios en LATAM y USA y el problema siempre era el mismo — eran buenos en lo que hacían pero no sabían cómo decirlo. La venta empieza mucho antes del pitch. Empieza cuando alguien te lee y piensa: 'esto es exactamente lo que necesito.'",
-       principle:"Si le hablas a todos, no le hablas a nadie. Define tu cliente con tanta precisión que cuando lo encuentres, sienta que lo conoces desde siempre.",
-       tasks:[
-         {title:"Define tu cliente ideal en una oración",detail:"Usa esta fórmula: 'Ayudo a [persona específica] que tiene [problema urgente] a lograr [resultado concreto] en [tiempo estimado].' Cuanto más específico, más poderoso.",result:"Una oración de posicionamiento que puedes decir en 10 segundos y que hace que tu cliente ideal piense: 'eso es exactamente lo que necesito.'"},
-         {title:"Crea tu lista de 20 prospectos calificados",detail:"Abre tus contactos. Escribe 20 personas que podrían necesitar lo que ofreces. Clasifícalos: A (urgencia alta, dinero disponible), B (interés sin urgencia), C (posible futuro). Trabaja esta semana solo los A.",result:"Una lista real con clasificación. 5 prospectos A valen más que 50 contactos sin calificar."},
-         {title:"Envía 5 mensajes de apertura — sin pitch",detail:"El error #1: abrir con venta. La fórmula: Personalización + Observación genuina + Pregunta abierta. Solo abre la conversación. La venta viene después.",result:"5 conversaciones abiertas. Aunque respondan 2 — ya tienes prospectos reales."},
-         {title:"Estudia a tu cliente en sus propias palabras",detail:"Busca grupos de Facebook o foros donde está tu cliente ideal. Lee sus quejas y frustraciones. Anota las frases exactas que usan. Cuando usas sus palabras, sientes que les lees la mente.",result:"5–10 frases reales de tu cliente describiendo su problema. Esto vale más que cualquier curso de copywriting."},
-       ]},
-      {title:"La conversación que cierra",
-       insight:"La venta no ocurre en el pitch — ocurre en la conversación. Los mejores vendedores hablan el 30% del tiempo y escuchan el 70%.",
-       dm:"💬 David: Vender es servir — no presionar. Cuando entendí eso, todo cambió. Mi trabajo no es convencer a nadie de que necesita algo. Es ayudarle a ver con claridad si lo que ofrezco resuelve su problema real. Esa honestidad cierra más ventas que cualquier táctica.",
-       principle:"No vendas soluciones — descubre dolores. El prospecto que describe su problema en voz alta ya está a mitad del proceso de convencerse solo.",
-       tasks:[
-         {title:"Aprende las 4 preguntas que revelan el dolor real",detail:"P1 Situación: '¿Cómo consigues clientes?' P2 Problema: '¿Qué tan predecible es ese flujo?' P3 Implicación: '¿Qué pasa si esto sigue igual 6 meses?' P4 Valor: '¿Cuánto valdría tener 3 clientes nuevos garantizados al mes?' Practica estas 4 en voz alta 5 veces.",result:"Dominar estas preguntas te posiciona como consultor, no como vendedor."},
-         {title:"Agenda y realiza al menos 1 llamada o video",detail:"A tus prospectos A escribe: 'Me gustaría hacerte 3 preguntas rápidas para ver si puedo ayudarte — ¿tienes 20 minutos?' En la llamada, usa las 4 preguntas. No presentes tu solución hasta que hayan descrito su problema 2 veces.",result:"Una llamada completada con notas en las palabras del prospecto. Esas notas son tu propuesta de venta natural."},
-         {title:"Construye tu presentación de 3 minutos",detail:"1) 'Trabajo con [cliente] que tiene [problema]'. 2) 'Lo que hacen normalmente no funciona porque [razón]'. 3) 'Lo que hacemos diferente es [tu enfoque]'. 4) 'El resultado típico es [beneficio concreto]'. 5) '¿Eso tiene sentido para ti?' Grábate. Escúchate. Mejórala.",result:"Una presentación de 3 minutos que suena a conversación natural, no a script memorizado."},
-         {title:"Haz seguimiento con valor — no con presión",detail:"No sigas con 'solo quería saber si pensaste en mi propuesta' — eso huele a desesperación. Envía algo útil. El 80% de las ventas ocurre después del 5to contacto.",result:"5 mensajes de seguimiento enviados. Al menos 1 conversación avanzada."},
-       ]},
-      {title:"El arte del cierre natural",
-       insight:"El cierre no es el momento en que 'convences' a alguien. Es el momento en que ayudas a alguien a tomar una decisión que ya quería tomar. Si tienes que presionar mucho, algo salió mal antes.",
-       dm:"💬 David: El miedo a pedir el cierre es el mayor ladrón de ingresos. La trampa del buen trabajador — ser tan bueno en tu servicio que te olvidas de pedir el negocio. La verdad es que pedir el sí es un servicio — porque si la persona lo necesita y tú no preguntas, le estás fallando.",
-       principle:"El miedo a pedir el cierre le cuesta más dinero a los vendedores que cualquier objeción. Pedir el sí es un servicio — no una imposición.",
-       tasks:[
-         {title:"Aprende a manejar las 3 objeciones reales",detail:"'No tengo dinero': '¿Qué pasaría si encontraras la forma de financiarlo? ¿El resultado vale la inversión?' 'Necesito pensarlo': '¿Qué información te falta para decidir hoy?' 'No tengo tiempo': 'Precisamente — eso es lo que esto resuelve.' Las objeciones son preguntas disfrazadas.",result:"Un script personal para cada objeción, en tu propio tono y lenguaje."},
-         {title:"Intenta 1 cierre esta semana",detail:"Di: 'Basado en lo que me contaste, creo que [servicio] es exactamente lo que necesitas. ¿Quieres que empecemos [fecha]?' Luego calla. El silencio es tu aliado.",result:"Un intento de cierre completado. No importa el resultado — importa haberlo hecho."},
-         {title:"Documenta tu proceso de venta",detail:"¿Cuántos contactos? ¿Cuántos respondieron? ¿Cuántos llegaron a llamada? ¿Cuántos cerraron? Con ese dato sabes cuántos contactos necesitas para X ventas.",result:"Tu primer embudo documentado. Este dato vale oro cuando quieras escalar."},
-       ]},
-      {title:"Construye el sistema — deja de depender de ti",
-       insight:"El problema de vender manualmente es que cuando paras, los ingresos paran. Un sistema de ventas genera clientes aunque estés dormido.",
-       dm:"💬 David: La trampa del buen trabajador es cuando eres tan bueno haciendo tu trabajo que te conviertes en el cuello de botella de tu propio negocio. El objetivo no es trabajar más duro. Es construir algo que funcione con o sin ti presente.",
-       principle:"El mejor momento para construir un sistema de ventas es cuando ya tienes clientes. El segundo mejor momento es ahora.",
-       tasks:[
-         {title:"Pide 1 testimonio real a tu mejor cliente",detail:"Escríbele: '¿Cómo describirías los resultados que has tenido? Me gustaría usar tu experiencia para ayudar a más personas.' El testimonio ideal responde: ¿Cuál era el problema antes? ¿Qué pasó después? ¿A quién se lo recomendarías?",result:"Un testimonio escrito o en audio. Este activo vale 10x más que cualquier anuncio."},
-         {title:"Activa tu motor de referidos",detail:"El 70% de los mejores clientes llegan por referido — pero menos del 20% de los vendedores los piden. Di: 'Me ayudarías mucho si me presentaras a 1 persona que pueda beneficiarse de lo que hago.'",result:"Al menos 1 referido activo en tu pipeline esta semana."},
-         {title:"Evalúa tu mes y define tu número diario",detail:"¿Cuánto generaste? ¿Cuántas ventas? ¿Cuál fue tu tasa de conversión? Para ganar $3,000 el próximo mes, ¿cuántos contactos diarios necesitas?",result:"Tu número diario de actividad — la cantidad exacta de contactos para alcanzar tu meta mensual."},
-       ]},
-    ]
+  objetivo: {
+    maq_citas: 60, maq_showup: 75, maq_close: 15, maq_com: 90,
+    mst_citas: 40, mst_showup: 80, mst_close: 18, mst_com: 300,
+    cdd_ventas: 3, cdd_com: 30,
+    ref_clientes: 30, ref_tasa: 10, ref_close: 25, ref_com_maq: 30, ref_com_mst: 100, ref_mix_mst: 20,
+    live_maq_ventas: 1, live_mst_ventas: 1, live_inv_ventas: 3, live_com: 150,
+    lbs_com: 40,
+    lbs_tickets: { ...DEFAULT_LBS }
   },
-  mentalidad:{
-    id:"mentalidad",icon:"🧠",color:"#f59e0b",dim:"rgba(245,158,11,0.1)",bdr:"rgba(245,158,11,0.25)",
-    title:"Mentalidad del Dinero",subtitle:"Reprograma las creencias que te cuestan dinero",
-    desc:"Un proceso de 4 semanas para identificar y desactivar los patrones mentales que bloquean tu crecimiento económico — con trabajo real, no motivación superficial.",
-    weeks:[
-      {title:"El inventario de tus creencias heredadas",
-       insight:"Tu relación con el dinero no la elegiste — te la enseñaron. Ninguna de esas creencias es verdad universal — son historias que se convirtieron en filtros automáticos.",
-       dm:"💬 David: Desde mi fe, creo que el dinero es una herramienta — no el fin. El problema no es el dinero en sí, es la relación distorsionada que muchos aprendieron con él desde pequeños. Vi en mi familia y en mis clientes el mismo patrón: cuando sanas esa relación, el dinero empieza a fluir diferente.",
-       principle:"No puedes cambiar lo que no puedes ver. Tus creencias sobre el dinero no son tuyas — son prestadas. Y lo prestado se puede devolver.",
-       tasks:[
-         {title:"Las 5 frases que escuchaste de niño sobre el dinero",detail:"Escribe en papel — no en pantalla — las 5 frases sobre dinero que más escuchaste de pequeño. 'El dinero no crece en los árboles', 'los ricos son corruptos', 'para ganar hay que sacrificarse'. ¿Estás actuando como si estas frases fueran verdad?",result:"Tu mapa de creencias heredadas. Sin este diagnóstico, cualquier otra cosa que hagas es trabajar en la superficie."},
-         {title:"Busca la evidencia contraria para cada creencia",detail:"Para cada frase, encuentra 2 ejemplos reales que la contradigan. La mente no puede mantener simultáneamente una creencia y su contraejemplo concreto.",result:"10 contraejemplos concretos. Cada uno es un hoyo en el muro que bloquea tu crecimiento."},
-         {title:"Calcula cuánto te han costado tus creencias",detail:"Por cada creencia limitante, ¿qué oportunidades dejaste pasar? ¿Qué pedidos de aumento no hiciste? Pon números aproximados. Las creencias tienen un costo financiero real y medible.",result:"Un número aproximado de lo que tus creencias te han costado. Ese número duele — y también libera."},
-         {title:"Instala tu nueva declaración financiera",detail:"Crea 1 afirmación específica para tu creencia más limitante. No vale 'soy millonario'. Vale: 'Tengo la capacidad de generar el dinero que mi familia necesita y lo demuestro con acción cada día.' Léela en voz alta 2 veces cada mañana por 21 días.",result:"Tu afirmación personalizada activa — no estándar, no copiada, tuya."},
-       ]},
-      {title:"El costo de la identidad equivocada",
-       insight:"Mientras te definas como 'alguien que lucha con el dinero', actuarás exactamente como tal. El cambio de identidad es el paso previo a cualquier resultado financiero.",
-       dm:"💬 David: Hay una frase que cambió mi perspectiva: 'Actúas consistentemente con quien crees que eres.' Si crees que no eres de los que tienen mucho, harás inconscientemente todo lo posible para no tenerlo. No es autoboicot — es tu cerebro siendo coherente con tu identidad.",
-       principle:"Tus acciones financieras siempre son consistentes con quien crees que eres. Cambia la identidad primero — los resultados te siguen.",
-       tasks:[
-         {title:"Escribe tu actual identidad financiera",detail:"Completa sin filtros: 'Yo soy alguien que...', 'Cuando se trata de dinero, siempre...', 'Las personas como yo generalmente...', 'Nunca podría...' Lo que escribas refleja los límites que tu mente acepta como reales.",result:"Tu identidad financiera actual expuesta. Ver las palabras escritas a veces es lo que necesitas para decir: '¿De verdad creo esto?'"},
-         {title:"Diseña tu identidad financiera futura",detail:"Reescribe cada frase en presente. 'Yo soy alguien que toma decisiones financieras con claridad y confianza.' Tu cerebro no distingue bien entre 'soy' y 'seré' — y eso trabaja a tu favor.",result:"Tu nueva identidad financiera escrita, en presente, específica. Léela cada noche antes de dormir."},
-         {title:"Haz 1 acto que tu identidad futura haría",detail:"Elige una acción que tu versión futura haría pero tu versión actual evita. Pedir un aumento, cobrar lo que vales, invertir aunque sea $20 en educación. El mensaje que le manda a tu subconsciente vale más que el acto mismo.",result:"1 acto de identidad completado y documentado. Ese registro construye evidencia de quién eres."},
-       ]},
-      {title:"La psicología del riesgo y la inversión",
-       insight:"El mayor error financiero no es invertir en algo malo. Es no invertir por miedo a perder. Kahneman (Premio Nobel) demostró que el dolor de perder $100 es 2x más fuerte que el placer de ganar $100. Ese sesgo te hace conservador cuando deberías ser estratégico.",
-       dm:"💬 David: Desde mi perspectiva de fe, creo que fuimos hechos para ser mayordomos de lo que se nos da — no para enterrarlo por miedo. La parábola de los talentos me enseñó que el único error real es no hacer nada con lo que tienes. Quedarte quieto también es una decisión, y tiene un costo.",
-       principle:"Quedarte donde estás también tiene un costo. Se llama costo de oportunidad — y es el más silencioso y más caro de todos.",
-       tasks:[
-         {title:"Calcula tu factura de la inacción",detail:"Piensa en 1 decisión que postergaste por miedo en los últimos 2 años. Si hubieras actuado, ¿cuánto dinero adicional estarías generando hoy? Multiplícalo por 12.",result:"Tu 'factura de la inacción'. No para culparte — para activar urgencia real."},
-         {title:"Estudia una inversión concreta que puedas hacer",detail:"La inversión de mayor ROI garantizado para la mayoría es educación en habilidades monetizables. Evalúa opciones: ¿cuánto cuesta? ¿Qué resultado promete? ¿Qué resultados tienen sus alumnos? Decide con datos, no con miedo.",result:"Una decisión informada — y si tiene sentido, un plan para financiarla."},
-         {title:"Practica la tolerancia al riesgo calculado",detail:"Esta semana toma 1 decisión pequeña con incertidumbre consciente. Publicar algo en redes que normalmente evitarías, ofrecer un precio más alto, compartir una idea de negocio que tenías guardada.",result:"1 acto de riesgo calculado completado. Nuevo dato sobre quién eres y de lo que eres capaz."},
-       ]},
-      {title:"El sistema que convierte mentalidad en resultados",
-       insight:"La mentalidad sin sistema es ilusión. El sistema sin mentalidad es estrés. Los que realmente prosperan combinan ambas. Este mes hiciste el trabajo más difícil. Ahora toca conectarlo con una estructura que convierta tu nueva mentalidad en resultados medibles.",
-       dm:"💬 David: He visto personas con la mentalidad correcta que no avanzan porque les falta el sistema. Y personas con el mejor sistema que autosabotean porque la mentalidad no cambió. Los dos van juntos. Ese es el trabajo real — y es exactamente lo que hiciste este mes.",
-       principle:"La transformación personal sin estructura se evapora. Necesitas un sistema que capture tu nueva mentalidad y la convierta en dinero real.",
-       tasks:[
-         {title:"Escribe tu visión financiera a 12 meses con números",detail:"No 'quiero ganar más' — específico: ¿cuánto mensual en 12 meses? Escríbelo en presente, como si ya ocurrió: 'Es diciembre de 2026 y genero $4,000 mensuales de forma consistente...'",result:"Tu visión financiera a 12 meses, específica y en presente. Léela 2 veces por semana."},
-         {title:"Comparte tu meta con alguien de confianza",detail:"Quienes escriben sus metas Y las comparten tienen 76% más probabilidad de lograrlas (Gail Matthews, Dominican University). Elige 1 persona que te apoye con honestidad.",result:"1 persona de responsabilidad activa. No para presión — para estructura y comunidad."},
-         {title:"Evalúa honestamente tu próxima restricción",detail:"¿Qué te frena más ahora para avanzar? ¿Es más mentalidad? ¿Falta de sistema de ventas? ¿No saber cómo generar ingresos adicionales? La respuesta define el siguiente paso inteligente.",result:"Claridad sobre tu siguiente restricción. Esa claridad vale más que cualquier motivación genérica."},
-       ]},
-    ]
+  optimista: {
+    maq_citas: 70, maq_showup: 80, maq_close: 20, maq_com: 90,
+    mst_citas: 45, mst_showup: 85, mst_close: 22, mst_com: 300,
+    cdd_ventas: 5, cdd_com: 30,
+    ref_clientes: 50, ref_tasa: 15, ref_close: 30, ref_com_maq: 30, ref_com_mst: 100, ref_mix_mst: 25,
+    live_maq_ventas: 1.5, live_mst_ventas: 1.5, live_inv_ventas: 5, live_com: 180,
+    lbs_com: 45,
+    lbs_tickets: { mayo: 2, junio: 3, julio: 5, agosto: 6, septiembre: 10, octubre: 18, noviembre: 15 }
   }
 };
 
-// ─── SVG ICONS ────────────────────────────────────────────────────────────────
-const PATHS = {
-  home:"M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25",
-  target:"M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z",
-  lock:"M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z",
-  chart:"M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941",
-  brain:"M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5",
-  check:"M4.5 12.75l6 6 9-13.5",
-  arrow:"M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3",
-  back:"M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18",
-  user:"M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z",
-  mail:"M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75",
-  phone:"M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z",
-  eye:"M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z M15 12a3 3 0 11-6 0 3 3 0 016 0z",
-  eyeoff:"M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88",
-};
-const Ic = ({n, cls="w-5 h-5", style:s}) => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-    strokeWidth="1.8" stroke="currentColor" className={cls} style={s}>
-    <path strokeLinecap="round" strokeLinejoin="round" d={PATHS[n]}/>
-  </svg>
-);
+let lbsTickets = { ...DEFAULT_LBS };
 
-// ─── RING ─────────────────────────────────────────────────────────────────────
-const Ring = ({pct,color,sz=64}) => {
-  const r=26,circ=2*Math.PI*r,off=circ*(1-pct/100);
-  return (
-    <svg width={sz} height={sz} viewBox="0 0 64 64" style={{transform:"rotate(-90deg)"}}>
-      <circle cx="32" cy="32" r={r} fill="none" stroke="var(--border2)" strokeWidth="5"/>
-      <circle cx="32" cy="32" r={r} fill="none" stroke={color} strokeWidth="5"
-        strokeDasharray={circ} strokeDashoffset={off} strokeLinecap="round"
-        style={{transition:"stroke-dashoffset .6s ease"}}/>
-    </svg>
-  );
-};
+// ============================================================
+// BUILD MONTH ROWS
+// ============================================================
+function buildMonthRows() {
+  const tbody = document.getElementById('month-rows');
+  tbody.innerHTML = '';
+  MONTHS.forEach(m => {
+    const sub = MONTH_SUBS[m];
+    const isMilestone = m === 'noviembre';
+    const row = document.createElement('tr');
+    if (isMilestone) row.classList.add('milestone');
+    row.innerHTML = `
+      <td class="month-label">${MONTH_LABELS[m]}${sub ? `<small>${sub}</small>` : ''}</td>
+      <td class="num" id="m-${m}-maq">$0</td>
+      <td class="num" id="m-${m}-mst">$0</td>
+      <td class="num" id="m-${m}-cdd">$0</td>
+      <td class="num" id="m-${m}-ref">$0</td>
+      <td class="num" id="m-${m}-live">$0</td>
+      <td class="num edit">
+        <input type="number" min="0" max="50" value="${lbsTickets[m]}" data-month="${m}" class="lbs-input">
+      </td>
+      <td class="total-cell" id="m-${m}-total">$0</td>
+    `;
+    tbody.appendChild(row);
+  });
+  // Totals row
+  const tr = document.createElement('tr');
+  tr.classList.add('totals');
+  tr.innerHTML = `
+    <td>TOTAL 7 meses</td>
+    <td class="num" id="t-maq">$0</td>
+    <td class="num" id="t-mst">$0</td>
+    <td class="num" id="t-cdd">$0</td>
+    <td class="num" id="t-ref">$0</td>
+    <td class="num" id="t-live">$0</td>
+    <td class="num" id="t-lbs">$0</td>
+    <td class="total-cell" id="t-total">$0</td>
+  `;
+  tbody.appendChild(tr);
 
-// ─── ONBOARDING ───────────────────────────────────────────────────────────────
-const Onboarding = ({onDone}) => {
-  const [step,setStep] = useState(0);
-  const slides = [
-    {emoji:"👋",title:"Bienvenido a tu Kit de Crecimiento",body:"Soy David Muñoz — consultor de negocios y parte del equipo de Luque Academy. Este kit nació de una realidad que vi repetirse en cientos de conversaciones: personas capaces, trabajadoras, que no avanzan porque les falta el sistema correcto.",sub:"Este kit es ese sistema. Simple. Práctico. Con resultados reales."},
-    {emoji:"🗺️",title:"Cómo funciona este kit",body:"Tienes 3 módulos: Liberación de Deudas, Primeras Ventas y Mentalidad del Dinero. Cada uno tiene 4 semanas de trabajo real, con tareas concretas, el 'por qué' detrás de cada una, y el resultado esperado al completarla.",sub:"No es contenido para leer y olvidar — es trabajo semanal para resultados reales."},
-    {emoji:"📋",title:"Cómo sacar el máximo provecho",body:"① Haz el diagnóstico — 3 preguntas para identificar tu módulo ideal. ② Trabaja 1 semana a la vez. No saltes adelante. ③ Completa las tareas antes de avanzar. ④ Regresa cada semana a marcar tu progreso.",sub:"El progreso no es motivación — es sistema. Una semana a la vez."},
-    {emoji:"🙏",title:"Una nota personal antes de empezar",body:"Desde mi fe, creo que cada persona tiene un propósito y los recursos para cumplirlo. El dinero no es el fin — es una herramienta para vivir con libertad y servir a otros. Este kit no es solo para ganar más. Es para que tengas la libertad de vivir con propósito.",sub:"Comencemos. Tu primer paso empieza ahora."},
-  ];
-  const s = slides[step];
-  return (
-    <div className="fade" style={{minHeight:"100vh",display:"flex",flexDirection:"column",padding:"40px 24px 32px",background:"linear-gradient(160deg,var(--bg),var(--bg2))"}}>
-      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 60% 40% at 50% 0%,rgba(201,168,76,.11),transparent 70%)",pointerEvents:"none"}}/>
-      {/* Dots */}
-      <div style={{display:"flex",justifyContent:"center",gap:6,marginBottom:40,position:"relative"}}>
-        {slides.map((_,i)=>(
-          <div key={i} className={`dot${i===step?" active":i<step?" done":""}`}
-            style={{width:i===step?28:8}}/>
-        ))}
-      </div>
-      <div style={{flex:1,display:"flex",flexDirection:"column",justifyContent:"center",position:"relative"}}>
-        <div style={{fontSize:52,textAlign:"center",marginBottom:24}}>{s.emoji}</div>
-        <h2 style={{fontSize:26,fontWeight:700,letterSpacing:"-0.02em",textAlign:"center",lineHeight:1.2,marginBottom:16,color:"var(--text)"}}>{s.title}</h2>
-        <p style={{fontSize:14,lineHeight:1.7,textAlign:"center",color:"var(--muted)",marginBottom:20,maxWidth:320,margin:"0 auto 20px"}}>{s.body}</p>
-        <div style={{background:"var(--gold-dim)",border:"1px solid var(--gold-bdr)",borderRadius:12,padding:"14px 16px",maxWidth:320,margin:"0 auto"}}>
-          <p style={{fontSize:12,lineHeight:1.6,textAlign:"center",color:"var(--gold)"}}>{s.sub}</p>
-        </div>
-      </div>
-      <div style={{marginTop:32,position:"relative"}}>
-        {step < slides.length-1 ? (
-          <>
-            <button className="btn-gold" onClick={()=>setStep(step+1)}>Siguiente →</button>
-            <button className="btn-ghost" style={{marginTop:10}} onClick={onDone}>Saltar intro</button>
-          </>
-        ) : (
-          <button className="btn-gold" onClick={onDone}>Comenzar mi diagnóstico →</button>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// ─── REGISTER ─────────────────────────────────────────────────────────────────
-const Register = ({onDone}) => {
-  const [f,setF] = useState({name:"",email:"",cc:"+1",phone:""});
-  const [err,setErr] = useState({});
-  const [loading,setLoading] = useState(false);
-  const [showPw,setShowPw] = useState(false); // not used but pattern ready
-
-  const validate = () => {
-    const e={};
-    if(!f.name.trim()) e.name="Tu nombre es requerido";
-    if(!f.email.includes("@")||!f.email.includes(".")) e.email="Ingresa un email válido";
-    if(!/^\d{7,12}$/.test(f.phone)) e.phone="Solo dígitos, entre 7 y 12";
-    return e;
-  };
-
-  const submit = async () => {
-    const e=validate();
-    if(Object.keys(e).length){setErr(e);return;}
-    setLoading(true);
-    try {
-      const id = uid();
-      const data = { name:f.name.trim(), email:f.email.trim().toLowerCase(), phone:`${f.cc}${f.phone}`, uid:id };
-      if(fb()) await fb().saveUser(id, data);
-      localStorage.setItem("dmkit_user", JSON.stringify(data));
-      setTimeout(()=>onDone(data), 600);
-    } catch(ex) {
-      console.warn("Firebase save failed, continuing offline:", ex);
-      const data = { name:f.name.trim(), email:f.email.trim().toLowerCase(), phone:`${f.cc}${f.phone}`, uid:uid() };
-      localStorage.setItem("dmkit_user", JSON.stringify(data));
-      onDone(data);
-    }
-  };
-
-  const setField = (key,val) => { setF({...f,[key]:val}); setErr({...err,[key]:""}); };
-
-  return (
-    <div className="fade" style={{minHeight:"100vh",display:"flex",flexDirection:"column",background:"linear-gradient(160deg,var(--bg),var(--bg2))"}}>
-      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 70% 50% at 50% 0%,rgba(201,168,76,.1),transparent 65%)",pointerEvents:"none"}}/>
-
-      {/* Hero */}
-      <div style={{position:"relative",padding:"40px 24px 28px",textAlign:"center"}}>
-        <div style={{display:"inline-flex",alignItems:"center",gap:6,padding:"5px 14px",borderRadius:24,background:"var(--gold-dim)",border:"1px solid var(--gold-bdr)",marginBottom:20}}>
-          <span style={{fontSize:12,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",color:"var(--gold)"}}>David Muñoz × Luque Academy</span>
-        </div>
-
-        {/* Avatar / Logo visual */}
-        <div style={{position:"relative",display:"inline-block",marginBottom:20}}>
-          <div style={{width:80,height:80,borderRadius:"50%",background:"linear-gradient(135deg,var(--gold),var(--gold-light))",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto",boxShadow:"0 0 0 6px rgba(201,168,76,.12),0 0 40px rgba(201,168,76,.2)"}}>
-            <span style={{fontSize:36}}>🏆</span>
-          </div>
-        </div>
-
-        <h1 style={{fontSize:28,fontWeight:700,letterSpacing:"-0.02em",lineHeight:1.15,marginBottom:12,color:"var(--text)"}}>
-          Tu Kit de<br/><span className="gold-text">Crecimiento Financiero</span>
-        </h1>
-        <p style={{fontSize:13,lineHeight:1.7,color:"var(--muted)",maxWidth:300,margin:"0 auto 20px"}}>
-          4 semanas. Tareas reales. Resultados medibles. Cuéntanos quién eres para personalizar tu camino.
-        </p>
-
-        {/* Stats row */}
-        <div style={{display:"flex",justifyContent:"center",gap:24}}>
-          {[["🌎","LATAM + USA"],["📅","4 semanas"],["✅","Gratis"]].map(([ic,lb])=>(
-            <div key={lb} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:4}}>
-              <span style={{fontSize:20}}>{ic}</span>
-              <span style={{fontSize:10,fontWeight:700,letterSpacing:"0.08em",textTransform:"uppercase",color:"var(--dim)"}}>{lb}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Form card */}
-      <div style={{flex:1,padding:"0 20px 32px"}}>
-        <div className="glass" style={{padding:22}}>
-
-          {/* Decorative top stripe */}
-          <div style={{height:3,background:"linear-gradient(90deg,var(--gold),var(--gold-light),transparent)",borderRadius:2,marginBottom:22}}/>
-
-          <p style={{fontSize:12,fontWeight:700,letterSpacing:"0.08em",textTransform:"uppercase",color:"var(--muted)",marginBottom:18}}>Crea tu acceso gratuito</p>
-
-          {/* Name */}
-          <div style={{marginBottom:14}}>
-            <label className="field-label">Nombre completo</label>
-            <div className="field-wrap">
-              <div className="field-icon"><Ic n="user" cls="w-4 h-4"/></div>
-              <input className={`field-input${err.name?" err":""}`} placeholder="Tu nombre completo"
-                value={f.name} onChange={e=>setField("name",e.target.value)}/>
-            </div>
-            {err.name && <p className="err-msg">{err.name}</p>}
-          </div>
-
-          {/* Email */}
-          <div style={{marginBottom:14}}>
-            <label className="field-label">Correo electrónico</label>
-            <div className="field-wrap">
-              <div className="field-icon"><Ic n="mail" cls="w-4 h-4"/></div>
-              <input className={`field-input${err.email?" err":""}`} type="email" placeholder="tu@correo.com"
-                value={f.email} onChange={e=>setField("email",e.target.value)}/>
-            </div>
-            {err.email && <p className="err-msg">{err.email}</p>}
-          </div>
-
-          {/* Phone */}
-          <div style={{marginBottom:22}}>
-            <label className="field-label">WhatsApp / Teléfono</label>
-            <div style={{display:"flex",gap:8}}>
-              <div style={{position:"relative",flexShrink:0}}>
-                <select value={f.cc} onChange={e=>setF({...f,cc:e.target.value})}
-                  style={{appearance:"none",background:"var(--bg2)",border:`1.5px solid ${err.phone?"var(--rose)":"var(--border)"}`,borderRadius:12,padding:"14px 12px",color:"var(--text)",fontSize:13,minWidth:100,cursor:"pointer"}}>
-                  {COUNTRIES.map(c=><option key={c.c} value={c.c}>{c.f} {c.c}</option>)}
-                </select>
-                <div style={{position:"absolute",right:8,top:"50%",transform:"translateY(-50%)",color:"var(--dim)",pointerEvents:"none",fontSize:10}}>▼</div>
-              </div>
-              <div className="field-wrap" style={{flex:1}}>
-                <div className="field-icon"><Ic n="phone" cls="w-4 h-4"/></div>
-                <input className={`field-input${err.phone?" err":""}`} type="tel" placeholder="Número sin código"
-                  value={f.phone} onChange={e=>setField("phone",e.target.value.replace(/\D/g,""))}/>
-              </div>
-            </div>
-            {err.phone && <p className="err-msg">{err.phone}</p>}
-          </div>
-
-          <button className="btn-gold" onClick={submit} disabled={loading}
-            style={{opacity:loading?.7:1}}>
-            {loading ? "Preparando tu kit…" : "Comenzar mi camino →"}
-          </button>
-
-          <p style={{textAlign:"center",fontSize:11,color:"var(--dim)",marginTop:12}}>
-            🔒 Tu información es privada. Sin spam, solo valor real.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ─── DIAGNOSTIC ───────────────────────────────────────────────────────────────
-const Diagnostic = ({onResult}) => {
-  const [step,setStep] = useState(0);
-  const [scores,setScores] = useState({deudas:0,ventas:0,mentalidad:0});
-  const [sel,setSel] = useState(null);
-
-  const pick = (type) => {
-    const ns={...scores,[type]:scores[type]+1};
-    setSel(type);
-    setTimeout(()=>{
-      setSel(null);
-      if(step < DIAG.length-1){ setStep(step+1); setScores(ns); }
-      else { onResult(Object.entries(ns).sort((a,b)=>b[1]-a[1])[0][0]); }
-    },380);
-  };
-  const q=DIAG[step];
-  return (
-    <div className="fade" style={{minHeight:"100vh",padding:"32px 20px",background:"linear-gradient(160deg,var(--bg),var(--bg2))"}}>
-      <p className="label-xs" style={{color:"var(--dim)",marginBottom:14}}>Diagnóstico · {step+1} de {DIAG.length}</p>
-      <div style={{height:3,background:"var(--border)",borderRadius:2,marginBottom:32,overflow:"hidden"}}>
-        <div style={{height:"100%",width:`${((step+1)/DIAG.length)*100}%`,background:"linear-gradient(90deg,var(--gold),var(--gold-light))",borderRadius:2,transition:"width .5s ease"}}/>
-      </div>
-      <h2 style={{fontSize:22,fontWeight:700,letterSpacing:"-0.02em",lineHeight:1.3,marginBottom:28,color:"var(--text)"}}>{q.q}</h2>
-      <div style={{display:"flex",flexDirection:"column",gap:12}}>
-        {q.opts.map(o=>(
-          <button key={o.type} onClick={()=>pick(o.type)}
-            style={{textAlign:"left",padding:"16px",borderRadius:16,display:"flex",alignItems:"flex-start",gap:14,background:sel===o.type?"rgba(201,168,76,.1)":"var(--surface)",border:`1.5px solid ${sel===o.type?"var(--gold-bdr)":"var(--border)"}`,transition:"all .2s"}}>
-            <span style={{fontSize:24,flexShrink:0,marginTop:1}}>{o.icon}</span>
-            <span style={{fontSize:14,lineHeight:1.55,color:sel===o.type?"var(--gold-light)":"var(--text)"}}>{o.label}</span>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// ─── RESULT ───────────────────────────────────────────────────────────────────
-const Result = ({result,user,onGo}) => {
-  const m=MODS[result];
-  return (
-    <div className="fade" style={{minHeight:"100vh",padding:"40px 20px 32px",background:"linear-gradient(160deg,var(--bg),var(--bg2))"}}>
-      <div style={{position:"absolute",inset:0,background:`radial-gradient(ellipse 60% 40% at 50% 20%,${m.dim},transparent 70%)`,pointerEvents:"none"}}/>
-      <div style={{textAlign:"center",marginBottom:28,position:"relative"}}>
-        <div style={{fontSize:48,marginBottom:12}}>{m.icon}</div>
-        <p className="label-xs" style={{color:m.color,marginBottom:8}}>Tu diagnóstico</p>
-        <h2 style={{fontSize:26,fontWeight:700,letterSpacing:"-0.02em",lineHeight:1.15,marginBottom:12,color:"var(--text)"}}>
-          Tu módulo es<br/><span style={{color:m.color}}>{m.title}</span>
-        </h2>
-        <p style={{fontSize:13,lineHeight:1.7,color:"var(--muted)",maxWidth:300,margin:"0 auto"}}>{m.desc}</p>
-      </div>
-      <div className="glass" style={{padding:20,marginBottom:16,position:"relative"}}>
-        <p className="label-xs" style={{color:m.color,marginBottom:16}}>Lo que logras en 4 semanas</p>
-        {m.weeks.map((w,i)=>(
-          <div key={i} style={{display:"flex",alignItems:"flex-start",gap:12,marginBottom:12}}>
-            <div style={{width:24,height:24,borderRadius:"50%",background:m.dim,border:`1px solid ${m.bdr}`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,fontSize:11,fontWeight:700,color:m.color}}>{i+1}</div>
-            <p style={{fontSize:13,fontWeight:600,color:"#c8c8d8",lineHeight:1.4}}>{w.title}</p>
-          </div>
-        ))}
-      </div>
-      <button className="btn-gold" onClick={()=>onGo(result)} style={{marginBottom:10}}>Comenzar Semana 1 →</button>
-      <button className="btn-ghost" onClick={()=>onGo("home")}>Ver todos los módulos</button>
-    </div>
-  );
-};
-
-// ─── HOME ─────────────────────────────────────────────────────────────────────
-const Home = ({user,diagnosed,onModule,onDiag}) => {
-  const m = diagnosed ? MODS[diagnosed] : null;
-  const first = user?.name?.split(" ")[0] || "ahí";
-  return (
-    <div className="fade" style={{paddingBottom:24}}>
-      {/* Hero */}
-      <div style={{position:"relative",overflow:"hidden",padding:"32px 20px 20px"}}>
-        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 70% 50% at 50% 0%,rgba(201,168,76,.1),transparent 70%)",pointerEvents:"none"}}/>
-        <p className="label-xs" style={{color:"var(--gold)",marginBottom:4}}>Bienvenido de vuelta</p>
-        <h1 style={{fontSize:28,fontWeight:700,letterSpacing:"-0.02em",lineHeight:1.2,marginBottom:4,color:"var(--text)"}}>Hola, {first} 👋</h1>
-        <p style={{fontSize:13,color:"var(--dim)"}}>Tu camino al sistema completo empieza aquí.</p>
-      </div>
-
-      {/* Active module card */}
-      {m ? (
-        <div style={{margin:"0 20px 16px",padding:"20px",borderRadius:20,background:"linear-gradient(135deg,rgba(201,168,76,.12),rgba(201,168,76,.04))",border:"1px solid var(--gold-bdr)"}}>
-          <div style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between",marginBottom:12}}>
-            <div>
-              <p className="label-xs" style={{color:"var(--gold)",marginBottom:6}}>Módulo activo</p>
-              <h3 style={{fontSize:18,fontWeight:700,color:"var(--text)",marginBottom:2}}>{m.title}</h3>
-              <p style={{fontSize:12,color:"var(--muted)"}}>{m.subtitle}</p>
-            </div>
-            <span style={{fontSize:28}}>{m.icon}</span>
-          </div>
-          <button onClick={()=>onModule(m.id)}
-            style={{display:"flex",alignItems:"center",gap:6,fontSize:13,fontWeight:700,color:"var(--gold)",background:"transparent",border:"none"}}>
-            Continuar semana actual <Ic n="arrow" cls="w-4 h-4"/>
-          </button>
-        </div>
-      ) : (
-        <div className="glass" style={{margin:"0 20px 16px",padding:20}}>
-          <div style={{fontSize:24,marginBottom:10}}>🎯</div>
-          <h3 style={{fontSize:17,fontWeight:700,marginBottom:6,color:"var(--text)"}}>Encuentra tu punto de partida</h3>
-          <p style={{fontSize:13,color:"var(--muted)",marginBottom:16,lineHeight:1.6}}>3 preguntas para identificar tu módulo ideal.</p>
-          <button className="btn-gold" onClick={onDiag}>Hacer diagnóstico →</button>
-        </div>
-      )}
-
-      {/* Modules list */}
-      <p className="label-xs" style={{padding:"8px 20px 10px",color:"var(--dim)"}}>Todos los módulos</p>
-      {Object.values(MODS).map(mod=>(
-        <button key={mod.id} onClick={()=>onModule(mod.id)}
-          style={{width:"100%",padding:"14px 20px",display:"flex",alignItems:"center",gap:14,background:"transparent",border:"none",borderBottom:"1px solid var(--border)",transition:"background .15s"}}
-          onMouseEnter={e=>e.currentTarget.style.background="var(--surface)"}
-          onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
-          <div style={{width:44,height:44,borderRadius:12,background:"var(--surface)",border:"1px solid var(--border)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>{mod.icon}</div>
-          <div style={{flex:1,textAlign:"left"}}>
-            <p style={{fontSize:14,fontWeight:700,color:"var(--text)",marginBottom:2}}>{mod.title}</p>
-            <p style={{fontSize:12,color:"var(--dim)"}}>{mod.subtitle}</p>
-          </div>
-          <Ic n="arrow" cls="w-4 h-4" style={{color:"var(--dim)"}}/>
-        </button>
-      ))}
-
-      {/* Subtle hint */}
-      <div style={{margin:"20px 20px 0",padding:"14px 16px",borderRadius:12,background:"var(--bg2)",border:"1px solid var(--border)"}}>
-        <div style={{display:"flex",gap:10,alignItems:"flex-start"}}>
-          <span style={{fontSize:15,marginTop:1}}>💡</span>
-          <p style={{fontSize:12,lineHeight:1.65,color:"var(--dim)"}}>Este kit te da las bases. Cuando sientas que estás listo para el sistema completo, existe un camino que combina todo esto en un motor de ingresos que trabaja contigo.</p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ─── TASK ITEM ────────────────────────────────────────────────────────────────
-const TaskItem = ({task,done,onToggle,color}) => {
-  const [open,setOpen] = useState(!done);
-  return (
-    <div style={{borderBottom:"1px solid var(--border)",paddingBottom:4}}>
-      <div style={{display:"flex",alignItems:"flex-start",gap:12,padding:"14px 0",cursor:"pointer"}} onClick={onToggle}>
-        <div className={`task-check${done?" done":""}`} style={{background:done?color:"transparent",borderColor:done?color:"var(--border2)"}}>
-          {done && <Ic n="check" cls="w-3 h-3" style={{color:"#09090f"}}/>}
-        </div>
-        <p style={{flex:1,fontSize:14,fontWeight:600,color:done?"var(--dim)":"var(--text)",textDecoration:done?"line-through":"none",lineHeight:1.4}}>
-          {task.title}
-        </p>
-        {!done && (
-          <button onClick={e=>{e.stopPropagation();setOpen(!open);}}
-            style={{background:"transparent",border:"none",color:"var(--dim)",fontSize:11,marginTop:2,flexShrink:0}}>
-            {open?"▲":"▼"}
-          </button>
-        )}
-      </div>
-      {!done && open && (
-        <div className="fade" style={{paddingLeft:34,paddingBottom:12}}>
-          <p style={{fontSize:13,lineHeight:1.7,color:"var(--muted)",marginBottom:12}}>{task.detail}</p>
-          <div style={{padding:"12px 14px",borderRadius:10,background:"rgba(201,168,76,.06)",border:"1px solid rgba(201,168,76,.12)"}}>
-            <p className="label-xs" style={{color:"var(--gold)",marginBottom:6}}>🎯 Resultado esperado</p>
-            <p style={{fontSize:12,lineHeight:1.6,color:"var(--muted)"}}>{task.result}</p>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-// ─── MODULE ───────────────────────────────────────────────────────────────────
-const Module = ({moduleId,user,onBack,tasks,onToggle}) => {
-  const [week,setWeek] = useState(0);
-  const m=MODS[moduleId], wk=m.weeks[week];
-  const wt=tasks[`${moduleId}_w${week}`]||{};
-  const done=Object.values(wt).filter(Boolean).length;
-  const total=wk.tasks.length;
-  const wpct=Math.round((done/total)*100);
-  const allDone=m.weeks.map((_,i)=>{const t=tasks[`${moduleId}_w${i}`]||{};return Object.values(t).filter(Boolean).length===m.weeks[i].tasks.length;});
-  const totDone=allDone.filter(Boolean).length;
-  const totPct=Math.round((totDone/m.weeks.length)*100);
-  const showBigCTA = week===3 && wpct>=50;
-  const showNudge = week>=2 && !showBigCTA;
-
-  return (
-    <div className="fade">
-      {/* Header */}
-      <div style={{padding:"24px 20px 16px"}}>
-        <button onClick={onBack} style={{display:"flex",alignItems:"center",gap:6,fontSize:13,color:"var(--dim)",background:"transparent",border:"none",marginBottom:20}}>
-          <Ic n="back" cls="w-4 h-4"/> Inicio
-        </button>
-        <div style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between"}}>
-          <div>
-            <div style={{display:"inline-flex",alignItems:"center",gap:6,padding:"4px 12px",borderRadius:24,background:m.dim,border:`1px solid ${m.bdr}`,marginBottom:10}}>
-              <span style={{fontSize:11,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",color:m.color}}>{m.icon} {moduleId==="deudas"?"Módulo 1":moduleId==="ventas"?"Módulo 2":"Módulo 3"}</span>
-            </div>
-            <h2 style={{fontSize:22,fontWeight:700,letterSpacing:"-0.02em",lineHeight:1.2,color:"var(--text)",marginBottom:4}}>{m.title}</h2>
-            <p style={{fontSize:12,color:"var(--dim)"}}>{m.subtitle}</p>
-          </div>
-          <div className="ring-wrap">
-            <Ring pct={totPct} color={m.color} sz={64}/>
-            <div className="ring-label">
-              <span style={{fontSize:13,fontWeight:700,color:m.color}}>{totPct}%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Week pills */}
-      <div className="no-scroll" style={{display:"flex",gap:8,padding:"0 20px 16px",overflowX:"auto"}}>
-        {m.weeks.map((_,i)=>(
-          <button key={i} onClick={()=>setWeek(i)} className={`week-pill${week===i?" active":allDone[i]?" done":""}`}
-            style={week===i?{background:m.color}:{}}>
-            {allDone[i]?"✓ ":""}Sem {i+1}
-          </button>
-        ))}
-      </div>
-
-      {/* Week card */}
-      <div className="glass" style={{margin:"0 20px 14px",padding:18}}>
-        <div style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between",marginBottom:10}}>
-          <div style={{flex:1}}>
-            <p className="label-xs" style={{color:m.color,marginBottom:5}}>Semana {week+1}</p>
-            <h3 style={{fontSize:17,fontWeight:700,lineHeight:1.3,color:"var(--text)"}}>{wk.title}</h3>
-          </div>
-          <span style={{fontSize:12,fontWeight:700,color:m.color,marginLeft:12,flexShrink:0,marginTop:2}}>{done}/{total}</span>
-        </div>
-        <div style={{height:3,background:"var(--border)",borderRadius:2,overflow:"hidden"}}>
-          <div style={{height:"100%",width:`${wpct}%`,background:m.color,borderRadius:2,transition:"width .5s ease"}}/>
-        </div>
-      </div>
-
-      {/* Insight */}
-      <div className="insight-box" style={{margin:"0 20px 14px",borderLeft:`3px solid ${m.color}`}}>
-        <p className="label-xs" style={{color:m.color,marginBottom:8}}>💡 Por qué importa esta semana</p>
-        <p style={{fontSize:13,lineHeight:1.7,color:"var(--muted)",marginBottom:12}}>{wk.insight}</p>
-        <div style={{padding:"10px 12px",borderRadius:10,background:"rgba(201,168,76,.05)",border:"1px solid rgba(201,168,76,.1)",marginBottom:10}}>
-          <p style={{fontSize:12,lineHeight:1.65,color:"#9a9060",fontStyle:"italic"}}>{wk.dm}</p>
-        </div>
-        <p style={{fontSize:12,lineHeight:1.6,color:"var(--dim)",fontStyle:"italic"}}>"{wk.principle}"</p>
-      </div>
-
-      {/* Tasks */}
-      <div style={{padding:"0 20px"}}>
-        <p className="label-xs" style={{color:"var(--dim)",marginBottom:8}}>Tareas de la semana</p>
-        {wk.tasks.map((t,i)=>(
-          <TaskItem key={i} task={t} done={wt[i]||false} onToggle={()=>onToggle(moduleId,week,i)} color={m.color}/>
-        ))}
-      </div>
-
-      {/* Nudge */}
-      {showNudge && (
-        <div style={{margin:"16px 20px 0",padding:"14px 16px",borderRadius:12,background:"var(--bg2)",border:"1px solid var(--border)"}}>
-          <p style={{fontSize:11,fontWeight:700,letterSpacing:"0.1em",textTransform:"uppercase",color:"var(--gold)",marginBottom:5}}>📍 Tu avance importa</p>
-          <p style={{fontSize:12,lineHeight:1.65,color:"var(--dim)"}}>Llevas {totPct}% del módulo. Las personas que completan estas semanas llegan con claridad real a decidir su siguiente sistema. Vas por buen camino.</p>
-        </div>
-      )}
-
-      {/* Big CTA — solo semana 4 con >50% */}
-      {showBigCTA && (
-        <div style={{margin:"16px 20px 0",padding:"24px 20px",borderRadius:20,background:"linear-gradient(135deg,rgba(201,168,76,.14),rgba(201,168,76,.04))",border:"1px solid var(--gold-bdr)",position:"relative",overflow:"hidden"}}>
-          <p className="label-xs" style={{color:"var(--gold)",marginBottom:8}}>El siguiente nivel</p>
-          <h4 style={{fontSize:20,fontWeight:700,lineHeight:1.25,marginBottom:10,color:"var(--text)"}}>Ya tienes las bases.<br/>Ahora necesitas el sistema.</h4>
-          <p style={{fontSize:13,lineHeight:1.7,color:"var(--muted)",marginBottom:16}}>
-            La <strong style={{color:"var(--gold-light)"}}>Máquina del Dinero</strong> convierte todo lo que trabajaste en un motor de ingresos consistente — sistema completo de ventas, mentalidad y escalabilidad en un solo lugar.
-          </p>
-          {["Cierre de ventas consistente","Sistema de clientes automatizado","Mentalidad + estrategia + ejecución"].map(it=>(
-            <div key={it} style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
-              <div style={{width:16,height:16,borderRadius:"50%",background:"rgba(201,168,76,.2)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
-                <Ic n="check" cls="w-2.5 h-2.5" style={{color:"var(--gold)"}}/>
-              </div>
-              <p style={{fontSize:12,color:"var(--muted)"}}>{it}</p>
-            </div>
-          ))}
-          <button className="btn-gold" style={{marginTop:16}}
-            onClick={()=>window.open("https://REEMPLAZA-CON-TU-LINK-HOTMART.com","_blank")}>
-            Quiero conocer la Máquina del Dinero →
-          </button>
-          <p style={{textAlign:"center",fontSize:11,color:"var(--dim)",marginTop:10}}>Habla con un asesor — sin presión, solo claridad</p>
-        </div>
-      )}
-      <div style={{height:32}}/>
-    </div>
-  );
-};
-
-// ─── BOTTOM NAV ───────────────────────────────────────────────────────────────
-const Nav = ({active,onNav}) => {
-  const items=[{id:"home",n:"home",l:"Inicio"},{id:"diag",n:"target",l:"Diagnóstico"},{id:"deudas",n:"lock",l:"Deudas"},{id:"ventas",n:"chart",l:"Ventas"},{id:"mentalidad",n:"brain",l:"Mente"}];
-  return (
-    <div className="bottom-nav">
-      <div style={{display:"flex"}}>
-        {items.map(it=>(
-          <button key={it.id} className={`nav-btn${active===it.id?" active":""}`} onClick={()=>onNav(it.id)}>
-            <Ic n={it.n} cls="w-5 h-5"/>
-            {it.l}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// ─── WHATSAPP / COMMUNITY BUTTON ──────────────────────────────────────────────
-const WAFloat = () => (
-  <button className="wa-float" title="Únete a la comunidad"
-    onClick={()=>window.open("https://REEMPLAZA-CON-TU-LINK-HOTMART-O-WHATSAPP.com","_blank")}>
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="white">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L.057 23.43a.75.75 0 00.918.918l5.574-1.478A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.956 9.956 0 01-5.073-1.381l-.364-.216-3.768.999.999-3.768-.216-.364A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-    </svg>
-  </button>
-);
-
-// ─── APP ──────────────────────────────────────────────────────────────────────
-function App() {
-  const [phase,setPhase]   = useState("loading");
-  const [user,setUser]     = useState(null);
-  const [diagnosed,setDx]  = useState(null);
-  const [tab,setTab]       = useState("home");
-  const [mod,setMod]       = useState(null);
-  const [tasks,setTasks]   = useState({});
-
-  // Boot — check localStorage
-  useEffect(()=>{
-    try {
-      const u = JSON.parse(localStorage.getItem("dmkit_user")||"null");
-      const d = localStorage.getItem("dmkit_dx")||null;
-      const t = JSON.parse(localStorage.getItem("dmkit_tasks")||"{}");
-      if(u){ setUser(u); setDx(d); setTasks(t); setPhase("main"); }
-      else { setPhase("intro"); }
-    } catch(e){ setPhase("intro"); }
-  },[]);
-
-  const persist = (u,d,t) => {
-    try {
-      if(u) localStorage.setItem("dmkit_user", JSON.stringify(u));
-      if(d) localStorage.setItem("dmkit_dx", d);
-      localStorage.setItem("dmkit_tasks", JSON.stringify(t));
-    } catch(e){}
-  };
-
-  const saveTasks = async (upd) => {
-    setTasks(upd);
-    persist(user, diagnosed, upd);
-    if(fb() && user?.uid){
-      try { await fb().saveProgress(user.uid, { tasks: upd, diagnosed }); } catch(e){}
-    }
-  };
-
-  const handleToggle = (mId,wi,ti) => {
-    const k=`${mId}_w${wi}`;
-    const upd={...tasks,[k]:{...(tasks[k]||{}),[ti]:!(tasks[k]||{})[ti]}};
-    saveTasks(upd);
-  };
-
-  const handleNav = (t) => {
-    setTab(t);
-    if(t==="diag"){ setMod(null); setPhase("diagnostic"); return; }
-    if(["deudas","ventas","mentalidad"].includes(t)) setMod(t);
-    else setMod(null);
-  };
-
-  const handleDiagResult = async (r) => {
-    setDx(r);
-    localStorage.setItem("dmkit_dx", r);
-    if(fb() && user?.uid){
-      try { await fb().saveProgress(user.uid, { diagnosed: r }); } catch(e){}
-    }
-    setPhase("result");
-  };
-
-  const bg = {background:"linear-gradient(160deg,var(--bg) 0%,var(--bg2) 100%)",minHeight:"100vh"};
-  const showMod = mod && ["deudas","ventas","mentalidad"].includes(mod);
-
-  if(phase==="loading") return <div style={{...bg,display:"flex",alignItems:"center",justifyContent:"center"}}><div style={{fontSize:32}}>⏳</div></div>;
-  if(phase==="intro")   return <div style={bg}><Onboarding onDone={()=>setPhase("register")}/></div>;
-  if(phase==="register") return <div style={bg}><Register onDone={u=>{setUser(u);setPhase("diagnostic");}}/></div>;
-  if(phase==="diagnostic") return <div style={bg}><Diagnostic onResult={handleDiagResult}/></div>;
-  if(phase==="result")  return <div style={bg}><Result result={diagnosed} user={user} onGo={v=>{if(v==="home"){setTab("home");setMod(null);}else{setMod(v);setTab(v);}setPhase("main");}}/></div>;
-
-  return (
-    <div style={bg}>
-      <div style={{maxWidth:480,margin:"0 auto",paddingBottom:72}}>
-        {!showMod
-          ? <Home user={user} diagnosed={diagnosed} onModule={id=>{setMod(id);setTab(id);}} onDiag={()=>setPhase("diagnostic")}/>
-          : <Module moduleId={mod} user={user} onBack={()=>{setMod(null);setTab("home");}} tasks={tasks} onToggle={handleToggle}/>
-        }
-      </div>
-      <Nav active={tab} onNav={handleNav}/>
-      <WAFloat/>
-    </div>
-  );
+  // Wire LBS inputs
+  document.querySelectorAll('.lbs-input').forEach(inp => {
+    inp.addEventListener('input', (e) => {
+      lbsTickets[e.target.dataset.month] = parseInt(e.target.value) || 0;
+      recalc();
+    });
+  });
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+// ============================================================
+// FORMAT
+// ============================================================
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('en-US');
+}
+
+// ============================================================
+// RECALC
+// ============================================================
+function getVal(id) {
+  return parseFloat(document.getElementById(id).value) || 0;
+}
+
+function recalc() {
+  // Inputs
+  const maqCitas = getVal('maq_citas');
+  const maqShowup = getVal('maq_showup') / 100;
+  const maqClose = getVal('maq_close') / 100;
+  const maqCom = getVal('maq_com');
+  const mstCitas = getVal('mst_citas');
+  const mstShowup = getVal('mst_showup') / 100;
+  const mstClose = getVal('mst_close') / 100;
+  const mstCom = getVal('mst_com');
+  const cddVentas = getVal('cdd_ventas');
+  const cddCom = getVal('cdd_com');
+
+  // Referidos
+  const refClientes = getVal('ref_clientes');
+  const refTasa = getVal('ref_tasa') / 100;
+  const refClose = getVal('ref_close') / 100;
+  const refComMaq = getVal('ref_com_maq');
+  const refComMst = getVal('ref_com_mst');
+  const refMixMst = getVal('ref_mix_mst') / 100;
+
+  // Zoom Lives (4 miércoles: 1 Máq + 1 MST + 2 Invitado)
+  const liveMaqVentas = getVal('live_maq_ventas');
+  const liveMstVentas = getVal('live_mst_ventas');
+  const liveInvVentas = getVal('live_inv_ventas');
+  const liveCom = getVal('live_com');
+
+  const lbsCom = getVal('lbs_com');
+
+  // Máquina (directo)
+  const maqEfe = maqCitas * maqShowup;
+  const maqVta = maqEfe * maqClose;
+  const maqIng = maqVta * maqCom;
+
+  // Maestría (directo)
+  const mstEfe = mstCitas * mstShowup;
+  const mstVta = mstEfe * mstClose;
+  const mstIng = mstVta * mstCom;
+
+  // Códigos
+  const cddIng = cddVentas * cddCom;
+
+  // Referidos
+  const refLeadsMes = refClientes * refTasa;
+  const refVentasMes = refLeadsMes * refClose;
+  const refVentasMst = refVentasMes * refMixMst;
+  const refVentasMaq = refVentasMes * (1 - refMixMst);
+  const refIng = (refVentasMst * refComMst) + (refVentasMaq * refComMaq);
+
+  // Zoom Lives (4 miércoles todos los meses)
+  const liveTotalVentas = liveMaqVentas + liveMstVentas + liveInvVentas;
+  const liveIng = liveTotalVentas * liveCom;
+
+  // Monthly evergreen (sin LBS)
+  const monthlyEvergreen = maqIng + mstIng + cddIng + refIng + liveIng;
+  const monthlyVentas = maqVta + mstVta + cddVentas + refVentasMes + liveTotalVentas;
+  const monthlyCitas = maqCitas + mstCitas;
+
+  // Update funnel cards
+  document.getElementById('maq-tag').textContent = fmt(maqCom) + '/v';
+  document.getElementById('mst-tag').textContent = fmt(mstCom) + '/v';
+  document.getElementById('f-maq-citas').textContent = Math.round(maqCitas);
+  document.getElementById('f-maq-efe').textContent = Math.round(maqEfe);
+  document.getElementById('f-maq-vta').textContent = maqVta.toFixed(1);
+  document.getElementById('f-maq-com').textContent = fmt(maqIng);
+  document.getElementById('f-mst-citas').textContent = Math.round(mstCitas);
+  document.getElementById('f-mst-efe').textContent = Math.round(mstEfe);
+  document.getElementById('f-mst-vta').textContent = mstVta.toFixed(1);
+  document.getElementById('f-mst-com').textContent = fmt(mstIng);
+
+  // Hero
+  document.getElementById('hero-monthly').textContent = fmt(monthlyEvergreen);
+  document.getElementById('hero-ventas').textContent = monthlyVentas.toFixed(1);
+  document.getElementById('hero-citas').textContent = Math.round(monthlyCitas);
+
+  // Build monthly table
+  let totMaq = 0, totMst = 0, totCdd = 0, totRef = 0, totLive = 0, totLbs = 0, totGrand = 0;
+  const monthTotals = {};
+  MONTHS.forEach(m => {
+    const maqM = maqIng;
+    const mstM = mstIng;
+    const cddM = cddIng;
+    const refM = refIng;
+    const liveM = liveIng;
+    const lbsM = (lbsTickets[m] || 0) * lbsCom;
+    const totalM = maqM + mstM + cddM + refM + liveM + lbsM;
+    monthTotals[m] = totalM;
+
+    document.getElementById(`m-${m}-maq`).textContent = fmt(maqM);
+    document.getElementById(`m-${m}-mst`).textContent = fmt(mstM);
+    document.getElementById(`m-${m}-cdd`).textContent = fmt(cddM);
+    document.getElementById(`m-${m}-ref`).textContent = fmt(refM);
+    document.getElementById(`m-${m}-live`).textContent = fmt(liveM);
+    document.getElementById(`m-${m}-total`).textContent = fmt(totalM);
+
+    totMaq += maqM;
+    totMst += mstM;
+    totCdd += cddM;
+    totRef += refM;
+    totLive += liveM;
+    totLbs += lbsM;
+    totGrand += totalM;
+  });
+
+  document.getElementById('t-maq').textContent = fmt(totMaq);
+  document.getElementById('t-mst').textContent = fmt(totMst);
+  document.getElementById('t-cdd').textContent = fmt(totCdd);
+  document.getElementById('t-ref').textContent = fmt(totRef);
+  document.getElementById('t-live').textContent = fmt(totLive);
+  document.getElementById('t-lbs').textContent = fmt(totLbs);
+  document.getElementById('t-total').textContent = fmt(totGrand);
+  document.getElementById('grand-total').textContent = fmt(totGrand);
+  const heroTotalEl = document.getElementById('hero-total');
+  if (heroTotalEl) heroTotalEl.textContent = fmt(totGrand);
+
+  // Chart
+  const maxVal = Math.max(...Object.values(monthTotals), 1);
+  const chart = document.getElementById('chart');
+  chart.innerHTML = '';
+  MONTHS.forEach(m => {
+    const val = monthTotals[m];
+    const isMilestone = m === 'noviembre';
+    const height = (val / maxVal) * 100;
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    col.innerHTML = `
+      <div class="bar-wrap">
+        <div class="bar ${isMilestone ? 'milestone' : ''}" style="height:${height}%">
+          <div class="bar-value">${fmt(val)}</div>
+        </div>
+      </div>
+      <div class="bar-label ${isMilestone ? 'milestone' : ''}">${MONTH_LABELS[m].substring(0,3)}</div>
+    `;
+    chart.appendChild(col);
+  });
+
+  // Comparison vs Q1
+  const q1Mensual = 647;
+  const q1Total = 2590;
+  const q1Ventas = 16;
+  const deltaMensual = monthlyEvergreen - q1Mensual;
+  const deltaVentas = monthlyVentas - q1Ventas;
+  const deltaTotal = totGrand - q1Total;
+
+  document.getElementById('cmp-mensual').textContent = fmt(monthlyEvergreen);
+  document.getElementById('cmp-ventas').textContent = monthlyVentas.toFixed(1);
+  document.getElementById('cmp-total').innerHTML = fmt(totGrand) + '<br><small style="color:rgba(45,122,59,0.7);font-weight:400;font-size:10px;">(may-nov)</small>';
+
+  const dMEl = document.getElementById('cmp-mensual-delta');
+  dMEl.textContent = (deltaMensual >= 0 ? '+' : '') + fmt(deltaMensual);
+  dMEl.className = 'comparison-val delta' + (deltaMensual < 0 ? ' neg' : '');
+
+  const dVEl = document.getElementById('cmp-ventas-delta');
+  dVEl.textContent = (deltaVentas >= 0 ? '+' : '') + deltaVentas.toFixed(1);
+  dVEl.className = 'comparison-val delta' + (deltaVentas < 0 ? ' neg' : '');
+
+  const dTEl = document.getElementById('cmp-total-delta');
+  const deltaPct = ((deltaTotal / q1Total) * 100).toFixed(0);
+  dTEl.textContent = (deltaTotal >= 0 ? '+' : '') + fmt(deltaTotal) + ' (' + (deltaTotal >= 0 ? '+' : '') + deltaPct + '%)';
+  dTEl.className = 'comparison-val delta' + (deltaTotal < 0 ? ' neg' : '');
+
+  // Refresh calendar view
+  const currentMonth = document.getElementById('cal-month-select').value;
+  buildCalendar(currentMonth);
+}
+
+// ============================================================
+// MONTHLY CALENDAR BUILDER
+// ============================================================
+// 20 días laborales típicos por mes (L-V × 4 semanas)
+// Standup pattern: Lun Warm / Mar Cool / Mie Warm / Jue Cool / Vie Victory
+const STANDUP_PATTERN = ['Warm Up','Cool Down','Warm Up','Cool Down','Victory'];
+const DAY_NAMES = ['lun','mar','mie','jue','vie'];
+
+function buildCalendar(monthKey) {
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+
+  // Obtener variables actuales
+  const maqCitas = getVal('maq_citas');
+  const mstCitas = getVal('mst_citas');
+  const totalCitasMes = maqCitas + mstCitas;
+  const citasSemana = Math.round(totalCitasMes / 4);
+  const citasDia = Math.round(citasSemana / 5);
+
+  const lbsThisMonth = lbsTickets[monthKey] || 0;
+  const isHeavyLbs = lbsThisMonth >= 8;
+
+  // Rotación fija de 4 miércoles al mes:
+  // Mié 1 (día 3): Máquina
+  // Mié 2 (día 10): Invitado especial
+  // Mié 3 (día 17): Maestría
+  // Mié 4 (día 24): Invitado / Caso éxito
+  // En meses de LBS heavy (oct/nov) el último se convierte en LBS
+  const LIVE_ROTATION = {
+    3: { type: 'Máquina', cssClass: 'live-maq' },
+    10: { type: 'Invitado', cssClass: 'live-inv' },
+    17: { type: 'Maestría', cssClass: 'live-mst' },
+    24: { type: 'Caso Éxito', cssClass: 'live-inv' }
+  };
+
+  // Override para meses LBS
+  if (monthKey === 'octubre' || monthKey === 'noviembre') {
+    LIVE_ROTATION[10] = { type: 'LBS + Invitado', cssClass: 'live-lbs' };
+    LIVE_ROTATION[24] = { type: 'LBS Cierre', cssClass: 'live-lbs' };
+  } else if (monthKey === 'agosto' || monthKey === 'septiembre') {
+    LIVE_ROTATION[24] = { type: 'LBS Siembra', cssClass: 'live-lbs' };
+  }
+
+  // Build 20 days (4 weeks × 5 days)
+  for (let week = 0; week < 4; week++) {
+    for (let dayIdx = 0; dayIdx < 5; dayIdx++) {
+      const realDay = week * 7 + dayIdx + 1;
+
+      const isVictory = dayIdx === 4;
+      const standupType = STANDUP_PATTERN[dayIdx];
+      const liveInfo = LIVE_ROTATION[realDay];
+      const isZoomLive = !!liveInfo;
+
+      // LBS push day
+      const isLbsPush = isHeavyLbs && !isZoomLive && (dayIdx === 3 || (week === 3 && dayIdx === 4));
+
+      const day = document.createElement('div');
+      day.className = 'cal-day';
+      if (isVictory) day.classList.add('victory');
+      if (isZoomLive) {
+        day.classList.remove('victory');
+        day.classList.add('zoom-live');
+        if (liveInfo.cssClass === 'live-lbs') day.classList.add('zoom-lbs');
+      }
+      if (isLbsPush && !isZoomLive) {
+        day.classList.remove('victory');
+        day.classList.add('lbs-push');
+      }
+
+      let routine = `${citasDia} citas`;
+      if (isVictory && !isZoomLive) routine = `${citasDia} citas · métricas`;
+      if (isZoomLive) routine = `${citasDia} citas + Live 7pm`;
+      if (isLbsPush) routine = `${citasDia} citas + push boletos`;
+
+      let tag = '';
+      if (isZoomLive) {
+        const tagClass = liveInfo.cssClass === 'live-lbs' ? 'tag-live-lbs' :
+                        (liveInfo.cssClass === 'live-inv' ? 'tag-live-inv' : 'tag-live');
+        tag = `<span class="cal-day-tag ${tagClass}">★ ${liveInfo.type}</span>`;
+      }
+      if (isLbsPush && !isZoomLive) tag = `<span class="cal-day-tag tag-lbs">Push LBS</span>`;
+
+      day.innerHTML = `
+        <div class="cal-day-num">${realDay}</div>
+        <div class="cal-day-standup">${standupType}</div>
+        <div class="cal-day-routine">${routine}</div>
+        ${tag}
+      `;
+      grid.appendChild(day);
+    }
+  }
+
+  // Update summary cards
+  const livesMes = Object.keys(LIVE_ROTATION).length;
+  document.getElementById('cal-citas').textContent = totalCitasMes;
+  document.getElementById('cal-lives').textContent = livesMes;
+  document.getElementById('cal-lbs-mes').textContent = lbsThisMonth;
+
+  const monthTotalEl = document.getElementById(`m-${monthKey}-total`);
+  if (monthTotalEl) {
+    document.getElementById('cal-income').textContent = monthTotalEl.textContent;
+  }
+}
+
+// Wire month selector
+document.getElementById('cal-month-select').addEventListener('change', (e) => {
+  buildCalendar(e.target.value);
+});
+
+// ============================================================
+// SCENARIO SWITCH
+// ============================================================
+function applyScenario(name) {
+  const s = SCENARIOS[name];
+  Object.keys(s).forEach(k => {
+    if (k === 'lbs_tickets') {
+      lbsTickets = { ...s[k] };
+      document.querySelectorAll('.lbs-input').forEach(inp => {
+        inp.value = lbsTickets[inp.dataset.month];
+      });
+    } else {
+      const el = document.getElementById(k);
+      if (el) el.value = s[k];
+    }
+  });
+
+  document.querySelectorAll('.scenario-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.scenario === name);
+  });
+  recalc();
+}
+
+document.querySelectorAll('.scenario-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyScenario(btn.dataset.scenario));
+});
+
+function resetDefaults() {
+  applyScenario('objetivo');
+}
+
+// Wire all inputs
+document.querySelectorAll('.control-input').forEach(inp => {
+  inp.addEventListener('input', recalc);
+});
+
+// Init
+buildMonthRows();
+recalc();
 </script>
 </body>
 </html>
