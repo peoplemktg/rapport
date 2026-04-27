@@ -2,872 +2,607 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Calculadora Evergreen + LBS — David Muñoz</title>
+<title>Plan Mensual — David Muñoz</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #0F1729; --navy: #1F3864; --gold: #C9A84C; --gold-light: #F5EDD4;
     --cream: #FAF7F0; --cream-dark: #F2EDE0; --gray: #6B7280; --gray-light: #E5E7EB;
-    --white: #FFFFFF; --green: #2D7A3B; --green-bg: #E8F5EA; --red: #9B3939;
-    --blue-soft: #E3EDF7; --navy-soft: #4A5F8A;
+    --white: #FFFFFF; --green: #2D7A3B; --green-bg: #E8F5EA;
+    --red: #9B3939; --red-bg: #FBF0EE; --plum: #4A2668;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--cream); color: var(--ink);
-    line-height: 1.5; padding: 32px 20px;
+    background: var(--cream); color: var(--ink); line-height: 1.5; padding: 32px 20px;
   }
-  .page { max-width: 1280px; margin: 0 auto; }
+  .page { max-width: 1100px; margin: 0 auto; }
 
-  .header { text-align: center; margin-bottom: 40px; position: relative; padding-bottom: 28px; }
+  /* HEADER */
+  .header { text-align: center; margin-bottom: 36px; padding-bottom: 28px; position: relative; }
   .header::after {
     content: ''; position: absolute; bottom: 0; left: 50%;
-    transform: translateX(-50%); width: 120px; height: 2px; background: var(--gold);
+    transform: translateX(-50%); width: 80px; height: 2px; background: var(--gold);
   }
-  .eyebrow {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--gold); font-weight: 600; margin-bottom: 10px;
-  }
-  h1 {
-    font-family: 'Fraunces', serif; font-size: 44px; font-weight: 700;
-    color: var(--navy); letter-spacing: -1.2px; line-height: 1.1; margin-bottom: 8px;
-  }
+  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 10px; }
+  h1 { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 700; color: var(--navy); letter-spacing: -1px; margin-bottom: 6px; }
   h1 em { font-style: italic; color: var(--gold); font-weight: 400; }
-  .subtitle { font-size: 15px; color: var(--gray); max-width: 680px; margin: 0 auto; }
+  .subtitle { font-size: 14px; color: var(--gray); }
 
-  /* SCENARIOS */
-  .scenarios {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-    margin-bottom: 28px;
+  /* SECCIÓN */
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
+    color: var(--navy); margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 2px solid var(--gold-light);
+    display: flex; align-items: center; gap: 10px;
   }
-  .scenario-btn {
-    padding: 14px 18px; background: var(--white); border: 2px solid var(--gray-light);
-    border-radius: 6px; cursor: pointer; transition: all 0.2s;
-    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
-    color: var(--ink); text-align: left;
-  }
-  .scenario-btn:hover { border-color: var(--gold); background: var(--gold-light); }
-  .scenario-btn.active { border-color: var(--navy); background: var(--navy); color: white; }
-  .scenario-btn.active .scenario-desc { color: #D0D4DE; }
-  .scenario-name {
-    font-weight: 700; font-size: 14px; margin-bottom: 3px;
-    font-family: 'Fraunces', serif;
-  }
-  .scenario-desc { font-size: 11px; color: var(--gray); line-height: 1.4; }
+  .section-title span { font-size: 13px; color: var(--gray); font-family: 'Inter', sans-serif; font-weight: 400; }
 
-  /* LAYOUT */
-  .main-layout {
-    display: grid; grid-template-columns: 380px 1fr; gap: 28px;
-    margin-bottom: 40px;
-  }
-
-  /* CONTROLS PANEL */
-  .controls {
+  /* DIAGNÓSTICO REAL */
+  .diag-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+  .diag-card {
     background: var(--white); border: 1px solid var(--gray-light);
-    border-radius: 6px; padding: 24px; position: sticky; top: 20px;
-    height: fit-content; max-height: calc(100vh - 40px); overflow-y: auto;
+    border-radius: 6px; padding: 18px 20px;
   }
-  .controls h2 {
-    font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy);
-    margin-bottom: 4px; font-weight: 600;
-  }
-  .controls .hint {
-    font-size: 11px; color: var(--gray); margin-bottom: 20px; font-style: italic;
-  }
+  .diag-card.alert { border-left: 4px solid var(--red); background: var(--red-bg); }
+  .diag-card.ok { border-left: 4px solid var(--gold); background: var(--gold-light); }
+  .diag-card.target { border-left: 4px solid var(--green); background: var(--green-bg); }
+  .diag-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); font-weight: 600; margin-bottom: 6px; }
+  .diag-val { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--navy); margin-bottom: 4px; line-height: 1; }
+  .diag-card.alert .diag-val { color: var(--red); }
+  .diag-card.target .diag-val { color: var(--green); }
+  .diag-sub { font-size: 11px; color: var(--gray); line-height: 1.4; }
 
-  .control-group {
-    margin-bottom: 22px; padding-bottom: 22px;
-    border-bottom: 1px solid var(--gray-light);
+  .diag-insight {
+    background: var(--navy); color: white; padding: 16px 20px; border-radius: 6px;
+    font-size: 13px; line-height: 1.6;
   }
-  .control-group:last-child { border-bottom: none; margin-bottom: 0; }
-  .control-group-title {
-    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--gold); font-weight: 700; margin-bottom: 14px;
-  }
+  .diag-insight strong { color: var(--gold); }
 
-  .control {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 12px; gap: 12px;
+  /* CALCULADORA COMISIONES */
+  .calc-wrap {
+    background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
   }
-  .control-label {
-    flex: 1; font-size: 13px; color: var(--ink);
-  }
-  .control-label small { color: var(--gray); font-size: 11px; display: block; margin-top: 2px; }
-  .control-input-wrap {
-    display: flex; align-items: center; gap: 6px;
-    background: var(--cream); padding: 4px 8px; border-radius: 4px;
-    border: 1px solid var(--gray-light);
-  }
-  .control-input {
-    width: 56px; border: none; background: transparent;
-    font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600;
-    color: var(--navy); text-align: center; outline: none;
-  }
-  .control-input:focus { color: var(--gold); }
-  .control-unit { font-size: 11px; color: var(--gray); }
-
-  /* RESULTS */
-  .results { display: flex; flex-direction: column; gap: 24px; }
-
-  .hero-metric {
-    background: linear-gradient(135deg, var(--navy) 0%, #2D4A7A 100%);
-    color: white; padding: 32px 36px; border-radius: 6px; position: relative;
-    overflow: hidden;
-  }
-  .hero-metric::before {
-    content: ''; position: absolute; top: 0; right: 0;
-    width: 200px; height: 100%;
-    background: radial-gradient(circle at top right, rgba(201,168,76,0.15), transparent 70%);
-  }
-  .hero-label {
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--gold); font-weight: 600; margin-bottom: 8px;
-  }
-  .hero-value {
-    font-family: 'Fraunces', serif; font-size: 56px; font-weight: 700;
-    line-height: 1; margin-bottom: 6px; color: white;
-  }
-  .hero-sub {
-    font-size: 14px; color: #D0D4DE;
-  }
-  .hero-breakdown {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
-    margin-top: 22px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.15);
-  }
-  .hero-cell { padding: 0 16px; border-right: 1px solid rgba(255,255,255,0.1); }
-  .hero-cell:first-child { padding-left: 0; }
-  .hero-cell:last-child { border-right: none; padding-right: 0; }
-  .hero-cell-val {
-    font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700;
-    color: white; line-height: 1; margin-bottom: 4px;
-  }
-  .hero-cell-lbl { font-size: 10px; color: #A0A8B8; letter-spacing: 1px; text-transform: uppercase; }
-
-  /* FUNNEL VIZ */
-  .funnel-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-  }
-  .funnel-card {
-    background: var(--white); border: 1px solid var(--gray-light);
-    border-left: 4px solid var(--gold); border-radius: 6px; padding: 20px 22px;
-  }
-  .funnel-card h3 {
-    font-family: 'Fraunces', serif; font-size: 17px; color: var(--navy);
-    margin-bottom: 14px; font-weight: 600;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .funnel-card h3 .commission-tag {
-    font-size: 11px; background: var(--gold-light); color: #7A6614;
-    padding: 3px 8px; border-radius: 3px; font-weight: 600;
-    font-family: 'Inter', sans-serif;
-  }
-
-  .funnel-steps { display: flex; flex-direction: column; gap: 8px; }
-  .funnel-step {
+  .calc-header {
+    background: var(--navy); color: white; padding: 16px 24px;
     display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 12px; background: var(--cream); border-radius: 4px;
-    font-size: 13px; border-left: 3px solid transparent;
   }
-  .funnel-step.result {
+  .calc-header h3 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; }
+  .calc-header .total { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: var(--gold); }
+
+  .calc-body { padding: 20px 24px; }
+  .calc-row {
+    display: grid; grid-template-columns: 160px 1fr 90px 90px 100px 110px; gap: 12px;
+    align-items: center; padding: 10px 0; border-bottom: 1px solid var(--gray-light);
+  }
+  .calc-row:last-child { border-bottom: none; }
+  .calc-row.header {
+    padding-bottom: 8px; font-size: 10px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--gray); font-weight: 600;
+  }
+  .product-name { font-weight: 600; font-size: 14px; }
+  .product-name small { font-weight: 400; font-size: 11px; color: var(--gray); display: block; }
+
+  input[type="range"] {
+    width: 100%; accent-color: var(--gold); cursor: pointer;
+    height: 4px; border-radius: 2px;
+  }
+  .range-val {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700;
+    color: var(--navy); text-align: center;
+  }
+  .ticket-cell { font-size: 12px; color: var(--gray); text-align: center; }
+  .com-cell { font-size: 12px; color: var(--gray); text-align: center; }
+  .result-cell {
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px;
+    color: var(--gold); text-align: right;
+  }
+  .result-cell.big { font-size: 20px; color: var(--green); }
+
+  /* META VISUAL */
+  .metas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .meta-card {
+    background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
+  }
+  .meta-card-header {
+    padding: 14px 20px; font-weight: 700; font-size: 14px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .meta-card-header.minima { background: var(--cream-dark); color: var(--navy); }
+  .meta-card-header.deseada { background: var(--navy); color: white; }
+  .meta-card-header .badge {
+    font-size: 11px; padding: 3px 8px; border-radius: 3px; font-weight: 600;
+  }
+  .meta-card-header.minima .badge { background: var(--gray-light); color: var(--gray); }
+  .meta-card-header.deseada .badge { background: var(--gold); color: var(--navy); }
+  .meta-card-body { padding: 16px 20px; }
+  .meta-path {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .meta-option {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; border-radius: 4px; font-size: 13px;
+    background: var(--cream); border-left: 3px solid var(--gray-light);
+  }
+  .meta-option.best {
     background: var(--gold-light); border-left-color: var(--gold);
     font-weight: 600;
   }
-  .funnel-step-label { color: var(--gray); }
-  .funnel-step.result .funnel-step-label { color: var(--navy); font-weight: 700; }
-  .funnel-step-value {
-    font-family: 'Fraunces', serif; font-weight: 600; color: var(--navy);
-    font-size: 15px;
+  .meta-option.possible { border-left-color: var(--navy); }
+  .meta-option .combo { color: var(--ink); }
+  .meta-option .ingreso {
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px; color: var(--gold);
   }
-  .funnel-step.result .funnel-step-value { color: var(--gold); font-size: 18px; }
+  .meta-option.best .ingreso { color: var(--green); font-size: 18px; }
+  .meta-option-label {
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--gray); margin-bottom: 8px; font-weight: 600;
+  }
 
-  /* MONTHLY PROJECTION */
-  .projection {
-    background: var(--white); border: 1px solid var(--gray-light);
-    border-radius: 6px; overflow: hidden;
+  /* BARRAS PROGRESO */
+  .progress-wrap { margin-top: 16px; }
+  .progress-item { margin-bottom: 12px; }
+  .progress-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+  .progress-label { color: var(--gray); }
+  .progress-val { font-weight: 700; color: var(--navy); font-family: 'Fraunces', serif; }
+  .progress-track { height: 10px; background: var(--gray-light); border-radius: 5px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 5px; transition: width 0.3s; }
+  .fill-red { background: var(--red); }
+  .fill-gold { background: var(--gold); }
+  .fill-green { background: var(--green); }
+
+  /* BONOS */
+  .bonos-table {
+    background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
   }
-  .projection-header {
-    padding: 20px 24px; background: var(--navy); color: white;
+  .bonos-table table { width: 100%; border-collapse: collapse; }
+  .bonos-table th {
+    background: var(--navy); color: white; padding: 12px 16px;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
+    text-align: left;
+  }
+  .bonos-table td {
+    padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--gray-light);
+  }
+  .bonos-table tr:last-child td { border-bottom: none; }
+  .bonos-table td.tipo { font-weight: 600; color: var(--navy); }
+  .bonos-table td.hito { font-family: 'Fraunces', serif; font-weight: 700; color: var(--ink); font-size: 15px; }
+  .bonos-table td.bono {
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px; color: var(--gold);
+  }
+  .bonos-table td.alcanzable {
+    font-weight: 600; font-size: 12px;
+  }
+  .alcanzable-si { color: var(--green); }
+  .alcanzable-reto { color: var(--gold); }
+  .alcanzable-grande { color: var(--plum); }
+  .bonos-table tr.highlight td { background: var(--gold-light); }
+  .bonos-table tr.note td {
+    background: var(--cream-dark); font-style: italic; font-size: 12px; color: var(--gray);
+    padding: 10px 16px;
+  }
+
+  /* PLAN DE ACCIÓN SEMANAL */
+  .semanas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .semana-card {
+    background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
+  }
+  .semana-header {
+    padding: 12px 16px; background: var(--cream-dark);
+    font-weight: 700; font-size: 13px; color: var(--navy);
     display: flex; justify-content: space-between; align-items: center;
   }
-  .projection-header h2 {
-    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
+  .semana-focus {
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--gold); font-weight: 700;
   }
-  .projection-header .total {
-    font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--gold);
+  .semana-body { padding: 14px 16px; }
+  .semana-accion {
+    display: flex; gap: 8px; padding: 6px 0; font-size: 12px;
+    border-bottom: 1px dashed var(--gray-light); align-items: flex-start; line-height: 1.3;
   }
+  .semana-accion:last-child { border-bottom: none; }
+  .semana-accion .dot {
+    width: 6px; height: 6px; border-radius: 50%; margin-top: 4px; flex-shrink: 0;
+  }
+  .dot-gold { background: var(--gold); }
+  .dot-navy { background: var(--navy); }
+  .dot-green { background: var(--green); }
+  .dot-plum { background: var(--plum); }
+  .semana-meta {
+    margin-top: 12px; padding: 8px 12px; background: var(--cream);
+    border-radius: 4px; font-size: 11px; color: var(--gray);
+  }
+  .semana-meta strong { color: var(--navy); }
 
-  .month-table { width: 100%; border-collapse: collapse; }
-  .month-table th, .month-table td {
-    padding: 12px 16px; text-align: left; font-size: 13px;
-    border-bottom: 1px solid var(--gray-light);
+  /* LIVES ROTACIÓN */
+  .lives-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .live-card {
+    background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px;
+    padding: 16px; text-align: center;
   }
-  .month-table th {
-    background: var(--cream-dark); color: var(--gray);
-    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-    font-weight: 600; text-align: center;
-  }
-  .month-table th:first-child { text-align: left; }
-  .month-table td.num {
-    text-align: center; font-family: 'Fraunces', serif; font-weight: 600;
-    color: var(--navy);
-  }
-  .month-table td.edit {
-    background: #FFFEF4;
-  }
-  .month-table td.total-cell {
-    font-family: 'Fraunces', serif; font-weight: 700; color: var(--gold);
-    text-align: center; font-size: 15px;
-  }
-  .month-table tr.milestone td {
-    background: var(--gold-light); font-weight: 700; color: var(--navy);
-    border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
-  }
-  .month-table tr.milestone td.total-cell { color: #7A6614; font-size: 17px; }
-  .month-table tr.totals td {
-    background: var(--navy); color: white; font-weight: 700;
-    border-bottom: none;
-  }
-  .month-table tr.totals td.total-cell { color: var(--gold); font-size: 18px; }
-  .month-table td.month-label { font-weight: 600; color: var(--ink); }
-  .month-table td.month-label small {
-    font-weight: 400; color: var(--gray); font-size: 11px; display: block;
-  }
-  .month-table input[type="number"] {
-    width: 50px; padding: 4px 6px; border: 1px solid var(--gold-light);
-    border-radius: 3px; background: white; font-family: 'Fraunces', serif;
-    font-size: 13px; font-weight: 600; text-align: center; color: var(--navy);
-    outline: none; transition: all 0.15s;
-  }
-  .month-table input[type="number"]:focus {
-    border-color: var(--gold); background: #FFFBEB;
-  }
-
-  /* CHART */
-  .chart-wrap {
-    background: var(--white); border: 1px solid var(--gray-light);
-    border-radius: 6px; padding: 24px 28px;
-  }
-  .chart-wrap h2 {
-    font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy);
-    margin-bottom: 6px; font-weight: 600;
-  }
-  .chart-wrap .chart-sub {
-    font-size: 12px; color: var(--gray); margin-bottom: 20px;
-  }
-  .chart {
-    display: flex; gap: 6px; height: 220px; align-items: flex-end;
-    padding: 20px 0 0 0; position: relative;
-  }
-  .chart::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0;
-    border-top: 1px dashed var(--gray-light);
-  }
-  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-  .bar-wrap {
-    flex: 1; width: 100%; display: flex; align-items: flex-end;
-    justify-content: center; position: relative;
-  }
-  .bar {
-    width: 85%; background: linear-gradient(180deg, var(--gold) 0%, #AD8F3A 100%);
-    border-radius: 4px 4px 0 0; position: relative;
-    transition: height 0.3s ease;
-    min-height: 4px;
-  }
-  .bar.milestone {
-    background: linear-gradient(180deg, var(--navy) 0%, #3A5478 100%);
-  }
-  .bar-value {
-    position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
-    font-family: 'Fraunces', serif; font-size: 11px; font-weight: 700;
-    color: var(--navy); white-space: nowrap;
-  }
-  .bar-label {
-    font-size: 11px; color: var(--gray); font-weight: 500; text-align: center;
-  }
-  .bar-label.milestone { color: var(--navy); font-weight: 700; }
-
-  /* MONTHLY CALENDAR VIEW */
-  .calendar-wrap {
-    background: var(--white); border: 1px solid var(--gray-light);
-    border-radius: 6px; padding: 24px 28px;
-  }
-  .calendar-header {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    margin-bottom: 20px; gap: 20px; flex-wrap: wrap;
-  }
-  .calendar-header h2 {
-    font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy);
-    margin-bottom: 4px; font-weight: 600;
-  }
-  .cal-month-selector {
-    display: flex; align-items: center; gap: 10px;
-    background: var(--cream); padding: 8px 14px; border-radius: 4px;
-    border: 1px solid var(--gray-light);
-  }
-  .cal-month-selector label {
-    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
-    color: var(--gray); font-weight: 600;
-  }
-  .cal-month-selector select {
-    border: none; background: transparent; font-family: 'Fraunces', serif;
-    font-size: 15px; font-weight: 600; color: var(--navy); cursor: pointer;
-    outline: none; padding: 2px 6px;
-  }
-
-  .cal-summary {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
-    margin-bottom: 20px;
-  }
-  .cal-sum-item {
-    background: var(--cream); padding: 14px 16px; border-radius: 4px;
-    text-align: center; border-left: 3px solid var(--gray-light);
-  }
-  .cal-sum-item.highlight {
-    background: var(--gold-light); border-left-color: var(--gold);
-  }
-  .cal-sum-val {
-    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700;
-    color: var(--navy); line-height: 1; margin-bottom: 4px;
-  }
-  .cal-sum-item.highlight .cal-sum-val { color: var(--gold); font-size: 24px; }
-  .cal-sum-lbl {
-    font-size: 10px; color: var(--gray); letter-spacing: 1px; text-transform: uppercase;
-  }
-
-  .cal-header-row {
-    display: grid; grid-template-columns: repeat(5, 1fr);
-    background: var(--navy); color: white;
-    border-radius: 4px 4px 0 0; overflow: hidden;
-  }
-  .cal-header-row div {
-    padding: 10px; text-align: center; font-size: 11px;
-    letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
-    border-right: 1px solid rgba(255,255,255,0.1);
-  }
-  .cal-header-row div:last-child { border-right: none; }
-
-  .cal-grid {
-    display: grid; grid-template-columns: repeat(5, 1fr);
-    border: 1px solid var(--gray-light); border-top: none; border-radius: 0 0 4px 4px;
-    overflow: hidden;
-  }
-  .cal-day {
-    min-height: 110px; padding: 10px 12px;
-    border-right: 1px solid var(--gray-light);
-    border-bottom: 1px solid var(--gray-light);
-    position: relative; background: white;
-  }
-  .cal-day:nth-child(5n) { border-right: none; }
-  .cal-day.empty { background: var(--cream-dark); }
-  .cal-day.victory { background: #FCF9EA; }
-  .cal-day.zoom-live {
-    background: linear-gradient(135deg, #FAF7F0 0%, #F5EDD4 100%);
-    border-left: 3px solid var(--gold);
-  }
-  .cal-day.zoom-lbs {
-    background: linear-gradient(135deg, #E8F0E5 0%, #C8E0BC 100%);
-    border-left: 3px solid #2D7A3B;
-  }
-  .cal-day.lbs-push {
-    background: #E8F0E5;
-  }
-  .cal-day-num {
-    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
-    color: var(--navy); line-height: 1; margin-bottom: 6px;
-  }
-  .cal-day-standup {
-    font-size: 9px; color: var(--gold); font-weight: 700;
-    letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 4px;
-  }
-  .cal-day-routine {
-    font-size: 10px; color: var(--gray); line-height: 1.3;
-  }
-  .cal-day-tag {
-    display: inline-block; padding: 2px 6px; border-radius: 3px;
-    font-size: 9px; font-weight: 700; margin-top: 5px;
-    letter-spacing: 0.5px; text-transform: uppercase;
-  }
-  .tag-live {
-    background: var(--navy); color: var(--gold);
-    border: 1px solid var(--gold);
-  }
-  .tag-live-inv {
-    background: #4A2668; color: #F5EDD4;
-    border: 1px solid #C9A84C;
-  }
-  .tag-live-lbs {
-    background: #2D7A3B; color: white;
-    border: 1px solid #2D7A3B;
-  }
-  .tag-lbs {
-    background: #2D7A3B; color: white;
-  }
-
-  .cal-legend {
-    display: flex; flex-wrap: wrap; gap: 16px;
-    margin-top: 16px; padding: 14px; background: var(--cream);
-    border-radius: 4px; justify-content: center;
-  }
-  .cal-legend-item {
-    display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--ink);
-  }
-  .cal-swatch {
-    width: 14px; height: 14px; border-radius: 2px;
-    border: 1px solid rgba(0,0,0,0.1);
-  }
-
-  /* COMPARISON vs Q1 */
-  .comparison-card {
-    background: var(--white); border: 1px solid var(--gray-light);
-    border-radius: 6px; padding: 24px 28px; border-left: 4px solid var(--navy);
-  }
-  .comparison-card h2 {
-    font-family: 'Fraunces', serif; font-size: 20px; color: var(--navy);
-    margin-bottom: 18px; font-weight: 600;
-  }
-  .comparison-row {
-    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
-    gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--gray-light);
-    align-items: center; font-size: 13px;
-  }
-  .comparison-row:last-child { border-bottom: none; }
-  .comparison-row.header {
-    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
-    color: var(--gray); font-weight: 600; padding-bottom: 10px;
-  }
-  .comparison-label { color: var(--gray); }
-  .comparison-val {
-    font-family: 'Fraunces', serif; font-weight: 600;
-    text-align: center; font-size: 16px; color: var(--navy);
-  }
-  .comparison-val.q1 { color: var(--red); }
-  .comparison-val.proj { color: var(--green); }
-  .comparison-val.delta {
-    background: var(--green-bg); color: var(--green); padding: 4px 8px;
-    border-radius: 3px; font-size: 13px;
-  }
-  .comparison-val.delta.neg {
-    background: #FBF0EE; color: var(--red);
-  }
-
-  /* RESET BTN */
-  .reset-wrap { text-align: center; margin-top: 28px; }
-  .reset-btn {
-    background: transparent; border: 1px solid var(--gray-light);
-    padding: 10px 20px; border-radius: 4px; color: var(--gray);
-    font-size: 12px; cursor: pointer; transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
-  }
-  .reset-btn:hover { border-color: var(--navy); color: var(--navy); }
+  .live-card.maq { border-top: 3px solid var(--navy); }
+  .live-card.inv { border-top: 3px solid var(--plum); }
+  .live-card.mst { border-top: 3px solid var(--gold); }
+  .live-card.caso { border-top: 3px solid var(--green); }
+  .live-mie { font-size: 11px; color: var(--gray); margin-bottom: 6px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .live-tipo { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .live-desc { font-size: 10px; color: var(--gray); line-height: 1.4; }
+  .live-hora { font-size: 11px; color: var(--gold); font-weight: 700; margin-top: 8px; }
 
   .footer {
-    text-align: center; margin-top: 48px; padding-top: 28px;
+    text-align: center; margin-top: 48px; padding-top: 24px;
     border-top: 1px solid var(--gray-light); font-size: 12px; color: var(--gray);
   }
   .footer em { color: var(--gold); font-style: italic; }
-
-  @media (max-width: 1100px) {
-    .main-layout { grid-template-columns: 1fr; }
-    .controls { position: static; max-height: none; }
-    .funnel-grid { grid-template-columns: 1fr; }
-  }
 </style>
 </head>
 <body>
 <div class="page">
 
   <div class="header">
-    <div class="eyebrow">Plan Q2–Q4 · Proyección Interactiva</div>
-    <h1>Calculadora <em>Evergreen + LBS</em></h1>
-    <p class="subtitle">Ajusta las métricas en el panel de la izquierda y observa el impacto en vivo. Proyección mayo a noviembre incluyendo Luque Business Summit.</p>
+    <div class="eyebrow">David Muñoz · Luque Academy · Q2 2026</div>
+    <h1>Plan <em>mensual</em> de trabajo</h1>
+    <p class="subtitle">Mínimo: 5 ventas · Deseado: $2,000 comisión · Canal: Quiz</p>
   </div>
 
-  <!-- SCENARIOS -->
-  <div class="scenarios">
-    <button class="scenario-btn" data-scenario="conservador">
-      <div class="scenario-name">Conservador</div>
-      <div class="scenario-desc">Mitad de las palancas. Caso pesimista.</div>
-    </button>
-    <button class="scenario-btn active" data-scenario="objetivo">
-      <div class="scenario-name">Objetivo</div>
-      <div class="scenario-desc">Todas las palancas al 100%. Caso base.</div>
-    </button>
-    <button class="scenario-btn" data-scenario="optimista">
-      <div class="scenario-name">Optimista</div>
-      <div class="scenario-desc">Sistema aceitado + upside en LBS.</div>
-    </button>
+  <!-- 1. DÓNDE ESTOY HOY -->
+  <div class="section">
+    <div class="section-title">Dónde estoy hoy <span>— datos reales Feb–Abr 2026</span></div>
+    <div class="diag-grid">
+      <div class="diag-card ok">
+        <div class="diag-label">Ventas promedio/mes</div>
+        <div class="diag-val">6</div>
+        <div class="diag-sub">Mínimo cumplido (5). Mix: 4.3 Máquina + 1 Maestría + 0.7 Códigos</div>
+      </div>
+      <div class="diag-card alert">
+        <div class="diag-label">Comisión promedio/mes</div>
+        <div class="diag-val">$697</div>
+        <div class="diag-sub">El problema no es de ventas — es del mix. $697 vs meta $2,000 = <strong>falta $1,303</strong></div>
+      </div>
+      <div class="diag-card alert">
+        <div class="diag-label">Facturación promedio/mes</div>
+        <div class="diag-val">$18,925</div>
+        <div class="diag-sub">5 Máquina = $9,975 · 1 Maestría = $10,000 · Así cierra la mayoría</div>
+      </div>
+    </div>
+    <div class="diag-insight">
+      <strong>El diagnóstico real:</strong> con el mix actual (mayormente Máquina a $90 comisión), necesitarías 22 ventas/mes para llegar a $2K — imposible con 100 citas. El camino correcto es cambiar el mix: <strong>2 Maestrías/mes</strong> dan $600 solos y dejan $1,400 para completar con Máquina. O sea: $2K = 2 MST ($600) + ~15 MDD ($1,350). La calculadora abajo te muestra todos los combos posibles.
+    </div>
   </div>
 
-  <div class="main-layout">
-
-    <!-- CONTROLS -->
-    <div class="controls">
-      <h2>Variables del sistema</h2>
-      <p class="hint">Edita cualquier número. Todo se recalcula al instante.</p>
-
-      <!-- MÁQUINA -->
-      <div class="control-group">
-        <div class="control-group-title">Máquina del Dinero</div>
-        <div class="control">
-          <div class="control-label">Citas agendadas/mes</div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="maq_citas" value="60" min="0" max="200">
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Show-up<small>% que llega al zoom</small></div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="maq_showup" value="75" min="0" max="100">
-            <span class="control-unit">%</span>
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Close rate<small>sobre efectivas</small></div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="maq_close" value="15" min="0" max="100">
-            <span class="control-unit">%</span>
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Comisión/venta</div>
-          <div class="control-input-wrap">
-            <span class="control-unit">$</span>
-            <input type="number" class="control-input" id="maq_com" value="90" min="0">
-          </div>
-        </div>
+  <!-- 2. CALCULADORA DE COMISIÓN -->
+  <div class="section">
+    <div class="section-title">Calcula tu comisión <span>— mueve los sliders, ve el resultado</span></div>
+    <div class="calc-wrap">
+      <div class="calc-header">
+        <h3>Comisión mensual proyectada</h3>
+        <div class="total" id="total-com">$0</div>
       </div>
+      <div class="calc-body">
+        <div class="calc-row header">
+          <div>Producto</div>
+          <div>Ventas/mes</div>
+          <div>Cantidad</div>
+          <div>Ticket</div>
+          <div>Comisión/v</div>
+          <div style="text-align:right">Ingreso</div>
+        </div>
 
-      <!-- MAESTRÍA -->
-      <div class="control-group">
-        <div class="control-group-title">Maestría del Dinero</div>
-        <div class="control">
-          <div class="control-label">Citas agendadas/mes</div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="mst_citas" value="40" min="0" max="200">
-          </div>
+        <div class="calc-row">
+          <div class="product-name">Maestría<small>$10K · $300 com</small></div>
+          <input type="range" id="sl-mst" min="0" max="10" value="2" step="1" oninput="recalc()">
+          <div class="range-val" id="rv-mst">2</div>
+          <div class="ticket-cell">$10,000</div>
+          <div class="com-cell">$300</div>
+          <div class="result-cell" id="rc-mst">$600</div>
         </div>
-        <div class="control">
-          <div class="control-label">Show-up</div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="mst_showup" value="80" min="0" max="100">
-            <span class="control-unit">%</span>
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Close rate</div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="mst_close" value="18" min="0" max="100">
-            <span class="control-unit">%</span>
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Comisión/venta</div>
-          <div class="control-input-wrap">
-            <span class="control-unit">$</span>
-            <input type="number" class="control-input" id="mst_com" value="300" min="0">
-          </div>
-        </div>
-      </div>
 
-      <!-- CÓDIGOS -->
-      <div class="control-group">
-        <div class="control-group-title">Códigos del Dinero (desde FUP)</div>
-        <div class="control">
-          <div class="control-label">Ventas/mes<small>desde tibios activados</small></div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="cdd_ventas" value="3" min="0" max="50">
-          </div>
+        <div class="calc-row">
+          <div class="product-name">Máquina<small>$1,995 · $90 com</small></div>
+          <input type="range" id="sl-mdd" min="0" max="25" value="5" step="1" oninput="recalc()">
+          <div class="range-val" id="rv-mdd">5</div>
+          <div class="ticket-cell">$1,995</div>
+          <div class="com-cell">$90</div>
+          <div class="result-cell" id="rc-mdd">$450</div>
         </div>
-        <div class="control">
-          <div class="control-label">Comisión/venta</div>
-          <div class="control-input-wrap">
-            <span class="control-unit">$</span>
-            <input type="number" class="control-input" id="cdd_com" value="30" min="0">
-          </div>
-        </div>
-      </div>
 
-      <!-- REFERIDOS -->
-      <div class="control-group">
-        <div class="control-group-title">Programa de Referidos</div>
-        <div class="control">
-          <div class="control-label">Clientes activos base<small>acumulados que pueden referir</small></div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="ref_clientes" value="30" min="0" max="500">
-          </div>
+        <div class="calc-row">
+          <div class="product-name">Códigos<small>$420 · $30 com</small></div>
+          <input type="range" id="sl-cdd" min="0" max="10" value="1" step="1" oninput="recalc()">
+          <div class="range-val" id="rv-cdd">1</div>
+          <div class="ticket-cell">$420</div>
+          <div class="com-cell">$30</div>
+          <div class="result-cell" id="rc-cdd">$30</div>
         </div>
-        <div class="control">
-          <div class="control-label">Tasa referidos<small>% clientes que refieren/mes</small></div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="ref_tasa" value="10" min="0" max="100">
-            <span class="control-unit">%</span>
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Close rate referido<small>convierten mejor que quiz</small></div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="ref_close" value="25" min="0" max="100">
-            <span class="control-unit">%</span>
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Comisión Máquina (referido)</div>
-          <div class="control-input-wrap">
-            <span class="control-unit">$</span>
-            <input type="number" class="control-input" id="ref_com_maq" value="30" min="0">
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Comisión Maestría (referido)</div>
-          <div class="control-input-wrap">
-            <span class="control-unit">$</span>
-            <input type="number" class="control-input" id="ref_com_mst" value="100" min="0">
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Mix % Maestría<small>resto es Máquina</small></div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="ref_mix_mst" value="20" min="0" max="100">
-            <span class="control-unit">%</span>
-          </div>
-        </div>
-      </div>
 
-      <!-- ZOOM LIVES -->
-      <div class="control-group">
-        <div class="control-group-title">Zoom Lives (todos los miércoles)</div>
-        <p style="font-size:11px; color:var(--gray); margin-bottom:12px; line-height:1.5;">
-          Rotación mensual: <strong>Mié 1</strong> Máquina · <strong>Mié 2</strong> Invitado · <strong>Mié 3</strong> Maestría · <strong>Mié 4</strong> Invitado/Caso éxito
-        </p>
-        <div class="control">
-          <div class="control-label">Lives Máquina/mes<small>asistentes × conversión</small></div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="live_maq_ventas" value="1" min="0" max="10" step="0.5">
-            <span class="control-unit">vtas</span>
-          </div>
+        <div class="calc-row" style="padding-top:14px;">
+          <div class="product-name" style="color:var(--green);font-weight:700;">TOTAL</div>
+          <div></div>
+          <div class="range-val" id="rv-total" style="color:var(--navy);">8</div>
+          <div class="ticket-cell" style="font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:var(--navy);" id="fact-total">$21,975</div>
+          <div class="com-cell"></div>
+          <div class="result-cell big" id="rc-total">$1,080</div>
         </div>
-        <div class="control">
-          <div class="control-label">Lives Maestría/mes</div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="live_mst_ventas" value="1" min="0" max="10" step="0.5">
-            <span class="control-unit">vtas</span>
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Lives Invitado/mes<small>2 lives · mix</small></div>
-          <div class="control-input-wrap">
-            <input type="number" class="control-input" id="live_inv_ventas" value="3" min="0" max="20" step="0.5">
-            <span class="control-unit">vtas</span>
-          </div>
-        </div>
-        <div class="control">
-          <div class="control-label">Comisión promedio/venta live<small>mix Máq + MST</small></div>
-          <div class="control-input-wrap">
-            <span class="control-unit">$</span>
-            <input type="number" class="control-input" id="live_com" value="150" min="0">
-          </div>
-        </div>
-      </div>
-
-      <!-- LBS -->
-      <div class="control-group">
-        <div class="control-group-title">Luque Business Summit · Nov 2026</div>
-        <p style="font-size:11px; color:var(--gray); margin-bottom:12px;">La venta se concentra Oct–Nov. Edita boletos por mes en la tabla abajo.</p>
-        <div class="control">
-          <div class="control-label">Comisión promedio por boleto<small>(mix 1/2/3 entradas)</small></div>
-          <div class="control-input-wrap">
-            <span class="control-unit">$</span>
-            <input type="number" class="control-input" id="lbs_com" value="40" min="0">
-          </div>
-        </div>
-      </div>
-
-      <div class="reset-wrap">
-        <button class="reset-btn" onclick="resetDefaults()">↻ Reset a valores base</button>
       </div>
     </div>
 
-    <!-- RESULTS -->
-    <div class="results">
+    <!-- BARRAS DE META -->
+    <div class="progress-wrap" style="margin-top:16px;background:var(--white);border:1px solid var(--gray-light);border-radius:6px;padding:18px 24px;">
+      <div style="font-size:12px;color:var(--gray);margin-bottom:14px;font-style:italic;">Las barras se actualizan con los sliders</div>
 
-      <!-- HERO METRIC -->
-      <div class="hero-metric">
-        <div class="hero-label">Ingreso proyectado · Mes evergreen (May–Sep)</div>
-        <div class="hero-value" id="hero-monthly">$0</div>
-        <div class="hero-sub" id="hero-sub">Comisión total esperada con las variables actuales</div>
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">Ventas totales vs mínimo (5)</span>
+          <span class="progress-val" id="bar-ventas-lbl">8 ventas</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="bar-ventas-fill" style="width:0%"></div>
+        </div>
+      </div>
 
-        <div class="hero-breakdown">
-          <div class="hero-cell">
-            <div class="hero-cell-val" id="hero-ventas">0</div>
-            <div class="hero-cell-lbl">Ventas/mes</div>
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">Comisión vs mínimo viable ($1,200)</span>
+          <span class="progress-val" id="bar-minimo-lbl">$0</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="bar-minimo-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">Comisión vs meta deseada ($2,000)</span>
+          <span class="progress-val" id="bar-deseado-lbl">$0</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="bar-deseado-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">Facturación vs hito bono ($50K)</span>
+          <span class="progress-val" id="bar-fact-lbl">$0</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="bar-fact-fill" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. CAMINOS A LAS METAS -->
+  <div class="section">
+    <div class="section-title">Caminos posibles <span>— combos de ventas para cada meta</span></div>
+    <div class="metas-grid">
+
+      <div class="meta-card">
+        <div class="meta-card-header minima">
+          <span>Meta mínima</span>
+          <span class="badge">5 ventas · ~$1,200</span>
+        </div>
+        <div class="meta-card-body">
+          <div class="meta-option-label">Escoge un combo</div>
+          <div class="meta-path">
+            <div class="meta-option">
+              <span class="combo">5 Máquina</span>
+              <span class="ingreso">$450</span>
+            </div>
+            <div class="meta-option possible">
+              <span class="combo">4 MDD + 1 CDD</span>
+              <span class="ingreso">$390</span>
+            </div>
+            <div class="meta-option possible">
+              <span class="combo">1 MST + 4 MDD</span>
+              <span class="ingreso">$660</span>
+            </div>
+            <div class="meta-option best">
+              <span class="combo">2 MST + 3 MDD ← mejor combo</span>
+              <span class="ingreso">$870</span>
+            </div>
           </div>
-          <div class="hero-cell">
-            <div class="hero-cell-val" id="hero-citas">0</div>
-            <div class="hero-cell-lbl">Citas/mes</div>
-          </div>
-          <div class="hero-cell">
-            <div class="hero-cell-val" id="hero-total">$0</div>
-            <div class="hero-cell-lbl">Total May–Nov</div>
+          <div style="margin-top:12px;font-size:11px;color:var(--gray);font-style:italic;line-height:1.5;">
+            ⚠ Solo con Máquina, el mínimo de 5 ventas da $450 — no cubre gastos. El combo real del mínimo es 2 MST + 3 MDD.
           </div>
         </div>
       </div>
 
-      <!-- FUNNEL VIZ -->
-      <div class="funnel-grid">
-        <div class="funnel-card">
-          <h3>Máquina <span class="commission-tag" id="maq-tag">$90/v</span></h3>
-          <div class="funnel-steps">
-            <div class="funnel-step">
-              <div class="funnel-step-label">Citas agendadas</div>
-              <div class="funnel-step-value" id="f-maq-citas">60</div>
+      <div class="meta-card">
+        <div class="meta-card-header deseada">
+          <span>Meta deseada</span>
+          <span class="badge">$2,000/mes</span>
+        </div>
+        <div class="meta-card-body">
+          <div class="meta-option-label">Combos que llegan a $2K</div>
+          <div class="meta-path">
+            <div class="meta-option">
+              <span class="combo">6 MST + 0 MDD</span>
+              <span class="ingreso">$1,800</span>
             </div>
-            <div class="funnel-step">
-              <div class="funnel-step-label">Efectivas (show-up 75%)</div>
-              <div class="funnel-step-value" id="f-maq-efe">45</div>
+            <div class="meta-option possible">
+              <span class="combo">5 MST + 5 MDD</span>
+              <span class="ingreso">$1,950</span>
             </div>
-            <div class="funnel-step result">
-              <div class="funnel-step-label">Ventas · Comisión</div>
-              <div class="funnel-step-value"><span id="f-maq-vta">7</span> · <span id="f-maq-com">$630</span></div>
+            <div class="meta-option possible">
+              <span class="combo">4 MST + 8 MDD</span>
+              <span class="ingreso">$1,920</span>
+            </div>
+            <div class="meta-option best">
+              <span class="combo">3 MST + 12 MDD ← más realista</span>
+              <span class="ingreso">$1,980</span>
             </div>
           </div>
-        </div>
-
-        <div class="funnel-card">
-          <h3>Maestría <span class="commission-tag" id="mst-tag">$300/v</span></h3>
-          <div class="funnel-steps">
-            <div class="funnel-step">
-              <div class="funnel-step-label">Citas agendadas</div>
-              <div class="funnel-step-value" id="f-mst-citas">40</div>
-            </div>
-            <div class="funnel-step">
-              <div class="funnel-step-label">Efectivas (show-up 80%)</div>
-              <div class="funnel-step-value" id="f-mst-efe">32</div>
-            </div>
-            <div class="funnel-step result">
-              <div class="funnel-step-label">Ventas · Comisión</div>
-              <div class="funnel-step-value"><span id="f-mst-vta">6</span> · <span id="f-mst-com">$1,800</span></div>
-            </div>
+          <div style="margin-top:12px;font-size:11px;color:var(--gray);font-style:italic;line-height:1.5;">
+            ★ El camino más realista con 100 citas quiz/mes y embudo MST→MDD es 3 MST + 12 MDD. Necesita show-up 75% y close rate MST 12%+.
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- PROJECTION TABLE -->
-      <div class="projection">
-        <div class="projection-header">
-          <h2>Proyección mes a mes · Mayo a Noviembre</h2>
-          <div class="total" id="grand-total">$0</div>
+  <!-- 4. PROPUESTA DE BONOS -->
+  <div class="section">
+    <div class="section-title">Propuesta de bonos <span>— para negociar con Juanjo</span></div>
+    <div class="bonos-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Tipo de bono</th>
+            <th>Hito</th>
+            <th>Bono propuesto</th>
+            <th>Basado en tu data</th>
+            <th>Alcanzable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="tipo">Mínimo ventas<br><small style="font-weight:400;color:var(--gray);">Sin bono — es la base</small></td>
+            <td class="hito">5 ventas<br><small>~$10K–20K facturación</small></td>
+            <td class="bono">$0<br><small style="color:var(--gray);font-weight:400;">Comisión base</small></td>
+            <td style="font-size:12px;color:var(--gray);">Ya lo alcanzas en promedio. No se pide bono aquí.</td>
+            <td class="alcanzable alcanzable-si">✓ Ya lo haces</td>
+          </tr>
+          <tr class="highlight">
+            <td class="tipo">Bono Maestría consistente<br><small style="font-weight:400;color:var(--gray);">⭐ El más fácil de aprobar</small></td>
+            <td class="hito">≥ 1 MST/mes</td>
+            <td class="bono">+$150</td>
+            <td style="font-size:12px;color:var(--gray);">En Q1 cerraste 3 MST en 3 meses (1/mes promedio). Ya lo cumples si lo sostienes.</td>
+            <td class="alcanzable alcanzable-si">✓ Muy alcanzable</td>
+          </tr>
+          <tr class="highlight">
+            <td class="tipo">Bono hito facturación I<br><small style="font-weight:400;color:var(--gray);">Base desde el esfuerzo real</small></td>
+            <td class="hito">$30K facturados/mes</td>
+            <td class="bono">+$150</td>
+            <td style="font-size:12px;color:var(--gray);">$30K = 2 MST + 5 MDD. Tu promedio actual es $18.9K. +60% sobre base.</td>
+            <td class="alcanzable alcanzable-reto">⚡ Reto real</td>
+          </tr>
+          <tr>
+            <td class="tipo">Bono hito facturación II</td>
+            <td class="hito">$50K facturados/mes</td>
+            <td class="bono">+$250</td>
+            <td style="font-size:12px;color:var(--gray);">$50K = 3–4 MST + varios MDD. +164% sobre tu base actual.</td>
+            <td class="alcanzable alcanzable-reto">⚡ Reto grande</td>
+          </tr>
+          <tr>
+            <td class="tipo">Bono hito facturación III</td>
+            <td class="hito">$80K facturados/mes</td>
+            <td class="bono">+$500</td>
+            <td style="font-size:12px;color:var(--gray);">$80K = 7–8 MST equivalentes. Zona de alto rendimiento.</td>
+            <td class="alcanzable alcanzable-grande">★ Alta apuesta</td>
+          </tr>
+          <tr>
+            <td class="tipo">Bono exceso ventas</td>
+            <td class="hito">Cada venta sobre 8</td>
+            <td class="bono">+$50/venta</td>
+            <td style="font-size:12px;color:var(--gray);">Premia consistencia por encima del promedio. Simple de calcular.</td>
+            <td class="alcanzable alcanzable-reto">⚡ Alcanzable</td>
+          </tr>
+          <tr class="note">
+            <td colspan="5">
+              💡 <strong>Argumento para Juanjo:</strong> "Cuando facturo $50K+, Luque recibe ~$47K netos (después de mi comisión). El bono de $250 representa 0.5% de esa utilidad. A ti te cuesta proporcional a lo que ya ganaste. Propongo que comparta ese 0.5–1% cuando excedo el umbral."
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 5. ZOOM LIVES ROTACIÓN -->
+  <div class="section">
+    <div class="section-title">Zoom Lives — todos los miércoles 7pm</div>
+    <div class="lives-grid">
+      <div class="live-card maq">
+        <div class="live-mie">Miércoles 1</div>
+        <div class="live-tipo">Quiz · Máquina</div>
+        <div class="live-desc">Sin invitado. Cierre puro. Audiencia: leads tibios CRM + asistentes a clase.</div>
+        <div class="live-hora">7:00–8:30pm</div>
+      </div>
+      <div class="live-card inv">
+        <div class="live-mie">Miércoles 2</div>
+        <div class="live-tipo">Live con Invitado</div>
+        <div class="live-desc">Experto o caso de éxito. Mix de audiencia. Mayor convocatoria.</div>
+        <div class="live-hora">7:00–8:30pm</div>
+      </div>
+      <div class="live-card mst">
+        <div class="live-mie">Miércoles 3</div>
+        <div class="live-tipo">Quiz · Maestría</div>
+        <div class="live-desc">Sin invitado. Pitch MST puro. Audiencia: nurturing + estudiantes MDD día 30–60.</div>
+        <div class="live-hora">7:00–8:30pm</div>
+      </div>
+      <div class="live-card caso">
+        <div class="live-mie">Miércoles 4</div>
+        <div class="live-tipo">Caso de éxito</div>
+        <div class="live-desc">Alumno real + testimonio. Cierra con oferta 48h. Más poderoso para MST.</div>
+        <div class="live-hora">7:00–8:30pm</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. PLAN DE ACCIÓN SEMANAL -->
+  <div class="section">
+    <div class="section-title">Plan de acción semanal <span>— rutina L–V</span></div>
+    <div class="semanas">
+
+      <div class="semana-card">
+        <div class="semana-header">
+          Semana 1
+          <span class="semana-focus">Activar</span>
         </div>
-        <table class="month-table">
-          <thead>
-            <tr>
-              <th>Mes</th>
-              <th>Máquina</th>
-              <th>Maestría</th>
-              <th>Códigos</th>
-              <th>Referidos</th>
-              <th>Zoom Lives</th>
-              <th>Boletos LBS</th>
-              <th>Total mes</th>
-            </tr>
-          </thead>
-          <tbody id="month-rows">
-            <!-- dinámico -->
-          </tbody>
-        </table>
+        <div class="semana-body">
+          <div class="semana-accion"><div class="dot dot-gold"></div>Contactar 171 asistentes a clase · 13/día mañana</div>
+          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/día tarde (3 MDD + 2 MST)</div>
+          <div class="semana-accion"><div class="dot dot-plum"></div>Mié 3: Live Máquina 7pm</div>
+          <div class="semana-accion"><div class="dot dot-green"></div>FUP día 0 a todos los zooms del día</div>
+          <div class="semana-accion"><div class="dot dot-gold"></div>Reactivar 21 Nurturing · 5/día</div>
+          <div class="semana-meta">Meta: <strong>2 cierres MST + 3 MDD</strong></div>
+        </div>
       </div>
 
-      <!-- CHART -->
-      <div class="chart-wrap">
-        <h2>Curva de ingreso mensual</h2>
-        <div class="chart-sub">Azul oscuro = mes LBS (noviembre)</div>
-        <div class="chart" id="chart"></div>
-      </div>
-
-      <!-- MONTHLY CALENDAR VIEW -->
-      <div class="calendar-wrap">
-        <div class="calendar-header">
-          <div>
-            <h2>Cómo se ve el mes operativamente</h2>
-            <div class="chart-sub">Vista L–V · standup diario con Juanjo + citas + Zoom Lives según tus variables</div>
-          </div>
-          <div class="cal-month-selector">
-            <label>Mes:</label>
-            <select id="cal-month-select">
-              <option value="mayo">Mayo</option>
-              <option value="junio">Junio</option>
-              <option value="julio">Julio</option>
-              <option value="agosto">Agosto</option>
-              <option value="septiembre">Septiembre</option>
-              <option value="octubre" selected>Octubre</option>
-              <option value="noviembre">Noviembre ⭐</option>
-            </select>
-          </div>
+      <div class="semana-card">
+        <div class="semana-header">
+          Semana 2
+          <span class="semana-focus">FUP + cerrar</span>
         </div>
-
-        <div class="cal-summary">
-          <div class="cal-sum-item">
-            <div class="cal-sum-val" id="cal-citas">100</div>
-            <div class="cal-sum-lbl">Citas del mes</div>
-          </div>
-          <div class="cal-sum-item">
-            <div class="cal-sum-val" id="cal-lives">2</div>
-            <div class="cal-sum-lbl">Zoom Lives</div>
-          </div>
-          <div class="cal-sum-item">
-            <div class="cal-sum-val" id="cal-lbs-mes">0</div>
-            <div class="cal-sum-lbl">Boletos LBS (mes)</div>
-          </div>
-          <div class="cal-sum-item highlight">
-            <div class="cal-sum-val" id="cal-income">$0</div>
-            <div class="cal-sum-lbl">Ingreso del mes</div>
-          </div>
-        </div>
-
-        <div class="cal-header-row">
-          <div>Lunes</div>
-          <div>Martes</div>
-          <div>Miércoles</div>
-          <div>Jueves</div>
-          <div>Viernes</div>
-        </div>
-        <div class="cal-grid" id="cal-grid"></div>
-
-        <div class="cal-legend">
-          <div class="cal-legend-item"><span class="cal-swatch" style="background:#2D1B45;border:1px solid #C9A84C;"></span>Standup Juanjo</div>
-          <div class="cal-legend-item"><span class="cal-swatch" style="background:#E3EDF7;"></span>3 Máquina · 2 Maestría</div>
-          <div class="cal-legend-item"><span class="cal-swatch" style="background:linear-gradient(135deg, #FAF7F0 0%, #F5EDD4 100%);border-left:3px solid #C9A84C;"></span>Live Máq/MST (sin invitado)</div>
-          <div class="cal-legend-item"><span class="cal-swatch" style="background:#4A2668;"></span>Live con Invitado/Caso</div>
-          <div class="cal-legend-item"><span class="cal-swatch" style="background:linear-gradient(135deg, #E8F0E5 0%, #C8E0BC 100%);border-left:3px solid #2D7A3B;"></span>Live LBS (ago–nov)</div>
-          <div class="cal-legend-item"><span class="cal-swatch" style="background:#FCF9EA;"></span>Viernes Victory</div>
+        <div class="semana-body">
+          <div class="semana-accion"><div class="dot dot-gold"></div>FUP día 3 y 5 de zooms semana 1</div>
+          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/día tarde</div>
+          <div class="semana-accion"><div class="dot dot-plum"></div>Mié 10: Live Invitado 7pm</div>
+          <div class="semana-accion"><div class="dot dot-gold"></div>Activar 87 tibios Barrido · 7/día</div>
+          <div class="semana-accion"><div class="dot dot-green"></div>Check-in estudiantes MDD día 30</div>
+          <div class="semana-meta">Meta acum: <strong>4 MST + 5 MDD</strong></div>
         </div>
       </div>
 
-      <!-- COMPARISON Q1 -->
-      <div class="comparison-card">
-        <h2>vs. Q1 real (enero–abril)</h2>
-        <div class="comparison-row header">
-          <div>Métrica</div>
-          <div style="text-align:center">Q1 real</div>
-          <div style="text-align:center">Proyección</div>
-          <div style="text-align:center">Delta</div>
+      <div class="semana-card">
+        <div class="semana-header">
+          Semana 3
+          <span class="semana-focus">Cerrar · Ascender</span>
         </div>
-        <div class="comparison-row">
-          <div class="comparison-label">Comisión mensual (evergreen)</div>
-          <div class="comparison-val q1">$647</div>
-          <div class="comparison-val proj" id="cmp-mensual">$0</div>
-          <div class="comparison-val delta" id="cmp-mensual-delta">—</div>
+        <div class="semana-body">
+          <div class="semana-accion"><div class="dot dot-gold"></div>FUP día 7 — cierre ventana leads sem 1</div>
+          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/día tarde</div>
+          <div class="semana-accion"><div class="dot dot-plum"></div>Mié 17: Live Maestría 7pm</div>
+          <div class="semana-accion"><div class="dot dot-green"></div>Invitar MDD día 60 a MST (ascensor)</div>
+          <div class="semana-accion"><div class="dot dot-gold"></div>Reactivar 64 no-shows · 15/semana</div>
+          <div class="semana-meta">Meta acum: <strong>5 MST + 8 MDD</strong></div>
         </div>
-        <div class="comparison-row">
-          <div class="comparison-label">Ventas totales/mes</div>
-          <div class="comparison-val q1">~16</div>
-          <div class="comparison-val proj" id="cmp-ventas">0</div>
-          <div class="comparison-val delta" id="cmp-ventas-delta">—</div>
+      </div>
+
+      <div class="semana-card">
+        <div class="semana-header">
+          Semana 4
+          <span class="semana-focus">Cerrar · Victory</span>
         </div>
-        <div class="comparison-row">
-          <div class="comparison-label">Comisión total periodo</div>
-          <div class="comparison-val q1">$2,590<br><small style="color:var(--gray);font-weight:400;font-size:10px;">(ene-abr)</small></div>
-          <div class="comparison-val proj" id="cmp-total">$0<br><small style="color:var(--gray);font-weight:400;font-size:10px;">(may-nov)</small></div>
-          <div class="comparison-val delta" id="cmp-total-delta">—</div>
+        <div class="semana-body">
+          <div class="semana-accion"><div class="dot dot-gold"></div>FUP final tibios barrido sem 2</div>
+          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/día tarde</div>
+          <div class="semana-accion"><div class="dot dot-plum"></div>Mié 24: Live Caso éxito 7pm</div>
+          <div class="semana-accion"><div class="dot dot-green"></div>Tibios CRM: 10/día con FUP 7 días</div>
+          <div class="semana-accion"><div class="dot dot-gold"></div>Viernes: Victory + métricas del mes</div>
+          <div class="semana-meta">Cierre mes: <strong>3 MST + 12 MDD ≈ $1,980</strong></div>
         </div>
       </div>
 
@@ -875,449 +610,75 @@
   </div>
 
   <div class="footer">
-    David Muñoz · Closer Luque Academy · <em>Calculadora interactiva Q2–Q4 2026</em>
+    David Muñoz · Luque Academy · <em>Plan mensual Q2 2026</em>
   </div>
 
 </div>
 
 <script>
-// ============================================================
-// LBS MONTHLY TICKET CURVE (editable en tabla)
-// Venta se concentra últimos 2-3 meses antes del evento
-// ============================================================
-const DEFAULT_LBS = {
-  'mayo': 1,
-  'junio': 2,
-  'julio': 3,
-  'agosto': 4,
-  'septiembre': 6,
-  'octubre': 12,
-  'noviembre': 10
-};
-
-const MONTHS = ['mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre'];
-const MONTH_LABELS = {
-  mayo: 'Mayo', junio: 'Junio', julio: 'Julio',
-  agosto: 'Agosto', septiembre: 'Septiembre',
-  octubre: 'Octubre', noviembre: 'Noviembre'
-};
-const MONTH_SUBS = {
-  mayo: 'Arranque Q2', junio: '', julio: 'Cierre Q2',
-  agosto: 'Siembra LBS', septiembre: '',
-  octubre: 'Pico LBS', noviembre: '⭐ Mes LBS'
-};
-
-// ============================================================
-// SCENARIO PRESETS
-// ============================================================
-const SCENARIOS = {
-  conservador: {
-    maq_citas: 60, maq_showup: 60, maq_close: 10, maq_com: 90,
-    mst_citas: 30, mst_showup: 70, mst_close: 12, mst_com: 300,
-    cdd_ventas: 1, cdd_com: 30,
-    ref_clientes: 20, ref_tasa: 5, ref_close: 20, ref_com_maq: 30, ref_com_mst: 100, ref_mix_mst: 15,
-    live_maq_ventas: 0.5, live_mst_ventas: 0.5, live_inv_ventas: 1.5, live_com: 130,
-    lbs_com: 35,
-    lbs_tickets: { mayo: 0, junio: 1, julio: 2, agosto: 3, septiembre: 4, octubre: 8, noviembre: 6 }
-  },
-  objetivo: {
-    maq_citas: 60, maq_showup: 75, maq_close: 15, maq_com: 90,
-    mst_citas: 40, mst_showup: 80, mst_close: 18, mst_com: 300,
-    cdd_ventas: 3, cdd_com: 30,
-    ref_clientes: 30, ref_tasa: 10, ref_close: 25, ref_com_maq: 30, ref_com_mst: 100, ref_mix_mst: 20,
-    live_maq_ventas: 1, live_mst_ventas: 1, live_inv_ventas: 3, live_com: 150,
-    lbs_com: 40,
-    lbs_tickets: { ...DEFAULT_LBS }
-  },
-  optimista: {
-    maq_citas: 70, maq_showup: 80, maq_close: 20, maq_com: 90,
-    mst_citas: 45, mst_showup: 85, mst_close: 22, mst_com: 300,
-    cdd_ventas: 5, cdd_com: 30,
-    ref_clientes: 50, ref_tasa: 15, ref_close: 30, ref_com_maq: 30, ref_com_mst: 100, ref_mix_mst: 25,
-    live_maq_ventas: 1.5, live_mst_ventas: 1.5, live_inv_ventas: 5, live_com: 180,
-    lbs_com: 45,
-    lbs_tickets: { mayo: 2, junio: 3, julio: 5, agosto: 6, septiembre: 10, octubre: 18, noviembre: 15 }
-  }
-};
-
-let lbsTickets = { ...DEFAULT_LBS };
-
-// ============================================================
-// BUILD MONTH ROWS
-// ============================================================
-function buildMonthRows() {
-  const tbody = document.getElementById('month-rows');
-  tbody.innerHTML = '';
-  MONTHS.forEach(m => {
-    const sub = MONTH_SUBS[m];
-    const isMilestone = m === 'noviembre';
-    const row = document.createElement('tr');
-    if (isMilestone) row.classList.add('milestone');
-    row.innerHTML = `
-      <td class="month-label">${MONTH_LABELS[m]}${sub ? `<small>${sub}</small>` : ''}</td>
-      <td class="num" id="m-${m}-maq">$0</td>
-      <td class="num" id="m-${m}-mst">$0</td>
-      <td class="num" id="m-${m}-cdd">$0</td>
-      <td class="num" id="m-${m}-ref">$0</td>
-      <td class="num" id="m-${m}-live">$0</td>
-      <td class="num edit">
-        <input type="number" min="0" max="50" value="${lbsTickets[m]}" data-month="${m}" class="lbs-input">
-      </td>
-      <td class="total-cell" id="m-${m}-total">$0</td>
-    `;
-    tbody.appendChild(row);
-  });
-  // Totals row
-  const tr = document.createElement('tr');
-  tr.classList.add('totals');
-  tr.innerHTML = `
-    <td>TOTAL 7 meses</td>
-    <td class="num" id="t-maq">$0</td>
-    <td class="num" id="t-mst">$0</td>
-    <td class="num" id="t-cdd">$0</td>
-    <td class="num" id="t-ref">$0</td>
-    <td class="num" id="t-live">$0</td>
-    <td class="num" id="t-lbs">$0</td>
-    <td class="total-cell" id="t-total">$0</td>
-  `;
-  tbody.appendChild(tr);
-
-  // Wire LBS inputs
-  document.querySelectorAll('.lbs-input').forEach(inp => {
-    inp.addEventListener('input', (e) => {
-      lbsTickets[e.target.dataset.month] = parseInt(e.target.value) || 0;
-      recalc();
-    });
-  });
-}
-
-// ============================================================
-// FORMAT
-// ============================================================
 function fmt(n) {
   return '$' + Math.round(n).toLocaleString('en-US');
 }
 
-// ============================================================
-// RECALC
-// ============================================================
-function getVal(id) {
-  return parseFloat(document.getElementById(id).value) || 0;
-}
-
 function recalc() {
-  // Inputs
-  const maqCitas = getVal('maq_citas');
-  const maqShowup = getVal('maq_showup') / 100;
-  const maqClose = getVal('maq_close') / 100;
-  const maqCom = getVal('maq_com');
-  const mstCitas = getVal('mst_citas');
-  const mstShowup = getVal('mst_showup') / 100;
-  const mstClose = getVal('mst_close') / 100;
-  const mstCom = getVal('mst_com');
-  const cddVentas = getVal('cdd_ventas');
-  const cddCom = getVal('cdd_com');
+  const mst = parseInt(document.getElementById('sl-mst').value);
+  const mdd = parseInt(document.getElementById('sl-mdd').value);
+  const cdd = parseInt(document.getElementById('sl-cdd').value);
 
-  // Referidos
-  const refClientes = getVal('ref_clientes');
-  const refTasa = getVal('ref_tasa') / 100;
-  const refClose = getVal('ref_close') / 100;
-  const refComMaq = getVal('ref_com_maq');
-  const refComMst = getVal('ref_com_mst');
-  const refMixMst = getVal('ref_mix_mst') / 100;
+  document.getElementById('rv-mst').textContent = mst;
+  document.getElementById('rv-mdd').textContent = mdd;
+  document.getElementById('rv-cdd').textContent = cdd;
 
-  // Zoom Lives (4 miércoles: 1 Máq + 1 MST + 2 Invitado)
-  const liveMaqVentas = getVal('live_maq_ventas');
-  const liveMstVentas = getVal('live_mst_ventas');
-  const liveInvVentas = getVal('live_inv_ventas');
-  const liveCom = getVal('live_com');
+  const comMst = mst * 300;
+  const comMdd = mdd * 90;
+  const comCdd = cdd * 30;
+  const totalCom = comMst + comMdd + comCdd;
+  const totalVentas = mst + mdd + cdd;
+  const totalFact = mst * 10000 + mdd * 1995 + cdd * 420;
 
-  const lbsCom = getVal('lbs_com');
+  document.getElementById('rc-mst').textContent = fmt(comMst);
+  document.getElementById('rc-mdd').textContent = fmt(comMdd);
+  document.getElementById('rc-cdd').textContent = fmt(comCdd);
+  document.getElementById('rc-total').textContent = fmt(totalCom);
+  document.getElementById('rv-total').textContent = totalVentas;
+  document.getElementById('fact-total').textContent = fmt(totalFact);
+  document.getElementById('total-com').textContent = fmt(totalCom);
 
-  // Máquina (directo)
-  const maqEfe = maqCitas * maqShowup;
-  const maqVta = maqEfe * maqClose;
-  const maqIng = maqVta * maqCom;
+  // Barras
+  const metaVentas = 5;
+  const metaMinimo = 1200;
+  const metaDeseado = 2000;
+  const metaFactBono = 50000;
 
-  // Maestría (directo)
-  const mstEfe = mstCitas * mstShowup;
-  const mstVta = mstEfe * mstClose;
-  const mstIng = mstVta * mstCom;
+  // Ventas
+  const vPct = Math.min((totalVentas / metaVentas) * 100, 200);
+  const ventasFill = document.getElementById('bar-ventas-fill');
+  ventasFill.style.width = Math.min(vPct, 100) + '%';
+  ventasFill.className = 'progress-fill ' + (totalVentas >= metaVentas * 1.5 ? 'fill-green' : totalVentas >= metaVentas ? 'fill-gold' : 'fill-red');
+  document.getElementById('bar-ventas-lbl').textContent = totalVentas + ' ventas (' + vPct.toFixed(0) + '% de meta mín)';
 
-  // Códigos
-  const cddIng = cddVentas * cddCom;
+  // Mínimo
+  const mPct = Math.min((totalCom / metaMinimo) * 100, 100);
+  const minimoFill = document.getElementById('bar-minimo-fill');
+  minimoFill.style.width = mPct + '%';
+  minimoFill.className = 'progress-fill ' + (totalCom >= metaMinimo ? 'fill-green' : totalCom >= metaMinimo * 0.7 ? 'fill-gold' : 'fill-red');
+  document.getElementById('bar-minimo-lbl').textContent = fmt(totalCom) + ' / ' + fmt(metaMinimo);
 
-  // Referidos
-  const refLeadsMes = refClientes * refTasa;
-  const refVentasMes = refLeadsMes * refClose;
-  const refVentasMst = refVentasMes * refMixMst;
-  const refVentasMaq = refVentasMes * (1 - refMixMst);
-  const refIng = (refVentasMst * refComMst) + (refVentasMaq * refComMaq);
+  // Deseado
+  const dPct = Math.min((totalCom / metaDeseado) * 100, 100);
+  const deseadoFill = document.getElementById('bar-deseado-fill');
+  deseadoFill.style.width = dPct + '%';
+  deseadoFill.className = 'progress-fill ' + (totalCom >= metaDeseado ? 'fill-green' : totalCom >= metaDeseado * 0.7 ? 'fill-gold' : 'fill-red');
+  document.getElementById('bar-deseado-lbl').textContent = fmt(totalCom) + ' / ' + fmt(metaDeseado);
 
-  // Zoom Lives (4 miércoles todos los meses)
-  const liveTotalVentas = liveMaqVentas + liveMstVentas + liveInvVentas;
-  const liveIng = liveTotalVentas * liveCom;
-
-  // Monthly evergreen (sin LBS)
-  const monthlyEvergreen = maqIng + mstIng + cddIng + refIng + liveIng;
-  const monthlyVentas = maqVta + mstVta + cddVentas + refVentasMes + liveTotalVentas;
-  const monthlyCitas = maqCitas + mstCitas;
-
-  // Update funnel cards
-  document.getElementById('maq-tag').textContent = fmt(maqCom) + '/v';
-  document.getElementById('mst-tag').textContent = fmt(mstCom) + '/v';
-  document.getElementById('f-maq-citas').textContent = Math.round(maqCitas);
-  document.getElementById('f-maq-efe').textContent = Math.round(maqEfe);
-  document.getElementById('f-maq-vta').textContent = maqVta.toFixed(1);
-  document.getElementById('f-maq-com').textContent = fmt(maqIng);
-  document.getElementById('f-mst-citas').textContent = Math.round(mstCitas);
-  document.getElementById('f-mst-efe').textContent = Math.round(mstEfe);
-  document.getElementById('f-mst-vta').textContent = mstVta.toFixed(1);
-  document.getElementById('f-mst-com').textContent = fmt(mstIng);
-
-  // Hero
-  document.getElementById('hero-monthly').textContent = fmt(monthlyEvergreen);
-  document.getElementById('hero-ventas').textContent = monthlyVentas.toFixed(1);
-  document.getElementById('hero-citas').textContent = Math.round(monthlyCitas);
-
-  // Build monthly table
-  let totMaq = 0, totMst = 0, totCdd = 0, totRef = 0, totLive = 0, totLbs = 0, totGrand = 0;
-  const monthTotals = {};
-  MONTHS.forEach(m => {
-    const maqM = maqIng;
-    const mstM = mstIng;
-    const cddM = cddIng;
-    const refM = refIng;
-    const liveM = liveIng;
-    const lbsM = (lbsTickets[m] || 0) * lbsCom;
-    const totalM = maqM + mstM + cddM + refM + liveM + lbsM;
-    monthTotals[m] = totalM;
-
-    document.getElementById(`m-${m}-maq`).textContent = fmt(maqM);
-    document.getElementById(`m-${m}-mst`).textContent = fmt(mstM);
-    document.getElementById(`m-${m}-cdd`).textContent = fmt(cddM);
-    document.getElementById(`m-${m}-ref`).textContent = fmt(refM);
-    document.getElementById(`m-${m}-live`).textContent = fmt(liveM);
-    document.getElementById(`m-${m}-total`).textContent = fmt(totalM);
-
-    totMaq += maqM;
-    totMst += mstM;
-    totCdd += cddM;
-    totRef += refM;
-    totLive += liveM;
-    totLbs += lbsM;
-    totGrand += totalM;
-  });
-
-  document.getElementById('t-maq').textContent = fmt(totMaq);
-  document.getElementById('t-mst').textContent = fmt(totMst);
-  document.getElementById('t-cdd').textContent = fmt(totCdd);
-  document.getElementById('t-ref').textContent = fmt(totRef);
-  document.getElementById('t-live').textContent = fmt(totLive);
-  document.getElementById('t-lbs').textContent = fmt(totLbs);
-  document.getElementById('t-total').textContent = fmt(totGrand);
-  document.getElementById('grand-total').textContent = fmt(totGrand);
-  const heroTotalEl = document.getElementById('hero-total');
-  if (heroTotalEl) heroTotalEl.textContent = fmt(totGrand);
-
-  // Chart
-  const maxVal = Math.max(...Object.values(monthTotals), 1);
-  const chart = document.getElementById('chart');
-  chart.innerHTML = '';
-  MONTHS.forEach(m => {
-    const val = monthTotals[m];
-    const isMilestone = m === 'noviembre';
-    const height = (val / maxVal) * 100;
-    const col = document.createElement('div');
-    col.className = 'bar-col';
-    col.innerHTML = `
-      <div class="bar-wrap">
-        <div class="bar ${isMilestone ? 'milestone' : ''}" style="height:${height}%">
-          <div class="bar-value">${fmt(val)}</div>
-        </div>
-      </div>
-      <div class="bar-label ${isMilestone ? 'milestone' : ''}">${MONTH_LABELS[m].substring(0,3)}</div>
-    `;
-    chart.appendChild(col);
-  });
-
-  // Comparison vs Q1
-  const q1Mensual = 647;
-  const q1Total = 2590;
-  const q1Ventas = 16;
-  const deltaMensual = monthlyEvergreen - q1Mensual;
-  const deltaVentas = monthlyVentas - q1Ventas;
-  const deltaTotal = totGrand - q1Total;
-
-  document.getElementById('cmp-mensual').textContent = fmt(monthlyEvergreen);
-  document.getElementById('cmp-ventas').textContent = monthlyVentas.toFixed(1);
-  document.getElementById('cmp-total').innerHTML = fmt(totGrand) + '<br><small style="color:rgba(45,122,59,0.7);font-weight:400;font-size:10px;">(may-nov)</small>';
-
-  const dMEl = document.getElementById('cmp-mensual-delta');
-  dMEl.textContent = (deltaMensual >= 0 ? '+' : '') + fmt(deltaMensual);
-  dMEl.className = 'comparison-val delta' + (deltaMensual < 0 ? ' neg' : '');
-
-  const dVEl = document.getElementById('cmp-ventas-delta');
-  dVEl.textContent = (deltaVentas >= 0 ? '+' : '') + deltaVentas.toFixed(1);
-  dVEl.className = 'comparison-val delta' + (deltaVentas < 0 ? ' neg' : '');
-
-  const dTEl = document.getElementById('cmp-total-delta');
-  const deltaPct = ((deltaTotal / q1Total) * 100).toFixed(0);
-  dTEl.textContent = (deltaTotal >= 0 ? '+' : '') + fmt(deltaTotal) + ' (' + (deltaTotal >= 0 ? '+' : '') + deltaPct + '%)';
-  dTEl.className = 'comparison-val delta' + (deltaTotal < 0 ? ' neg' : '');
-
-  // Refresh calendar view
-  const currentMonth = document.getElementById('cal-month-select').value;
-  buildCalendar(currentMonth);
+  // Facturación bono
+  const fPct = Math.min((totalFact / metaFactBono) * 100, 100);
+  const factFill = document.getElementById('bar-fact-fill');
+  factFill.style.width = fPct + '%';
+  factFill.className = 'progress-fill ' + (totalFact >= metaFactBono ? 'fill-green' : totalFact >= metaFactBono * 0.6 ? 'fill-gold' : 'fill-red');
+  document.getElementById('bar-fact-lbl').textContent = fmt(totalFact) + ' / ' + fmt(metaFactBono);
 }
 
-// ============================================================
-// MONTHLY CALENDAR BUILDER
-// ============================================================
-// 20 días laborales típicos por mes (L-V × 4 semanas)
-// Standup pattern: Lun Warm / Mar Cool / Mie Warm / Jue Cool / Vie Victory
-const STANDUP_PATTERN = ['Warm Up','Cool Down','Warm Up','Cool Down','Victory'];
-const DAY_NAMES = ['lun','mar','mie','jue','vie'];
-
-function buildCalendar(monthKey) {
-  const grid = document.getElementById('cal-grid');
-  grid.innerHTML = '';
-
-  // Obtener variables actuales
-  const maqCitas = getVal('maq_citas');
-  const mstCitas = getVal('mst_citas');
-  const totalCitasMes = maqCitas + mstCitas;
-  const citasSemana = Math.round(totalCitasMes / 4);
-  const citasDia = Math.round(citasSemana / 5);
-
-  const lbsThisMonth = lbsTickets[monthKey] || 0;
-  const isHeavyLbs = lbsThisMonth >= 8;
-
-  // Rotación fija de 4 miércoles al mes:
-  // Mié 1 (día 3): Máquina
-  // Mié 2 (día 10): Invitado especial
-  // Mié 3 (día 17): Maestría
-  // Mié 4 (día 24): Invitado / Caso éxito
-  // En meses de LBS heavy (oct/nov) el último se convierte en LBS
-  const LIVE_ROTATION = {
-    3: { type: 'Máquina', cssClass: 'live-maq' },
-    10: { type: 'Invitado', cssClass: 'live-inv' },
-    17: { type: 'Maestría', cssClass: 'live-mst' },
-    24: { type: 'Caso Éxito', cssClass: 'live-inv' }
-  };
-
-  // Override para meses LBS
-  if (monthKey === 'octubre' || monthKey === 'noviembre') {
-    LIVE_ROTATION[10] = { type: 'LBS + Invitado', cssClass: 'live-lbs' };
-    LIVE_ROTATION[24] = { type: 'LBS Cierre', cssClass: 'live-lbs' };
-  } else if (monthKey === 'agosto' || monthKey === 'septiembre') {
-    LIVE_ROTATION[24] = { type: 'LBS Siembra', cssClass: 'live-lbs' };
-  }
-
-  // Build 20 days (4 weeks × 5 days)
-  for (let week = 0; week < 4; week++) {
-    for (let dayIdx = 0; dayIdx < 5; dayIdx++) {
-      const realDay = week * 7 + dayIdx + 1;
-
-      const isVictory = dayIdx === 4;
-      const standupType = STANDUP_PATTERN[dayIdx];
-      const liveInfo = LIVE_ROTATION[realDay];
-      const isZoomLive = !!liveInfo;
-
-      // LBS push day
-      const isLbsPush = isHeavyLbs && !isZoomLive && (dayIdx === 3 || (week === 3 && dayIdx === 4));
-
-      const day = document.createElement('div');
-      day.className = 'cal-day';
-      if (isVictory) day.classList.add('victory');
-      if (isZoomLive) {
-        day.classList.remove('victory');
-        day.classList.add('zoom-live');
-        if (liveInfo.cssClass === 'live-lbs') day.classList.add('zoom-lbs');
-      }
-      if (isLbsPush && !isZoomLive) {
-        day.classList.remove('victory');
-        day.classList.add('lbs-push');
-      }
-
-      let routine = `${citasDia} citas`;
-      if (isVictory && !isZoomLive) routine = `${citasDia} citas · métricas`;
-      if (isZoomLive) routine = `${citasDia} citas + Live 7pm`;
-      if (isLbsPush) routine = `${citasDia} citas + push boletos`;
-
-      let tag = '';
-      if (isZoomLive) {
-        const tagClass = liveInfo.cssClass === 'live-lbs' ? 'tag-live-lbs' :
-                        (liveInfo.cssClass === 'live-inv' ? 'tag-live-inv' : 'tag-live');
-        tag = `<span class="cal-day-tag ${tagClass}">★ ${liveInfo.type}</span>`;
-      }
-      if (isLbsPush && !isZoomLive) tag = `<span class="cal-day-tag tag-lbs">Push LBS</span>`;
-
-      day.innerHTML = `
-        <div class="cal-day-num">${realDay}</div>
-        <div class="cal-day-standup">${standupType}</div>
-        <div class="cal-day-routine">${routine}</div>
-        ${tag}
-      `;
-      grid.appendChild(day);
-    }
-  }
-
-  // Update summary cards
-  const livesMes = Object.keys(LIVE_ROTATION).length;
-  document.getElementById('cal-citas').textContent = totalCitasMes;
-  document.getElementById('cal-lives').textContent = livesMes;
-  document.getElementById('cal-lbs-mes').textContent = lbsThisMonth;
-
-  const monthTotalEl = document.getElementById(`m-${monthKey}-total`);
-  if (monthTotalEl) {
-    document.getElementById('cal-income').textContent = monthTotalEl.textContent;
-  }
-}
-
-// Wire month selector
-document.getElementById('cal-month-select').addEventListener('change', (e) => {
-  buildCalendar(e.target.value);
-});
-
-// ============================================================
-// SCENARIO SWITCH
-// ============================================================
-function applyScenario(name) {
-  const s = SCENARIOS[name];
-  Object.keys(s).forEach(k => {
-    if (k === 'lbs_tickets') {
-      lbsTickets = { ...s[k] };
-      document.querySelectorAll('.lbs-input').forEach(inp => {
-        inp.value = lbsTickets[inp.dataset.month];
-      });
-    } else {
-      const el = document.getElementById(k);
-      if (el) el.value = s[k];
-    }
-  });
-
-  document.querySelectorAll('.scenario-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.scenario === name);
-  });
-  recalc();
-}
-
-document.querySelectorAll('.scenario-btn').forEach(btn => {
-  btn.addEventListener('click', () => applyScenario(btn.dataset.scenario));
-});
-
-function resetDefaults() {
-  applyScenario('objetivo');
-}
-
-// Wire all inputs
-document.querySelectorAll('.control-input').forEach(inp => {
-  inp.addEventListener('input', recalc);
-});
-
-// Init
-buildMonthRows();
 recalc();
 </script>
 </body>
