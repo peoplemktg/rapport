@@ -10,6 +10,7 @@
     --cream: #FAF7F0; --cream-dark: #F2EDE0; --gray: #6B7280; --gray-light: #E5E7EB;
     --white: #FFFFFF; --green: #2D7A3B; --green-bg: #E8F5EA;
     --red: #9B3939; --red-bg: #FBF0EE; --plum: #4A2668;
+    --orange: #C47020;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -39,152 +40,241 @@
   }
   .section-title span { font-size: 13px; color: var(--gray); font-family: 'Inter', sans-serif; font-weight: 400; }
 
-  /* DIAGNÓSTICO REAL */
-  .diag-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+  /* LÓGICA DEL PLAN */
+  .plan-logica {
+    display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr; gap: 0;
+    align-items: stretch; margin-bottom: 20px;
+  }
+  .logica-card {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 6px; padding: 20px 22px;
+  }
+  .logica-card.base { border-top: 4px solid var(--navy); }
+  .logica-card.bonos { border-top: 4px solid var(--gold); }
+  .logica-card.meta { border-top: 4px solid var(--green); background: var(--green-bg); }
+  .logica-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: var(--gold); font-weight: 700;
+  }
+  .logica-label {
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gray); font-weight: 600; margin-bottom: 8px;
+  }
+  .logica-card.base .logica-label { color: var(--navy); }
+  .logica-card.bonos .logica-label { color: var(--orange); }
+  .logica-card.meta .logica-label { color: var(--green); }
+  .logica-val {
+    font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700;
+    color: var(--navy); line-height: 1; margin-bottom: 8px;
+  }
+  .logica-card.bonos .logica-val { color: var(--orange); }
+  .logica-card.meta .logica-val { color: var(--green); font-size: 38px; }
+  .logica-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
+  .logica-desc strong { color: var(--ink); }
+
+  /* DIAGNÓSTICO */
+  .diag-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 14px; }
   .diag-card {
     background: var(--white); border: 1px solid var(--gray-light);
-    border-radius: 6px; padding: 18px 20px;
+    border-radius: 6px; padding: 16px 18px;
   }
-  .diag-card.alert { border-left: 4px solid var(--red); background: var(--red-bg); }
-  .diag-card.ok { border-left: 4px solid var(--gold); background: var(--gold-light); }
-  .diag-card.target { border-left: 4px solid var(--green); background: var(--green-bg); }
+  .diag-card.alert { border-left: 4px solid var(--red); }
+  .diag-card.ok { border-left: 4px solid var(--gold); }
+  .diag-card.target { border-left: 4px solid var(--green); }
   .diag-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); font-weight: 600; margin-bottom: 6px; }
-  .diag-val { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; color: var(--navy); margin-bottom: 4px; line-height: 1; }
+  .diag-val { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; color: var(--navy); margin-bottom: 4px; line-height: 1; }
   .diag-card.alert .diag-val { color: var(--red); }
-  .diag-card.target .diag-val { color: var(--green); }
   .diag-sub { font-size: 11px; color: var(--gray); line-height: 1.4; }
 
   .diag-insight {
-    background: var(--navy); color: white; padding: 16px 20px; border-radius: 6px;
+    background: var(--navy); color: white; padding: 14px 20px; border-radius: 6px;
     font-size: 13px; line-height: 1.6;
   }
   .diag-insight strong { color: var(--gold); }
 
-  /* CALCULADORA COMISIONES */
+  /* CALCULADORA */
   .calc-wrap {
     background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
   }
   .calc-header {
-    background: var(--navy); color: white; padding: 16px 24px;
-    display: flex; justify-content: space-between; align-items: center;
+    background: var(--navy); color: white; padding: 14px 24px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
   }
-  .calc-header h3 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; }
-  .calc-header .total { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700; color: var(--gold); }
+  .calc-header h3 { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; }
+  .calc-totales {
+    display: flex; gap: 20px; align-items: center;
+  }
+  .calc-total-item { text-align: center; }
+  .calc-total-lbl { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: #A0A8B8; }
+  .calc-total-val { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: white; }
+  .calc-total-val.gold { color: var(--gold); font-size: 26px; }
+  .calc-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); }
 
   .calc-body { padding: 20px 24px; }
   .calc-row {
-    display: grid; grid-template-columns: 160px 1fr 90px 90px 100px 110px; gap: 12px;
-    align-items: center; padding: 10px 0; border-bottom: 1px solid var(--gray-light);
+    display: grid; grid-template-columns: 170px 1fr 70px 80px 80px 110px;
+    gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--gray-light);
   }
   .calc-row:last-child { border-bottom: none; }
   .calc-row.header {
     padding-bottom: 8px; font-size: 10px; letter-spacing: 1px;
     text-transform: uppercase; color: var(--gray); font-weight: 600;
   }
-  .product-name { font-weight: 600; font-size: 14px; }
+  .product-name { font-weight: 600; font-size: 13px; }
   .product-name small { font-weight: 400; font-size: 11px; color: var(--gray); display: block; }
 
-  input[type="range"] {
-    width: 100%; accent-color: var(--gold); cursor: pointer;
-    height: 4px; border-radius: 2px;
-  }
+  input[type="range"] { width: 100%; accent-color: var(--gold); cursor: pointer; }
   .range-val {
-    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700;
+    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700;
     color: var(--navy); text-align: center;
   }
-  .ticket-cell { font-size: 12px; color: var(--gray); text-align: center; }
-  .com-cell { font-size: 12px; color: var(--gray); text-align: center; }
+  .ticket-cell { font-size: 11px; color: var(--gray); text-align: center; }
   .result-cell {
     font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px;
     color: var(--gold); text-align: right;
   }
-  .result-cell.big { font-size: 20px; color: var(--green); }
 
-  /* META VISUAL */
-  .metas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .meta-card {
+  /* BARRAS ESCALONADAS */
+  .barras-wrap {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 6px; padding: 20px 24px;
+  }
+  .barras-titulo {
+    font-family: 'Fraunces', serif; font-size: 17px; color: var(--navy);
+    margin-bottom: 18px; font-weight: 600;
+  }
+  .barra-item { margin-bottom: 16px; }
+  .barra-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 5px;
+  }
+  .barra-label { font-size: 12px; font-weight: 500; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .barra-badge {
+    font-size: 9px; padding: 2px 6px; border-radius: 3px; font-weight: 700;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .badge-base { background: var(--cream-dark); color: var(--navy); }
+  .badge-bono { background: var(--gold-light); color: #7A6614; }
+  .badge-meta { background: var(--green-bg); color: var(--green); }
+  .barra-val { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 700; color: var(--navy); }
+  .barra-track {
+    height: 12px; background: var(--gray-light); border-radius: 6px;
+    overflow: visible; position: relative;
+  }
+  .barra-fill {
+    height: 100%; border-radius: 6px; transition: width 0.35s ease; position: relative;
+  }
+  .fill-red { background: linear-gradient(90deg, var(--red) 0%, #C25555 100%); }
+  .fill-orange { background: linear-gradient(90deg, var(--orange) 0%, #E0943A 100%); }
+  .fill-gold { background: linear-gradient(90deg, var(--gold) 0%, #E2C26B 100%); }
+  .fill-green { background: linear-gradient(90deg, var(--green) 0%, #4FAC5C 100%); }
+  .barra-markers { display: flex; justify-content: space-between; margin-top: 3px; }
+  .barra-marker { font-size: 9px; color: var(--gray); }
+  .barra-marker.active { color: var(--gold); font-weight: 700; }
+  .barra-marker.reached { color: var(--green); font-weight: 700; }
+
+  /* BONOS PROPUESTA */
+  .bonos-wrap {
     background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
   }
-  .meta-card-header {
-    padding: 14px 20px; font-weight: 700; font-size: 14px;
+  .bonos-header {
+    padding: 16px 24px; background: var(--plum); color: white;
     display: flex; justify-content: space-between; align-items: center;
   }
-  .meta-card-header.minima { background: var(--cream-dark); color: var(--navy); }
-  .meta-card-header.deseada { background: var(--navy); color: white; }
-  .meta-card-header .badge {
-    font-size: 11px; padding: 3px 8px; border-radius: 3px; font-weight: 600;
+  .bonos-header h3 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; }
+  .bonos-total-wrap { text-align: right; }
+  .bonos-total-lbl { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #D4C4E8; }
+  .bonos-total-val { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--gold); }
+
+  .bonos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .bono-item {
+    padding: 16px 20px; border-right: 1px solid var(--gray-light);
+    border-bottom: 1px solid var(--gray-light);
   }
-  .meta-card-header.minima .badge { background: var(--gray-light); color: var(--gray); }
-  .meta-card-header.deseada .badge { background: var(--gold); color: var(--navy); }
-  .meta-card-body { padding: 16px 20px; }
-  .meta-path {
-    display: flex; flex-direction: column; gap: 8px;
+  .bono-item:nth-child(even) { border-right: none; }
+  .bono-item:nth-last-child(-n+2) { border-bottom: none; }
+  .bono-item.activo { background: linear-gradient(135deg, #FAF5E8 0%, white 50%); }
+  .bono-tipo {
+    font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 4px;
   }
-  .meta-option {
+  .bono-tipo.ventas { color: var(--navy); }
+  .bono-tipo.fact { color: var(--orange); }
+  .bono-tipo.mst { color: var(--green); }
+  .bono-nombre { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 8px; }
+  .bono-hito {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .bono-pago {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 14px; border-radius: 4px; font-size: 13px;
-    background: var(--cream); border-left: 3px solid var(--gray-light);
+    background: var(--cream); padding: 8px 12px; border-radius: 4px; margin-top: 8px;
   }
-  .meta-option.best {
-    background: var(--gold-light); border-left-color: var(--gold);
-    font-weight: 600;
+  .bono-pago-lbl { font-size: 11px; color: var(--gray); }
+  .bono-pago-val {
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: var(--gold);
   }
-  .meta-option.possible { border-left-color: var(--navy); }
-  .meta-option .combo { color: var(--ink); }
-  .meta-option .ingreso {
-    font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px; color: var(--gold);
+  .bono-status {
+    font-size: 10px; margin-top: 6px; font-weight: 600; letter-spacing: 0.5px;
   }
-  .meta-option.best .ingreso { color: var(--green); font-size: 18px; }
-  .meta-option-label {
-    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
-    color: var(--gray); margin-bottom: 8px; font-weight: 600;
-  }
+  .bono-status.si { color: var(--green); }
+  .bono-status.reto { color: var(--orange); }
+  .bono-status.grande { color: var(--plum); }
 
-  /* BARRAS PROGRESO */
-  .progress-wrap { margin-top: 16px; }
-  .progress-item { margin-bottom: 12px; }
-  .progress-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
-  .progress-label { color: var(--gray); }
-  .progress-val { font-weight: 700; color: var(--navy); font-family: 'Fraunces', serif; }
-  .progress-track { height: 10px; background: var(--gray-light); border-radius: 5px; overflow: hidden; }
-  .progress-fill { height: 100%; border-radius: 5px; transition: width 0.3s; }
-  .fill-red { background: var(--red); }
-  .fill-gold { background: var(--gold); }
-  .fill-green { background: var(--green); }
+  .bonos-argumento {
+    padding: 16px 20px; background: #F5EBF8; border-top: 1px solid #D4C4E8;
+    font-size: 12px; color: var(--plum); line-height: 1.6;
+  }
+  .bonos-argumento strong { color: var(--navy); }
 
-  /* BONOS */
-  .bonos-table {
-    background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
+  /* SIMULADOR FINAL */
+  .simulador {
+    background: linear-gradient(135deg, var(--navy) 0%, #2D4A7A 100%);
+    border-radius: 6px; padding: 24px 28px; color: white;
   }
-  .bonos-table table { width: 100%; border-collapse: collapse; }
-  .bonos-table th {
-    background: var(--navy); color: white; padding: 12px 16px;
-    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
-    text-align: left;
+  .simulador h3 {
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
+    color: var(--gold); margin-bottom: 18px;
   }
-  .bonos-table td {
-    padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--gray-light);
+  .sim-toggle-row {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;
   }
-  .bonos-table tr:last-child td { border-bottom: none; }
-  .bonos-table td.tipo { font-weight: 600; color: var(--navy); }
-  .bonos-table td.hito { font-family: 'Fraunces', serif; font-weight: 700; color: var(--ink); font-size: 15px; }
-  .bonos-table td.bono {
-    font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px; color: var(--gold);
+  .sim-toggle {
+    display: flex; align-items: center; gap: 8px; cursor: pointer;
+    padding: 8px 14px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px;
+    font-size: 12px; color: #D0D4DE; transition: all 0.2s; background: transparent;
+    font-family: 'Inter', sans-serif;
   }
-  .bonos-table td.alcanzable {
-    font-weight: 600; font-size: 12px;
+  .sim-toggle.on {
+    background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 700;
   }
-  .alcanzable-si { color: var(--green); }
-  .alcanzable-reto { color: var(--gold); }
-  .alcanzable-grande { color: var(--plum); }
-  .bonos-table tr.highlight td { background: var(--gold-light); }
-  .bonos-table tr.note td {
-    background: var(--cream-dark); font-style: italic; font-size: 12px; color: var(--gray);
-    padding: 10px 16px;
-  }
+  .sim-toggle input { margin: 0; cursor: pointer; accent-color: var(--navy); }
 
-  /* PLAN DE ACCIÓN SEMANAL */
-  .semanas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .sim-resultado {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;
+    background: rgba(0,0,0,0.2); border-radius: 6px; overflow: hidden;
+    margin-top: 4px;
+  }
+  .sim-cell { padding: 16px 20px; border-right: 1px solid rgba(255,255,255,0.1); text-align: center; }
+  .sim-cell:last-child { border-right: none; }
+  .sim-cell-lbl { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: #A0A8B8; margin-bottom: 6px; font-weight: 600; }
+  .sim-cell-val { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; color: white; }
+  .sim-cell-val.gold { color: var(--gold); font-size: 36px; }
+
+  .sim-desglose {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 16px;
+  }
+  .sim-bono-chip {
+    background: rgba(255,255,255,0.08); border-radius: 4px; padding: 10px 12px;
+    font-size: 11px; color: #D0D4DE; text-align: center; border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.2s;
+  }
+  .sim-bono-chip.active { background: rgba(201,168,76,0.15); border-color: var(--gold); color: white; }
+  .sim-bono-chip .chip-val { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; color: var(--gold); }
+  .sim-bono-chip .chip-lbl { font-size: 10px; color: #A0A8B8; margin-top: 2px; }
+
+  /* PLAN SEMANAL */
+  .semanas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
   .semana-card {
     background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
   }
@@ -194,43 +284,26 @@
     display: flex; justify-content: space-between; align-items: center;
   }
   .semana-focus {
-    font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
-    color: var(--gold); font-weight: 700;
+    font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); font-weight: 700;
   }
-  .semana-body { padding: 14px 16px; }
+  .semana-body { padding: 12px 14px; }
   .semana-accion {
-    display: flex; gap: 8px; padding: 6px 0; font-size: 12px;
+    display: flex; gap: 7px; padding: 5px 0; font-size: 11px;
     border-bottom: 1px dashed var(--gray-light); align-items: flex-start; line-height: 1.3;
   }
   .semana-accion:last-child { border-bottom: none; }
-  .semana-accion .dot {
-    width: 6px; height: 6px; border-radius: 50%; margin-top: 4px; flex-shrink: 0;
-  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
   .dot-gold { background: var(--gold); }
   .dot-navy { background: var(--navy); }
   .dot-green { background: var(--green); }
   .dot-plum { background: var(--plum); }
   .semana-meta {
-    margin-top: 12px; padding: 8px 12px; background: var(--cream);
-    border-radius: 4px; font-size: 11px; color: var(--gray);
+    margin-top: 10px; padding: 7px 10px; background: var(--cream);
+    border-radius: 4px; font-size: 10px; color: var(--gray);
   }
   .semana-meta strong { color: var(--navy); }
 
-  /* LIVES ROTACIÓN */
-  .lives-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .live-card {
-    background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px;
-    padding: 16px; text-align: center;
-  }
-  .live-card.maq { border-top: 3px solid var(--navy); }
-  .live-card.inv { border-top: 3px solid var(--plum); }
-  .live-card.mst { border-top: 3px solid var(--gold); }
-  .live-card.caso { border-top: 3px solid var(--green); }
-  .live-mie { font-size: 11px; color: var(--gray); margin-bottom: 6px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
-  .live-tipo { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
-  .live-desc { font-size: 10px; color: var(--gray); line-height: 1.4; }
-  .live-hora { font-size: 11px; color: var(--gold); font-weight: 700; margin-top: 8px; }
-
+  /* FOOTER */
   .footer {
     text-align: center; margin-top: 48px; padding-top: 24px;
     border-top: 1px solid var(--gray-light); font-size: 12px; color: var(--gray);
@@ -244,368 +317,410 @@
   <div class="header">
     <div class="eyebrow">David Muñoz · Luque Academy · Q2 2026</div>
     <h1>Plan <em>mensual</em> de trabajo</h1>
-    <p class="subtitle">Mínimo: 5 ventas · Deseado: $2,000 comisión · Canal: Quiz</p>
+    <p class="subtitle">Base consistente $1.2K–$1.5K · Bonos por hitos te llevan a $2K+</p>
   </div>
 
-  <!-- 1. DÓNDE ESTOY HOY -->
+  <!-- LÓGICA DEL PLAN -->
   <div class="section">
-    <div class="section-title">Dónde estoy hoy <span>— datos reales Feb–Abr 2026</span></div>
+    <div class="plan-logica">
+      <div class="logica-card base">
+        <div class="logica-label">Paso 1 · Base alcanzable</div>
+        <div class="logica-val">$1.2K–$1.5K</div>
+        <div class="logica-desc">
+          <strong>2 MST + 8–10 MDD</strong> en 100 citas Quiz/mes. Esto ya excede el mínimo de 5 ventas y produce ingreso predecible. No depende de eventos ni lanzamientos.
+        </div>
+      </div>
+      <div class="logica-arrow">+</div>
+      <div class="logica-card bonos">
+        <div class="logica-label">Paso 2 · Bonos por hitos</div>
+        <div class="logica-val">+$500–$600</div>
+        <div class="logica-desc">
+          Al exceder hitos de <strong>ventas</strong> (10+, 12+) y <strong>facturación</strong> ($25K, $35K), se activan bonos. Juanjo solo los paga cuando ya ganó más.
+        </div>
+      </div>
+      <div class="logica-arrow">=</div>
+      <div class="logica-card meta">
+        <div class="logica-label">Meta deseada</div>
+        <div class="logica-val">$2,000+</div>
+        <div class="logica-desc">
+          Base + bonos = $2,000–$2,100 en el escenario objetivo. Con todos los bonos activos en escenario optimista: hasta <strong>$2,500</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DÓNDE ESTOY -->
+  <div class="section">
+    <div class="section-title">Punto de partida real <span>— datos Feb–Abr 2026</span></div>
     <div class="diag-grid">
       <div class="diag-card ok">
         <div class="diag-label">Ventas promedio/mes</div>
         <div class="diag-val">6</div>
-        <div class="diag-sub">Mínimo cumplido (5). Mix: 4.3 Máquina + 1 Maestría + 0.7 Códigos</div>
+        <div class="diag-sub">Mínimo cumplido. Mix: 4.3 Máquina + 1 Maestría + 0.7 Códigos/mes</div>
       </div>
       <div class="diag-card alert">
-        <div class="diag-label">Comisión promedio/mes</div>
+        <div class="diag-label">Comisión actual/mes</div>
         <div class="diag-val">$697</div>
-        <div class="diag-sub">El problema no es de ventas — es del mix. $697 vs meta $2,000 = <strong>falta $1,303</strong></div>
+        <div class="diag-sub">Gap a meta base = $503 → se resuelve cambiando mix a 2 MST/mes</div>
       </div>
       <div class="diag-card alert">
-        <div class="diag-label">Facturación promedio/mes</div>
+        <div class="diag-label">Facturación actual/mes</div>
         <div class="diag-val">$18,925</div>
-        <div class="diag-sub">5 Máquina = $9,975 · 1 Maestría = $10,000 · Así cierra la mayoría</div>
+        <div class="diag-sub">Hito bono mínimo en $25K → gap de $6K = ~1 MST extra</div>
       </div>
     </div>
     <div class="diag-insight">
-      <strong>El diagnóstico real:</strong> con el mix actual (mayormente Máquina a $90 comisión), necesitarías 22 ventas/mes para llegar a $2K — imposible con 100 citas. El camino correcto es cambiar el mix: <strong>2 Maestrías/mes</strong> dan $600 solos y dejan $1,400 para completar con Máquina. O sea: $2K = 2 MST ($600) + ~15 MDD ($1,350). La calculadora abajo te muestra todos los combos posibles.
+      <strong>Lo que falta para llegar a la base de $1.5K:</strong> pasar de 1 MST a 2 MST/mes (+$300) y de 4 MDD a 10 MDD/mes (+$540). Total: +$840 sobre el promedio actual. El no-show de Quiz al 58% es la fuga principal — bajarlo a 35% ya da las citas efectivas necesarias para lograrlo.
     </div>
   </div>
 
-  <!-- 2. CALCULADORA DE COMISIÓN -->
+  <!-- CALCULADORA -->
   <div class="section">
-    <div class="section-title">Calcula tu comisión <span>— mueve los sliders, ve el resultado</span></div>
+    <div class="section-title">Calculadora de comisión <span>— mueve los sliders</span></div>
     <div class="calc-wrap">
       <div class="calc-header">
-        <h3>Comisión mensual proyectada</h3>
-        <div class="total" id="total-com">$0</div>
+        <h3>Comisión base mensual</h3>
+        <div class="calc-totales">
+          <div class="calc-total-item">
+            <div class="calc-total-lbl">Ventas</div>
+            <div class="calc-total-val" id="hdr-ventas">8</div>
+          </div>
+          <div class="calc-divider"></div>
+          <div class="calc-total-item">
+            <div class="calc-total-lbl">Facturación</div>
+            <div class="calc-total-val" id="hdr-fact">$0</div>
+          </div>
+          <div class="calc-divider"></div>
+          <div class="calc-total-item">
+            <div class="calc-total-lbl">Comisión base</div>
+            <div class="calc-total-val gold" id="hdr-com">$0</div>
+          </div>
+        </div>
       </div>
       <div class="calc-body">
         <div class="calc-row header">
-          <div>Producto</div>
-          <div>Ventas/mes</div>
-          <div>Cantidad</div>
-          <div>Ticket</div>
-          <div>Comisión/v</div>
-          <div style="text-align:right">Ingreso</div>
+          <div>Producto</div><div>Cantidad</div><div>Ventas</div>
+          <div>Ticket</div><div>Com/v</div><div style="text-align:right">Ingreso</div>
         </div>
-
         <div class="calc-row">
-          <div class="product-name">Maestría<small>$10K · $300 com</small></div>
-          <input type="range" id="sl-mst" min="0" max="10" value="2" step="1" oninput="recalc()">
+          <div class="product-name">Maestría del Dinero<small>Pitch principal · $10K</small></div>
+          <input type="range" id="sl-mst" min="0" max="10" value="2" oninput="recalc()">
           <div class="range-val" id="rv-mst">2</div>
           <div class="ticket-cell">$10,000</div>
-          <div class="com-cell">$300</div>
+          <div class="ticket-cell">$300</div>
           <div class="result-cell" id="rc-mst">$600</div>
         </div>
-
         <div class="calc-row">
-          <div class="product-name">Máquina<small>$1,995 · $90 com</small></div>
-          <input type="range" id="sl-mdd" min="0" max="25" value="5" step="1" oninput="recalc()">
-          <div class="range-val" id="rv-mdd">5</div>
+          <div class="product-name">Máquina del Dinero<small>Downsell · $1,995</small></div>
+          <input type="range" id="sl-mdd" min="0" max="25" value="8" oninput="recalc()">
+          <div class="range-val" id="rv-mdd">8</div>
           <div class="ticket-cell">$1,995</div>
-          <div class="com-cell">$90</div>
-          <div class="result-cell" id="rc-mdd">$450</div>
+          <div class="ticket-cell">$90</div>
+          <div class="result-cell" id="rc-mdd">$720</div>
         </div>
-
         <div class="calc-row">
-          <div class="product-name">Códigos<small>$420 · $30 com</small></div>
-          <input type="range" id="sl-cdd" min="0" max="10" value="1" step="1" oninput="recalc()">
+          <div class="product-name">Códigos del Dinero<small>Downsell FUP · $420</small></div>
+          <input type="range" id="sl-cdd" min="0" max="10" value="1" oninput="recalc()">
           <div class="range-val" id="rv-cdd">1</div>
           <div class="ticket-cell">$420</div>
-          <div class="com-cell">$30</div>
+          <div class="ticket-cell">$30</div>
           <div class="result-cell" id="rc-cdd">$30</div>
         </div>
-
-        <div class="calc-row" style="padding-top:14px;">
-          <div class="product-name" style="color:var(--green);font-weight:700;">TOTAL</div>
+        <div class="calc-row" style="border-top:2px solid var(--gold-light);">
+          <div class="product-name" style="font-weight:700;color:var(--navy);">TOTAL</div>
           <div></div>
-          <div class="range-val" id="rv-total" style="color:var(--navy);">8</div>
-          <div class="ticket-cell" style="font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:var(--navy);" id="fact-total">$21,975</div>
-          <div class="com-cell"></div>
-          <div class="result-cell big" id="rc-total">$1,080</div>
+          <div class="range-val" id="rv-total" style="font-size:18px;">11</div>
+          <div class="ticket-cell" style="font-family:'Fraunces',serif;font-weight:700;color:var(--navy);" id="fact-total">—</div>
+          <div></div>
+          <div class="result-cell" style="font-size:22px;color:var(--green);" id="rc-total">$1,350</div>
         </div>
       </div>
     </div>
 
-    <!-- BARRAS DE META -->
-    <div class="progress-wrap" style="margin-top:16px;background:var(--white);border:1px solid var(--gray-light);border-radius:6px;padding:18px 24px;">
-      <div style="font-size:12px;color:var(--gray);margin-bottom:14px;font-style:italic;">Las barras se actualizan con los sliders</div>
+    <!-- BARRAS DE PROGRESO ESCALONADAS -->
+    <div class="barras-wrap" style="margin-top:16px;">
+      <div class="barras-titulo">¿Dónde estás con estos números?</div>
 
-      <div class="progress-item">
-        <div class="progress-header">
-          <span class="progress-label">Ventas totales vs mínimo (5)</span>
-          <span class="progress-val" id="bar-ventas-lbl">8 ventas</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="bar-ventas-fill" style="width:0%"></div>
-        </div>
-      </div>
-
-      <div class="progress-item">
-        <div class="progress-header">
-          <span class="progress-label">Comisión vs mínimo viable ($1,200)</span>
-          <span class="progress-val" id="bar-minimo-lbl">$0</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="bar-minimo-fill" style="width:0%"></div>
-        </div>
-      </div>
-
-      <div class="progress-item">
-        <div class="progress-header">
-          <span class="progress-label">Comisión vs meta deseada ($2,000)</span>
-          <span class="progress-val" id="bar-deseado-lbl">$0</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="bar-deseado-fill" style="width:0%"></div>
-        </div>
-      </div>
-
-      <div class="progress-item">
-        <div class="progress-header">
-          <span class="progress-label">Facturación vs hito bono ($50K)</span>
-          <span class="progress-val" id="bar-fact-lbl">$0</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="bar-fact-fill" style="width:0%"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3. CAMINOS A LAS METAS -->
-  <div class="section">
-    <div class="section-title">Caminos posibles <span>— combos de ventas para cada meta</span></div>
-    <div class="metas-grid">
-
-      <div class="meta-card">
-        <div class="meta-card-header minima">
-          <span>Meta mínima</span>
-          <span class="badge">5 ventas · ~$1,200</span>
-        </div>
-        <div class="meta-card-body">
-          <div class="meta-option-label">Escoge un combo</div>
-          <div class="meta-path">
-            <div class="meta-option">
-              <span class="combo">5 Máquina</span>
-              <span class="ingreso">$450</span>
-            </div>
-            <div class="meta-option possible">
-              <span class="combo">4 MDD + 1 CDD</span>
-              <span class="ingreso">$390</span>
-            </div>
-            <div class="meta-option possible">
-              <span class="combo">1 MST + 4 MDD</span>
-              <span class="ingreso">$660</span>
-            </div>
-            <div class="meta-option best">
-              <span class="combo">2 MST + 3 MDD ← mejor combo</span>
-              <span class="ingreso">$870</span>
-            </div>
+      <div class="barra-item">
+        <div class="barra-header">
+          <div class="barra-label">
+            Ventas totales
+            <span class="barra-badge badge-base">mín: 5</span>
           </div>
-          <div style="margin-top:12px;font-size:11px;color:var(--gray);font-style:italic;line-height:1.5;">
-            ⚠ Solo con Máquina, el mínimo de 5 ventas da $450 — no cubre gastos. El combo real del mínimo es 2 MST + 3 MDD.
-          </div>
+          <div class="barra-val" id="bv-ventas">—</div>
+        </div>
+        <div class="barra-track">
+          <div class="barra-fill" id="bf-ventas" style="width:0%"></div>
+        </div>
+        <div class="barra-markers">
+          <span class="barra-marker">0</span>
+          <span class="barra-marker" id="bm-v5">5 mín</span>
+          <span class="barra-marker" id="bm-v10">10 bono I</span>
+          <span class="barra-marker" id="bm-v12">12 bono II</span>
+          <span class="barra-marker">15+</span>
         </div>
       </div>
 
-      <div class="meta-card">
-        <div class="meta-card-header deseada">
-          <span>Meta deseada</span>
-          <span class="badge">$2,000/mes</span>
+      <div class="barra-item">
+        <div class="barra-header">
+          <div class="barra-label">
+            Comisión base
+            <span class="barra-badge badge-base">base: $1.2K–$1.5K</span>
+          </div>
+          <div class="barra-val" id="bv-com">—</div>
         </div>
-        <div class="meta-card-body">
-          <div class="meta-option-label">Combos que llegan a $2K</div>
-          <div class="meta-path">
-            <div class="meta-option">
-              <span class="combo">6 MST + 0 MDD</span>
-              <span class="ingreso">$1,800</span>
-            </div>
-            <div class="meta-option possible">
-              <span class="combo">5 MST + 5 MDD</span>
-              <span class="ingreso">$1,950</span>
-            </div>
-            <div class="meta-option possible">
-              <span class="combo">4 MST + 8 MDD</span>
-              <span class="ingreso">$1,920</span>
-            </div>
-            <div class="meta-option best">
-              <span class="combo">3 MST + 12 MDD ← más realista</span>
-              <span class="ingreso">$1,980</span>
-            </div>
+        <div class="barra-track">
+          <div class="barra-fill" id="bf-com" style="width:0%"></div>
+        </div>
+        <div class="barra-markers">
+          <span class="barra-marker">$0</span>
+          <span class="barra-marker" id="bm-c700">$697 actual</span>
+          <span class="barra-marker" id="bm-c1200">$1.2K base</span>
+          <span class="barra-marker" id="bm-c1500">$1.5K meta</span>
+          <span class="barra-marker">$2K+</span>
+        </div>
+      </div>
+
+      <div class="barra-item">
+        <div class="barra-header">
+          <div class="barra-label">
+            Facturación mensual
+            <span class="barra-badge badge-bono">hitos: $25K · $35K</span>
           </div>
-          <div style="margin-top:12px;font-size:11px;color:var(--gray);font-style:italic;line-height:1.5;">
-            ★ El camino más realista con 100 citas quiz/mes y embudo MST→MDD es 3 MST + 12 MDD. Necesita show-up 75% y close rate MST 12%+.
+          <div class="barra-val" id="bv-fact">—</div>
+        </div>
+        <div class="barra-track">
+          <div class="barra-fill" id="bf-fact" style="width:0%"></div>
+        </div>
+        <div class="barra-markers">
+          <span class="barra-marker">$0</span>
+          <span class="barra-marker" id="bm-f19">$18.9K actual</span>
+          <span class="barra-marker" id="bm-f25">$25K bono I</span>
+          <span class="barra-marker" id="bm-f35">$35K bono II</span>
+          <span class="barra-marker">$50K+</span>
+        </div>
+      </div>
+
+      <div class="barra-item">
+        <div class="barra-header">
+          <div class="barra-label">
+            Total con bonos activos
+            <span class="barra-badge badge-meta">meta: $2,000</span>
           </div>
+          <div class="barra-val" id="bv-total">—</div>
+        </div>
+        <div class="barra-track">
+          <div class="barra-fill" id="bf-total" style="width:0%"></div>
+        </div>
+        <div class="barra-markers">
+          <span class="barra-marker">$0</span>
+          <span class="barra-marker">$1K</span>
+          <span class="barra-marker" id="bm-t1500">$1.5K base</span>
+          <span class="barra-marker" id="bm-t2000">$2K meta</span>
+          <span class="barra-marker">$2.5K</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 4. PROPUESTA DE BONOS -->
+  <!-- PROPUESTA DE BONOS -->
   <div class="section">
     <div class="section-title">Propuesta de bonos <span>— para negociar con Juanjo</span></div>
-    <div class="bonos-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Tipo de bono</th>
-            <th>Hito</th>
-            <th>Bono propuesto</th>
-            <th>Basado en tu data</th>
-            <th>Alcanzable</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="tipo">Mínimo ventas<br><small style="font-weight:400;color:var(--gray);">Sin bono — es la base</small></td>
-            <td class="hito">5 ventas<br><small>~$10K–20K facturación</small></td>
-            <td class="bono">$0<br><small style="color:var(--gray);font-weight:400;">Comisión base</small></td>
-            <td style="font-size:12px;color:var(--gray);">Ya lo alcanzas en promedio. No se pide bono aquí.</td>
-            <td class="alcanzable alcanzable-si">✓ Ya lo haces</td>
-          </tr>
-          <tr class="highlight">
-            <td class="tipo">Bono Maestría consistente<br><small style="font-weight:400;color:var(--gray);">⭐ El más fácil de aprobar</small></td>
-            <td class="hito">≥ 1 MST/mes</td>
-            <td class="bono">+$150</td>
-            <td style="font-size:12px;color:var(--gray);">En Q1 cerraste 3 MST en 3 meses (1/mes promedio). Ya lo cumples si lo sostienes.</td>
-            <td class="alcanzable alcanzable-si">✓ Muy alcanzable</td>
-          </tr>
-          <tr class="highlight">
-            <td class="tipo">Bono hito facturación I<br><small style="font-weight:400;color:var(--gray);">Base desde el esfuerzo real</small></td>
-            <td class="hito">$30K facturados/mes</td>
-            <td class="bono">+$150</td>
-            <td style="font-size:12px;color:var(--gray);">$30K = 2 MST + 5 MDD. Tu promedio actual es $18.9K. +60% sobre base.</td>
-            <td class="alcanzable alcanzable-reto">⚡ Reto real</td>
-          </tr>
-          <tr>
-            <td class="tipo">Bono hito facturación II</td>
-            <td class="hito">$50K facturados/mes</td>
-            <td class="bono">+$250</td>
-            <td style="font-size:12px;color:var(--gray);">$50K = 3–4 MST + varios MDD. +164% sobre tu base actual.</td>
-            <td class="alcanzable alcanzable-reto">⚡ Reto grande</td>
-          </tr>
-          <tr>
-            <td class="tipo">Bono hito facturación III</td>
-            <td class="hito">$80K facturados/mes</td>
-            <td class="bono">+$500</td>
-            <td style="font-size:12px;color:var(--gray);">$80K = 7–8 MST equivalentes. Zona de alto rendimiento.</td>
-            <td class="alcanzable alcanzable-grande">★ Alta apuesta</td>
-          </tr>
-          <tr>
-            <td class="tipo">Bono exceso ventas</td>
-            <td class="hito">Cada venta sobre 8</td>
-            <td class="bono">+$50/venta</td>
-            <td style="font-size:12px;color:var(--gray);">Premia consistencia por encima del promedio. Simple de calcular.</td>
-            <td class="alcanzable alcanzable-reto">⚡ Alcanzable</td>
-          </tr>
-          <tr class="note">
-            <td colspan="5">
-              💡 <strong>Argumento para Juanjo:</strong> "Cuando facturo $50K+, Luque recibe ~$47K netos (después de mi comisión). El bono de $250 representa 0.5% de esa utilidad. A ti te cuesta proporcional a lo que ya ganaste. Propongo que comparta ese 0.5–1% cuando excedo el umbral."
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+    <div class="bonos-wrap">
+      <div class="bonos-header">
+        <h3>Estructura de incentivos propuesta</h3>
+        <div class="bonos-total-wrap">
+          <div class="bonos-total-lbl">Máximo mensual con bonos</div>
+          <div class="bonos-total-val">+$600</div>
+        </div>
+      </div>
 
-  <!-- 5. ZOOM LIVES ROTACIÓN -->
-  <div class="section">
-    <div class="section-title">Zoom Lives — todos los miércoles 7pm</div>
-    <div class="lives-grid">
-      <div class="live-card maq">
-        <div class="live-mie">Miércoles 1</div>
-        <div class="live-tipo">Quiz · Máquina</div>
-        <div class="live-desc">Sin invitado. Cierre puro. Audiencia: leads tibios CRM + asistentes a clase.</div>
-        <div class="live-hora">7:00–8:30pm</div>
+      <div class="bonos-grid">
+
+        <div class="bono-item activo">
+          <div class="bono-tipo ventas">Hito de ventas · I</div>
+          <div class="bono-nombre">Consistencia básica</div>
+          <div class="bono-hito">≥ 10 ventas/mes</div>
+          <div class="bono-pago">
+            <div class="bono-pago-lbl">Bono fijo</div>
+            <div class="bono-pago-val">+$100</div>
+          </div>
+          <div class="bono-status reto" id="bs-v10">⚡ Reto alcanzable · necesitas +4 sobre promedio</div>
+        </div>
+
+        <div class="bono-item activo">
+          <div class="bono-tipo ventas">Hito de ventas · II</div>
+          <div class="bono-nombre">Exceso claro</div>
+          <div class="bono-hito">≥ 12 ventas/mes</div>
+          <div class="bono-pago">
+            <div class="bono-pago-lbl">Bono fijo (acumulable)</div>
+            <div class="bono-pago-val">+$150</div>
+          </div>
+          <div class="bono-status grande" id="bs-v12">★ Requiere sistema operando</div>
+        </div>
+
+        <div class="bono-item">
+          <div class="bono-tipo fact">Hito de facturación · I</div>
+          <div class="bono-nombre">Supera la base actual</div>
+          <div class="bono-hito">$25K facturados/mes</div>
+          <div class="bono-pago">
+            <div class="bono-pago-lbl">Bono fijo</div>
+            <div class="bono-pago-val">+$100</div>
+          </div>
+          <div class="bono-status reto" id="bs-f25">⚡ +$6K sobre tu promedio actual</div>
+        </div>
+
+        <div class="bono-item">
+          <div class="bono-tipo fact">Hito de facturación · II</div>
+          <div class="bono-nombre">Zona alta</div>
+          <div class="bono-hito">$35K facturados/mes</div>
+          <div class="bono-pago">
+            <div class="bono-pago-lbl">Bono fijo (acumulable)</div>
+            <div class="bono-pago-val">+$200</div>
+          </div>
+          <div class="bono-status grande" id="bs-f35">★ Requiere 3+ MST o 15+ MDD</div>
+        </div>
+
+        <div class="bono-item activo" style="border-bottom:none;">
+          <div class="bono-tipo mst">Maestría garantizada</div>
+          <div class="bono-nombre">⭐ El más fácil de aprobar</div>
+          <div class="bono-hito">≥ 1 MST/mes</div>
+          <div class="bono-pago">
+            <div class="bono-pago-lbl">Bono fijo</div>
+            <div class="bono-pago-val">+$150</div>
+          </div>
+          <div class="bono-status si" id="bs-mst">✓ Muy alcanzable — ya cerraste 1/mes en Q1</div>
+        </div>
+
+        <div class="bono-item" style="background:var(--cream-dark);border-bottom:none;display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-size:13px;color:var(--gray);line-height:1.7;font-style:italic;">
+            <strong style="color:var(--navy);font-style:normal;">Total máximo si activas todo:</strong><br>
+            Base $1,500 + MST $150 + ventas II $150 + fact II $200 = <span style="font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--green);">$2,000</span><br>
+            <span style="font-size:11px;">El plan está diseñado para que los bonos sean el puente exacto a la meta.</span>
+          </div>
+        </div>
+
       </div>
-      <div class="live-card inv">
-        <div class="live-mie">Miércoles 2</div>
-        <div class="live-tipo">Live con Invitado</div>
-        <div class="live-desc">Experto o caso de éxito. Mix de audiencia. Mayor convocatoria.</div>
-        <div class="live-hora">7:00–8:30pm</div>
-      </div>
-      <div class="live-card mst">
-        <div class="live-mie">Miércoles 3</div>
-        <div class="live-tipo">Quiz · Maestría</div>
-        <div class="live-desc">Sin invitado. Pitch MST puro. Audiencia: nurturing + estudiantes MDD día 30–60.</div>
-        <div class="live-hora">7:00–8:30pm</div>
-      </div>
-      <div class="live-card caso">
-        <div class="live-mie">Miércoles 4</div>
-        <div class="live-tipo">Caso de éxito</div>
-        <div class="live-desc">Alumno real + testimonio. Cierra con oferta 48h. Más poderoso para MST.</div>
-        <div class="live-hora">7:00–8:30pm</div>
+      <div class="bonos-argumento">
+        💬 <strong>Argumento para Juanjo:</strong> "Cuando facturo $35K, Luque recibe ~$33K netos después de mi comisión base. El bono de $200 representa 0.6% de esa utilidad. Propongo compartir ese porcentaje cuando excedo el umbral — solo pagas cuando ya ganaste más."
       </div>
     </div>
   </div>
 
-  <!-- 6. PLAN DE ACCIÓN SEMANAL -->
+  <!-- SIMULADOR INTERACTIVO -->
   <div class="section">
-    <div class="section-title">Plan de acción semanal <span>— rutina L–V</span></div>
+    <div class="simulador">
+      <h3>Simulador · activa los bonos que alcanzas</h3>
+      <div class="sim-toggle-row">
+        <button class="sim-toggle on" id="tog-mst" onclick="toggleBono('mst')">
+          ⭐ MST garantizada (+$150)
+        </button>
+        <button class="sim-toggle" id="tog-v10" onclick="toggleBono('v10')">
+          Ventas ≥10 (+$100)
+        </button>
+        <button class="sim-toggle" id="tog-v12" onclick="toggleBono('v12')">
+          Ventas ≥12 (+$150)
+        </button>
+        <button class="sim-toggle" id="tog-f25" onclick="toggleBono('f25')">
+          Fact ≥$25K (+$100)
+        </button>
+        <button class="sim-toggle" id="tog-f35" onclick="toggleBono('f35')">
+          Fact ≥$35K (+$200)
+        </button>
+      </div>
+
+      <div class="sim-desglose">
+        <div class="sim-bono-chip" id="chip-mst">
+          <div class="chip-val">+$150</div>
+          <div class="chip-lbl">MST</div>
+        </div>
+        <div class="sim-bono-chip" id="chip-v10">
+          <div class="chip-val">+$100</div>
+          <div class="chip-lbl">10 ventas</div>
+        </div>
+        <div class="sim-bono-chip" id="chip-v12">
+          <div class="chip-val">+$150</div>
+          <div class="chip-lbl">12 ventas</div>
+        </div>
+        <div class="sim-bono-chip" id="chip-f25">
+          <div class="chip-val">+$100</div>
+          <div class="chip-lbl">$25K fact</div>
+        </div>
+        <div class="sim-bono-chip" id="chip-f35">
+          <div class="chip-val">+$200</div>
+          <div class="chip-lbl">$35K fact</div>
+        </div>
+        <div class="sim-bono-chip" style="background:rgba(0,0,0,0.2);border:none;">
+          <div class="chip-val" id="chip-bonos-total" style="color:white;">+$0</div>
+          <div class="chip-lbl">Total bonos</div>
+        </div>
+      </div>
+
+      <div class="sim-resultado" style="margin-top:16px;">
+        <div class="sim-cell">
+          <div class="sim-cell-lbl">Comisión base (sliders)</div>
+          <div class="sim-cell-val" id="sim-base">$0</div>
+        </div>
+        <div class="sim-cell">
+          <div class="sim-cell-lbl">+ Bonos activos</div>
+          <div class="sim-cell-val" id="sim-bonos">+$0</div>
+        </div>
+        <div class="sim-cell">
+          <div class="sim-cell-lbl">Total mes</div>
+          <div class="sim-cell-val gold" id="sim-total">$0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAN SEMANAL -->
+  <div class="section">
+    <div class="section-title">Rutina semanal <span>— acciones L–V para llegar al número</span></div>
     <div class="semanas">
 
       <div class="semana-card">
-        <div class="semana-header">
-          Semana 1
-          <span class="semana-focus">Activar</span>
-        </div>
+        <div class="semana-header">Semana 1 <span class="semana-focus">Activar</span></div>
         <div class="semana-body">
-          <div class="semana-accion"><div class="dot dot-gold"></div>Contactar 171 asistentes a clase · 13/día mañana</div>
-          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/día tarde (3 MDD + 2 MST)</div>
-          <div class="semana-accion"><div class="dot dot-plum"></div>Mié 3: Live Máquina 7pm</div>
-          <div class="semana-accion"><div class="dot dot-green"></div>FUP día 0 a todos los zooms del día</div>
-          <div class="semana-accion"><div class="dot dot-gold"></div>Reactivar 21 Nurturing · 5/día</div>
-          <div class="semana-meta">Meta: <strong>2 cierres MST + 3 MDD</strong></div>
+          <div class="semana-accion"><div class="dot dot-gold"></div>171 asistentes clase · 13/día mañana · abrir Kryptonita</div>
+          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/tarde · 3 Máq + 2 MST</div>
+          <div class="semana-accion"><div class="dot dot-plum"></div>Mié: Live Máquina 7pm</div>
+          <div class="semana-accion"><div class="dot dot-green"></div>FUP día 0 a todos los zooms</div>
+          <div class="semana-meta">Meta: <strong>1 MST + 3 MDD</strong></div>
         </div>
       </div>
 
       <div class="semana-card">
-        <div class="semana-header">
-          Semana 2
-          <span class="semana-focus">FUP + cerrar</span>
-        </div>
+        <div class="semana-header">Semana 2 <span class="semana-focus">FUP + cerrar</span></div>
         <div class="semana-body">
-          <div class="semana-accion"><div class="dot dot-gold"></div>FUP día 3 y 5 de zooms semana 1</div>
-          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/día tarde</div>
-          <div class="semana-accion"><div class="dot dot-plum"></div>Mié 10: Live Invitado 7pm</div>
-          <div class="semana-accion"><div class="dot dot-gold"></div>Activar 87 tibios Barrido · 7/día</div>
-          <div class="semana-accion"><div class="dot dot-green"></div>Check-in estudiantes MDD día 30</div>
-          <div class="semana-meta">Meta acum: <strong>4 MST + 5 MDD</strong></div>
+          <div class="semana-accion"><div class="dot dot-gold"></div>FUP día 3 y 5 de sem 1 · presionar decisión</div>
+          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/tarde</div>
+          <div class="semana-accion"><div class="dot dot-plum"></div>Mié: Live Invitado 7pm</div>
+          <div class="semana-accion"><div class="dot dot-green"></div>87 Tibios Barrido · 7/día mañana</div>
+          <div class="semana-meta">Acum: <strong>1 MST + 6 MDD</strong></div>
         </div>
       </div>
 
       <div class="semana-card">
-        <div class="semana-header">
-          Semana 3
-          <span class="semana-focus">Cerrar · Ascender</span>
-        </div>
+        <div class="semana-header">Semana 3 <span class="semana-focus">Ascender</span></div>
         <div class="semana-body">
-          <div class="semana-accion"><div class="dot dot-gold"></div>FUP día 7 — cierre ventana leads sem 1</div>
-          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/día tarde</div>
-          <div class="semana-accion"><div class="dot dot-plum"></div>Mié 17: Live Maestría 7pm</div>
-          <div class="semana-accion"><div class="dot dot-green"></div>Invitar MDD día 60 a MST (ascensor)</div>
-          <div class="semana-accion"><div class="dot dot-gold"></div>Reactivar 64 no-shows · 15/semana</div>
-          <div class="semana-meta">Meta acum: <strong>5 MST + 8 MDD</strong></div>
+          <div class="semana-accion"><div class="dot dot-gold"></div>FUP día 7 · cerrar ventana sem 1</div>
+          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/tarde</div>
+          <div class="semana-accion"><div class="dot dot-plum"></div>Mié: Live Maestría 7pm</div>
+          <div class="semana-accion"><div class="dot dot-green"></div>Check-in MDD día 30 → invitar MST</div>
+          <div class="semana-meta">Acum: <strong>2 MST + 9 MDD</strong></div>
         </div>
       </div>
 
       <div class="semana-card">
-        <div class="semana-header">
-          Semana 4
-          <span class="semana-focus">Cerrar · Victory</span>
-        </div>
+        <div class="semana-header">Semana 4 <span class="semana-focus">Cerrar mes</span></div>
         <div class="semana-body">
-          <div class="semana-accion"><div class="dot dot-gold"></div>FUP final tibios barrido sem 2</div>
-          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/día tarde</div>
-          <div class="semana-accion"><div class="dot dot-plum"></div>Mié 24: Live Caso éxito 7pm</div>
-          <div class="semana-accion"><div class="dot dot-green"></div>Tibios CRM: 10/día con FUP 7 días</div>
-          <div class="semana-accion"><div class="dot dot-gold"></div>Viernes: Victory + métricas del mes</div>
-          <div class="semana-meta">Cierre mes: <strong>3 MST + 12 MDD ≈ $1,980</strong></div>
+          <div class="semana-accion"><div class="dot dot-gold"></div>FUP tibios barrido + Tibios CRM</div>
+          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/tarde</div>
+          <div class="semana-accion"><div class="dot dot-plum"></div>Mié: Live Caso éxito 7pm</div>
+          <div class="semana-accion"><div class="dot dot-green"></div>Victory viernes · métricas + bonos</div>
+          <div class="semana-meta">Cierre: <strong>2 MST + 12 MDD ≈ $1,680 base</strong></div>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -616,8 +731,23 @@
 </div>
 
 <script>
-function fmt(n) {
-  return '$' + Math.round(n).toLocaleString('en-US');
+// ============================================================
+// ESTADO BONOS
+// ============================================================
+const bonosState = { mst: true, v10: false, v12: false, f25: false, f35: false };
+const bonosVal = { mst: 150, v10: 100, v12: 150, f25: 100, f35: 200 };
+
+function toggleBono(key) {
+  bonosState[key] = !bonosState[key];
+  document.getElementById('tog-' + key).classList.toggle('on', bonosState[key]);
+  document.getElementById('chip-' + key).classList.toggle('active', bonosState[key]);
+  recalc();
+}
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+function fmtK(n) {
+  if (n >= 1000) return '$' + (n / 1000).toFixed(0) + 'K';
+  return '$' + Math.round(n);
 }
 
 function recalc() {
@@ -641,43 +771,98 @@ function recalc() {
   document.getElementById('rc-cdd').textContent = fmt(comCdd);
   document.getElementById('rc-total').textContent = fmt(totalCom);
   document.getElementById('rv-total').textContent = totalVentas;
-  document.getElementById('fact-total').textContent = fmt(totalFact);
-  document.getElementById('total-com').textContent = fmt(totalCom);
+  document.getElementById('fact-total').textContent = fmtK(totalFact);
+  document.getElementById('hdr-ventas').textContent = totalVentas;
+  document.getElementById('hdr-fact').textContent = fmtK(totalFact);
+  document.getElementById('hdr-com').textContent = fmt(totalCom);
 
-  // Barras
-  const metaVentas = 5;
-  const metaMinimo = 1200;
-  const metaDeseado = 2000;
-  const metaFactBono = 50000;
-
+  // ---- BARRAS ----
   // Ventas
-  const vPct = Math.min((totalVentas / metaVentas) * 100, 200);
-  const ventasFill = document.getElementById('bar-ventas-fill');
-  ventasFill.style.width = Math.min(vPct, 100) + '%';
-  ventasFill.className = 'progress-fill ' + (totalVentas >= metaVentas * 1.5 ? 'fill-green' : totalVentas >= metaVentas ? 'fill-gold' : 'fill-red');
-  document.getElementById('bar-ventas-lbl').textContent = totalVentas + ' ventas (' + vPct.toFixed(0) + '% de meta mín)';
+  const vPct = Math.min((totalVentas / 15) * 100, 100);
+  const bfV = document.getElementById('bf-ventas');
+  bfV.style.width = vPct + '%';
+  bfV.className = 'barra-fill ' + (totalVentas >= 12 ? 'fill-green' : totalVentas >= 10 ? 'fill-gold' : totalVentas >= 5 ? 'fill-orange' : 'fill-red');
+  document.getElementById('bv-ventas').textContent = totalVentas + ' ventas';
+  document.getElementById('bm-v5').className = 'barra-marker' + (totalVentas >= 5 ? ' reached' : '');
+  document.getElementById('bm-v10').className = 'barra-marker' + (totalVentas >= 10 ? ' reached' : totalVentas >= 5 ? ' active' : '');
+  document.getElementById('bm-v12').className = 'barra-marker' + (totalVentas >= 12 ? ' reached' : totalVentas >= 10 ? ' active' : '');
 
-  // Mínimo
-  const mPct = Math.min((totalCom / metaMinimo) * 100, 100);
-  const minimoFill = document.getElementById('bar-minimo-fill');
-  minimoFill.style.width = mPct + '%';
-  minimoFill.className = 'progress-fill ' + (totalCom >= metaMinimo ? 'fill-green' : totalCom >= metaMinimo * 0.7 ? 'fill-gold' : 'fill-red');
-  document.getElementById('bar-minimo-lbl').textContent = fmt(totalCom) + ' / ' + fmt(metaMinimo);
+  // Comisión
+  const cPct = Math.min((totalCom / 2000) * 100, 100);
+  const bfC = document.getElementById('bf-com');
+  bfC.style.width = cPct + '%';
+  bfC.className = 'barra-fill ' + (totalCom >= 1500 ? 'fill-green' : totalCom >= 1200 ? 'fill-gold' : totalCom >= 697 ? 'fill-orange' : 'fill-red');
+  document.getElementById('bv-com').textContent = fmt(totalCom);
+  document.getElementById('bm-c700').className = 'barra-marker' + (totalCom >= 697 ? ' reached' : '');
+  document.getElementById('bm-c1200').className = 'barra-marker' + (totalCom >= 1200 ? ' reached' : totalCom >= 697 ? ' active' : '');
+  document.getElementById('bm-c1500').className = 'barra-marker' + (totalCom >= 1500 ? ' reached' : totalCom >= 1200 ? ' active' : '');
 
-  // Deseado
-  const dPct = Math.min((totalCom / metaDeseado) * 100, 100);
-  const deseadoFill = document.getElementById('bar-deseado-fill');
-  deseadoFill.style.width = dPct + '%';
-  deseadoFill.className = 'progress-fill ' + (totalCom >= metaDeseado ? 'fill-green' : totalCom >= metaDeseado * 0.7 ? 'fill-gold' : 'fill-red');
-  document.getElementById('bar-deseado-lbl').textContent = fmt(totalCom) + ' / ' + fmt(metaDeseado);
+  // Facturación
+  const fPct = Math.min((totalFact / 50000) * 100, 100);
+  const bfF = document.getElementById('bf-fact');
+  bfF.style.width = fPct + '%';
+  bfF.className = 'barra-fill ' + (totalFact >= 35000 ? 'fill-green' : totalFact >= 25000 ? 'fill-gold' : totalFact >= 18925 ? 'fill-orange' : 'fill-red');
+  document.getElementById('bv-fact').textContent = fmtK(totalFact);
+  document.getElementById('bm-f19').className = 'barra-marker' + (totalFact >= 18925 ? ' reached' : '');
+  document.getElementById('bm-f25').className = 'barra-marker' + (totalFact >= 25000 ? ' reached' : totalFact >= 18925 ? ' active' : '');
+  document.getElementById('bm-f35').className = 'barra-marker' + (totalFact >= 35000 ? ' reached' : totalFact >= 25000 ? ' active' : '');
 
-  // Facturación bono
-  const fPct = Math.min((totalFact / metaFactBono) * 100, 100);
-  const factFill = document.getElementById('bar-fact-fill');
-  factFill.style.width = fPct + '%';
-  factFill.className = 'progress-fill ' + (totalFact >= metaFactBono ? 'fill-green' : totalFact >= metaFactBono * 0.6 ? 'fill-gold' : 'fill-red');
-  document.getElementById('bar-fact-lbl').textContent = fmt(totalFact) + ' / ' + fmt(metaFactBono);
+  // ---- BONOS ----
+  let totalBonos = 0;
+  Object.keys(bonosState).forEach(k => {
+    if (bonosState[k]) totalBonos += bonosVal[k];
+  });
+  const totalFinal = totalCom + totalBonos;
+
+  // Barra total con bonos
+  const tPct = Math.min((totalFinal / 2500) * 100, 100);
+  const bfT = document.getElementById('bf-total');
+  bfT.style.width = tPct + '%';
+  bfT.className = 'barra-fill ' + (totalFinal >= 2000 ? 'fill-green' : totalFinal >= 1500 ? 'fill-gold' : totalFinal >= 1200 ? 'fill-orange' : 'fill-red');
+  document.getElementById('bv-total').textContent = fmt(totalFinal);
+  document.getElementById('bm-t1500').className = 'barra-marker' + (totalFinal >= 1500 ? ' reached' : '');
+  document.getElementById('bm-t2000').className = 'barra-marker' + (totalFinal >= 2000 ? ' reached' : totalFinal >= 1500 ? ' active' : '');
+
+  // Status de bonos individuales
+  document.getElementById('bs-mst').textContent = mst >= 1
+    ? '✓ Ya cumpliste con ' + mst + ' MST'
+    : '⚠ Necesitas al menos 1 MST';
+  document.getElementById('bs-mst').className = 'bono-status ' + (mst >= 1 ? 'si' : 'reto');
+
+  document.getElementById('bs-v10').textContent = totalVentas >= 10
+    ? '✓ Alcanzado (' + totalVentas + ' ventas)'
+    : '⚡ Faltan ' + (10 - totalVentas) + ' ventas para activarlo';
+  document.getElementById('bs-v10').className = 'bono-status ' + (totalVentas >= 10 ? 'si' : 'reto');
+
+  document.getElementById('bs-v12').textContent = totalVentas >= 12
+    ? '✓ Alcanzado'
+    : '★ Faltan ' + (12 - totalVentas) + ' ventas';
+  document.getElementById('bs-v12').className = 'bono-status ' + (totalVentas >= 12 ? 'si' : 'grande');
+
+  document.getElementById('bs-f25').textContent = totalFact >= 25000
+    ? '✓ Alcanzado (' + fmtK(totalFact) + ')'
+    : '⚡ Faltan ' + fmtK(25000 - totalFact) + ' de facturación';
+  document.getElementById('bs-f25').className = 'bono-status ' + (totalFact >= 25000 ? 'si' : 'reto');
+
+  document.getElementById('bs-f35').textContent = totalFact >= 35000
+    ? '✓ Alcanzado'
+    : '★ Faltan ' + fmtK(35000 - totalFact);
+  document.getElementById('bs-f35').className = 'bono-status ' + (totalFact >= 35000 ? 'si' : 'grande');
+
+  // Simulador
+  document.getElementById('sim-base').textContent = fmt(totalCom);
+  document.getElementById('sim-bonos').textContent = '+' + fmt(totalBonos);
+  document.getElementById('sim-total').textContent = fmt(totalFinal);
+  document.getElementById('chip-bonos-total').textContent = '+' + fmt(totalBonos);
 }
+
+// Sync toggles con estado inicial
+Object.keys(bonosState).forEach(k => {
+  if (bonosState[k]) {
+    document.getElementById('tog-' + k).classList.add('on');
+    document.getElementById('chip-' + k).classList.add('active');
+  }
+});
 
 recalc();
 </script>
