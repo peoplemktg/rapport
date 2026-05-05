@@ -2,869 +2,1502 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Plan Mensual — David Muñoz</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Closer — v2</title>
 <style>
   :root {
-    --ink: #0F1729; --navy: #1F3864; --gold: #C9A84C; --gold-light: #F5EDD4;
-    --cream: #FAF7F0; --cream-dark: #F2EDE0; --gray: #6B7280; --gray-light: #E5E7EB;
-    --white: #FFFFFF; --green: #2D7A3B; --green-bg: #E8F5EA;
-    --red: #9B3939; --red-bg: #FBF0EE; --plum: #4A2668;
-    --orange: #C47020;
+    --bg: #f5f5f5;
+    --surface: #ffffff;
+    --surface2: #f0f0f0;
+    --surface3: #e8e8e8;
+    --border: #d8d8d8;
+    --border-strong: #aaaaaa;
+    --gold: #b8860b;
+    --gold-bg: #fdf6e3;
+    --gold-border: #e6c96a;
+    --green: #1a7a43;
+    --green-bg: #edf7f2;
+    --green-border: #7ecfa1;
+    --red: #c0392b;
+    --red-bg: #fdf0ee;
+    --red-border: #e8a49e;
+    --blue: #1a5fa8;
+    --blue-bg: #eef4fc;
+    --blue-border: #89b5e8;
+    --orange: #b85c00;
+    --orange-bg: #fdf3e8;
+    --orange-border: #e8b87a;
+    --text: #1a1a1a;
+    --text-dim: #555555;
+    --text-muted: #999999;
+    --radius: 8px;
+    --font: -apple-system, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-mono: 'Courier New', Courier, monospace;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--cream); color: var(--ink); line-height: 1.5; padding: 32px 20px;
-  }
-  .page { max-width: 1100px; margin: 0 auto; }
-
-  /* HEADER */
-  .header { text-align: center; margin-bottom: 36px; padding-bottom: 28px; position: relative; }
-  .header::after {
-    content: ''; position: absolute; bottom: 0; left: 50%;
-    transform: translateX(-50%); width: 80px; height: 2px; background: var(--gold);
-  }
-  .eyebrow { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 600; margin-bottom: 10px; }
-  h1 { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 700; color: var(--navy); letter-spacing: -1px; margin-bottom: 6px; }
-  h1 em { font-style: italic; color: var(--gold); font-weight: 400; }
-  .subtitle { font-size: 14px; color: var(--gray); }
-
-  /* SECCIÓN */
-  .section { margin-bottom: 36px; }
-  .section-title {
-    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600;
-    color: var(--navy); margin-bottom: 16px; padding-bottom: 10px;
-    border-bottom: 2px solid var(--gold-light);
-    display: flex; align-items: center; gap: 10px;
-  }
-  .section-title span { font-size: 13px; color: var(--gray); font-family: 'Inter', sans-serif; font-weight: 400; }
-
-  /* LÓGICA DEL PLAN */
-  .plan-logica {
-    display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr; gap: 0;
-    align-items: stretch; margin-bottom: 20px;
-  }
-  .logica-card {
-    background: var(--white); border: 1px solid var(--gray-light);
-    border-radius: 6px; padding: 20px 22px;
-  }
-  .logica-card.base { border-top: 4px solid var(--navy); }
-  .logica-card.bonos { border-top: 4px solid var(--gold); }
-  .logica-card.meta { border-top: 4px solid var(--green); background: var(--green-bg); }
-  .logica-arrow {
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; color: var(--gold); font-weight: 700;
-  }
-  .logica-label {
-    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--gray); font-weight: 600; margin-bottom: 8px;
-  }
-  .logica-card.base .logica-label { color: var(--navy); }
-  .logica-card.bonos .logica-label { color: var(--orange); }
-  .logica-card.meta .logica-label { color: var(--green); }
-  .logica-val {
-    font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700;
-    color: var(--navy); line-height: 1; margin-bottom: 8px;
-  }
-  .logica-card.bonos .logica-val { color: var(--orange); }
-  .logica-card.meta .logica-val { color: var(--green); font-size: 38px; }
-  .logica-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
-  .logica-desc strong { color: var(--ink); }
-
-  /* DIAGNÓSTICO */
-  .diag-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 14px; }
-  .diag-card {
-    background: var(--white); border: 1px solid var(--gray-light);
-    border-radius: 6px; padding: 16px 18px;
-  }
-  .diag-card.alert { border-left: 4px solid var(--red); }
-  .diag-card.ok { border-left: 4px solid var(--gold); }
-  .diag-card.target { border-left: 4px solid var(--green); }
-  .diag-label { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); font-weight: 600; margin-bottom: 6px; }
-  .diag-val { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; color: var(--navy); margin-bottom: 4px; line-height: 1; }
-  .diag-card.alert .diag-val { color: var(--red); }
-  .diag-sub { font-size: 11px; color: var(--gray); line-height: 1.4; }
-
-  .diag-insight {
-    background: var(--navy); color: white; padding: 14px 20px; border-radius: 6px;
-    font-size: 13px; line-height: 1.6;
-  }
-  .diag-insight strong { color: var(--gold); }
-
-  /* CALCULADORA */
-  .calc-wrap {
-    background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
-  }
-  .calc-header {
-    background: var(--navy); color: white; padding: 14px 24px;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
-  }
-  .calc-header h3 { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; }
-  .calc-totales {
-    display: flex; gap: 20px; align-items: center;
-  }
-  .calc-total-item { text-align: center; }
-  .calc-total-lbl { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: #A0A8B8; }
-  .calc-total-val { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: white; }
-  .calc-total-val.gold { color: var(--gold); font-size: 26px; }
-  .calc-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); }
-
-  .calc-body { padding: 20px 24px; }
-  .calc-row {
-    display: grid; grid-template-columns: 170px 1fr 70px 80px 80px 110px;
-    gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--gray-light);
-  }
-  .calc-row:last-child { border-bottom: none; }
-  .calc-row.header {
-    padding-bottom: 8px; font-size: 10px; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--gray); font-weight: 600;
-  }
-  .product-name { font-weight: 600; font-size: 13px; }
-  .product-name small { font-weight: 400; font-size: 11px; color: var(--gray); display: block; }
-
-  input[type="range"] { width: 100%; accent-color: var(--gold); cursor: pointer; }
-  .range-val {
-    font-family: 'Fraunces', serif; font-size: 22px; font-weight: 700;
-    color: var(--navy); text-align: center;
-  }
-  .ticket-cell { font-size: 11px; color: var(--gray); text-align: center; }
-  .result-cell {
-    font-family: 'Fraunces', serif; font-weight: 700; font-size: 16px;
-    color: var(--gold); text-align: right;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 13px;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* BARRAS ESCALONADAS */
-  .barras-wrap {
-    background: var(--white); border: 1px solid var(--gray-light);
-    border-radius: 6px; padding: 20px 24px;
+  /* TOP BAR */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: var(--text);
+    flex-shrink: 0;
   }
-  .barras-titulo {
-    font-family: 'Fraunces', serif; font-size: 17px; color: var(--navy);
-    margin-bottom: 18px; font-weight: 600;
-  }
-  .barra-item { margin-bottom: 16px; }
-  .barra-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 5px;
-  }
-  .barra-label { font-size: 12px; font-weight: 500; color: var(--ink); display: flex; align-items: center; gap: 8px; }
-  .barra-badge {
-    font-size: 9px; padding: 2px 6px; border-radius: 3px; font-weight: 700;
-    letter-spacing: 0.5px; text-transform: uppercase;
-  }
-  .badge-base { background: var(--cream-dark); color: var(--navy); }
-  .badge-bono { background: var(--gold-light); color: #7A6614; }
-  .badge-meta { background: var(--green-bg); color: var(--green); }
-  .barra-val { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 700; color: var(--navy); }
-  .barra-track {
-    height: 12px; background: var(--gray-light); border-radius: 6px;
-    overflow: visible; position: relative;
-  }
-  .barra-fill {
-    height: 100%; border-radius: 6px; transition: width 0.35s ease; position: relative;
-  }
-  .fill-red { background: linear-gradient(90deg, var(--red) 0%, #C25555 100%); }
-  .fill-orange { background: linear-gradient(90deg, var(--orange) 0%, #E0943A 100%); }
-  .fill-gold { background: linear-gradient(90deg, var(--gold) 0%, #E2C26B 100%); }
-  .fill-green { background: linear-gradient(90deg, var(--green) 0%, #4FAC5C 100%); }
-  .barra-markers { display: flex; justify-content: space-between; margin-top: 3px; }
-  .barra-marker { font-size: 9px; color: var(--gray); }
-  .barra-marker.active { color: var(--gold); font-weight: 700; }
-  .barra-marker.reached { color: var(--green); font-weight: 700; }
 
-  /* BONOS PROPUESTA */
-  .bonos-wrap {
-    background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
+  .topbar-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #ffffff;
   }
-  .bonos-header {
-    padding: 16px 24px; background: var(--plum); color: white;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .bonos-header h3 { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; }
-  .bonos-total-wrap { text-align: right; }
-  .bonos-total-lbl { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #D4C4E8; }
-  .bonos-total-val { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--gold); }
 
-  .bonos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-  .bono-item {
-    padding: 16px 20px; border-right: 1px solid var(--gray-light);
-    border-bottom: 1px solid var(--gray-light);
+  .timer-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
-  .bono-item:nth-child(even) { border-right: none; }
-  .bono-item:nth-last-child(-n+2) { border-bottom: none; }
-  .bono-item.activo { background: linear-gradient(135deg, #FAF5E8 0%, white 50%); }
-  .bono-tipo {
-    font-size: 9px; letter-spacing: 1.2px; text-transform: uppercase;
-    font-weight: 700; margin-bottom: 4px;
+
+  .timer {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    min-width: 56px;
   }
-  .bono-tipo.ventas { color: var(--navy); }
-  .bono-tipo.fact { color: var(--orange); }
-  .bono-tipo.mst { color: var(--green); }
-  .bono-nombre { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 8px; }
-  .bono-hito {
-    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: var(--navy);
+
+  .timer.warning { color: #f5c842; }
+  .timer.danger { color: #ff6b6b; animation: blink 1s infinite; }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .btn {
+    border: none;
+    border-radius: 5px;
+    padding: 5px 11px;
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+
+  .btn-start { background: #2ecc71; color: #fff; }
+  .btn-start:hover { background: #27ae60; }
+  .btn-stop { background: #e74c3c; color: #fff; }
+  .btn-reset { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+  .btn-reset:hover { background: rgba(255,255,255,0.25); }
+
+  /* PHASE TABS */
+  .phases {
+    display: flex;
+    background: var(--surface);
+    border-bottom: 2px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .phase-tab {
+    flex: 1;
+    padding: 0;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+    border-right: 1px solid var(--border);
+    border-bottom: 3px solid transparent;
+    background: var(--surface2);
+    user-select: none;
+  }
+
+  .phase-tab:last-child { border-right: none; }
+
+  .phase-tab-inner {
+    padding: 8px 4px 7px;
+  }
+
+  .phase-tab:hover { background: var(--surface); }
+
+  .phase-tab.active {
+    background: var(--surface);
+    border-bottom-color: var(--text);
+  }
+
+  .phase-tab.done {
+    background: var(--green-bg);
+    border-bottom-color: var(--green);
+  }
+
+  .phase-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-muted);
+    display: block;
+    letter-spacing: 0.05em;
+  }
+
+  .phase-name {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .phase-tab.active .phase-name { color: var(--text); }
+  .phase-tab.done .phase-name { color: var(--green); }
+  .phase-tab.done .phase-num { color: var(--green); }
+
+  /* MAIN */
+  .main {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel {
+    display: none;
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .panel.active { display: flex; }
+
+  .panel::-webkit-scrollbar { width: 4px; }
+  .panel::-webkit-scrollbar-track { background: transparent; }
+  .panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 13px;
+  }
+
+  .card.gold { border-color: var(--gold-border); background: var(--gold-bg); }
+  .card.green { border-color: var(--green-border); background: var(--green-bg); }
+  .card.red { border-color: var(--red-border); background: var(--red-bg); }
+  .card.blue { border-color: var(--blue-border); background: var(--blue-bg); }
+  .card.orange { border-color: var(--orange-border); background: var(--orange-bg); }
+
+  .card-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 9px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card.gold .card-title { color: var(--gold); }
+  .card.green .card-title { color: var(--green); }
+  .card.red .card-title { color: var(--red); }
+  .card.blue .card-title { color: var(--blue); }
+  .card.orange .card-title { color: var(--orange); }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 8px 0 5px;
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 8px 0; }
+
+  /* Q ITEMS */
+  .q-list { display: flex; flex-direction: column; gap: 4px; }
+
+  .q-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 8px 10px;
+    background: var(--surface2);
+    border-radius: 6px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+
+  .q-item:hover { border-color: var(--border-strong); background: var(--surface); }
+  .q-item.used { opacity: 0.38; }
+  .q-item.used .q-text { text-decoration: line-through; }
+
+  .q-bullet {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-strong);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    transition: all 0.12s;
+  }
+
+  .q-item.used .q-bullet {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+
+  .q-text {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .q-tag {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+
+  .tag-spin { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+  .tag-voss { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-border); }
+  .tag-hurt { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+  .tag-urg  { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+
+  /* CHECKLIST */
+  .check-list { display: flex; flex-direction: column; gap: 4px; }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 8px 10px;
+    background: var(--surface2);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.12s;
+    border: 1.5px solid transparent;
+  }
+
+  .check-item:hover { border-color: var(--border-strong); }
+
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1.5px solid var(--border-strong);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    transition: all 0.12s;
+    margin-top: 1px;
+    color: transparent;
+  }
+
+  .check-item.checked .check-box {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+
+  .check-text {
+    font-size: 12.5px;
+    color: var(--text);
+    flex: 1;
+    line-height: 1.45;
+  }
+
+  .check-item.checked .check-text {
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+
+  /* SIGNAL BAR */
+  .signal-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 11px;
+    background: var(--surface2);
+    border-radius: 6px;
     margin-bottom: 4px;
   }
-  .bono-pago {
-    display: flex; justify-content: space-between; align-items: center;
-    background: var(--cream); padding: 8px 12px; border-radius: 4px; margin-top: 8px;
-  }
-  .bono-pago-lbl { font-size: 11px; color: var(--gray); }
-  .bono-pago-val {
-    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: var(--gold);
-  }
-  .bono-status {
-    font-size: 10px; margin-top: 6px; font-weight: 600; letter-spacing: 0.5px;
-  }
-  .bono-status.si { color: var(--green); }
-  .bono-status.reto { color: var(--orange); }
-  .bono-status.grande { color: var(--plum); }
 
-  .bonos-argumento {
-    padding: 16px 20px; background: #F5EBF8; border-top: 1px solid #D4C4E8;
-    font-size: 12px; color: var(--plum); line-height: 1.6;
-  }
-  .bonos-argumento strong { color: var(--navy); }
+  .signal-label { font-size: 12px; color: var(--text-dim); font-weight: 600; }
 
-  /* SIMULADOR FINAL */
-  .simulador {
-    background: linear-gradient(135deg, var(--navy) 0%, #2D4A7A 100%);
-    border-radius: 6px; padding: 24px 28px; color: white;
-  }
-  .simulador h3 {
-    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600;
-    color: var(--gold); margin-bottom: 18px;
-  }
-  .sim-toggle-row {
-    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;
-  }
-  .sim-toggle {
-    display: flex; align-items: center; gap: 8px; cursor: pointer;
-    padding: 8px 14px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px;
-    font-size: 12px; color: #D0D4DE; transition: all 0.2s; background: transparent;
-    font-family: 'Inter', sans-serif;
-  }
-  .sim-toggle.on {
-    background: var(--gold); color: var(--navy); border-color: var(--gold); font-weight: 700;
-  }
-  .sim-toggle input { margin: 0; cursor: pointer; accent-color: var(--navy); }
+  .signal-dots { display: flex; gap: 5px; align-items: center; }
 
-  .sim-resultado {
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;
-    background: rgba(0,0,0,0.2); border-radius: 6px; overflow: hidden;
-    margin-top: 4px;
-  }
-  .sim-cell { padding: 16px 20px; border-right: 1px solid rgba(255,255,255,0.1); text-align: center; }
-  .sim-cell:last-child { border-right: none; }
-  .sim-cell-lbl { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: #A0A8B8; margin-bottom: 6px; font-weight: 600; }
-  .sim-cell-val { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; color: white; }
-  .sim-cell-val.gold { color: var(--gold); font-size: 36px; }
-
-  .sim-desglose {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 16px;
-  }
-  .sim-bono-chip {
-    background: rgba(255,255,255,0.08); border-radius: 4px; padding: 10px 12px;
-    font-size: 11px; color: #D0D4DE; text-align: center; border: 1px solid rgba(255,255,255,0.1);
+  .signal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-strong);
+    background: var(--surface);
     transition: all 0.2s;
   }
-  .sim-bono-chip.active { background: rgba(201,168,76,0.15); border-color: var(--gold); color: white; }
-  .sim-bono-chip .chip-val { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; color: var(--gold); }
-  .sim-bono-chip .chip-lbl { font-size: 10px; color: #A0A8B8; margin-top: 2px; }
 
-  /* PLAN SEMANAL */
-  .semanas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-  .semana-card {
-    background: var(--white); border: 1px solid var(--gray-light); border-radius: 6px; overflow: hidden;
-  }
-  .semana-header {
-    padding: 12px 16px; background: var(--cream-dark);
-    font-weight: 700; font-size: 13px; color: var(--navy);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .semana-focus {
-    font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); font-weight: 700;
-  }
-  .semana-body { padding: 12px 14px; }
-  .semana-accion {
-    display: flex; gap: 7px; padding: 5px 0; font-size: 11px;
-    border-bottom: 1px dashed var(--gray-light); align-items: flex-start; line-height: 1.3;
-  }
-  .semana-accion:last-child { border-bottom: none; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 3px; flex-shrink: 0; }
-  .dot-gold { background: var(--gold); }
-  .dot-navy { background: var(--navy); }
-  .dot-green { background: var(--green); }
-  .dot-plum { background: var(--plum); }
-  .semana-meta {
-    margin-top: 10px; padding: 7px 10px; background: var(--cream);
-    border-radius: 4px; font-size: 10px; color: var(--gray);
-  }
-  .semana-meta strong { color: var(--navy); }
+  .signal-dot.lit { background: var(--green); border-color: var(--green); }
 
-  /* FOOTER */
-  .footer {
-    text-align: center; margin-top: 48px; padding-top: 24px;
-    border-top: 1px solid var(--gray-light); font-size: 12px; color: var(--gray);
+  .signal-gate {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green);
+    background: var(--green-bg);
+    border: 1px solid var(--green-border);
+    border-radius: 5px;
+    padding: 6px 10px;
+    margin-top: 4px;
+    display: none;
   }
-  .footer em { color: var(--gold); font-style: italic; }
+
+  .signal-gate.visible { display: block; }
+
+  /* PHRASES */
+  .phrase-list { display: flex; flex-direction: column; gap: 5px; }
+
+  .phrase-item {
+    padding: 9px 11px;
+    background: var(--surface2);
+    border-radius: 6px;
+    border-left: 3px solid var(--gold-border);
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.12s;
+    position: relative;
+  }
+
+  .phrase-item:hover { background: var(--gold-bg); border-left-color: var(--gold); }
+  .phrase-item.red-phrase { border-left-color: var(--red-border); }
+  .phrase-item.red-phrase:hover { background: var(--red-bg); border-left-color: var(--red); }
+  .phrase-item.green-phrase { border-left-color: var(--green-border); }
+  .phrase-item.green-phrase:hover { background: var(--green-bg); border-left-color: var(--green); }
+  .phrase-item.orange-phrase { border-left-color: var(--orange-border); }
+  .phrase-item.orange-phrase:hover { background: var(--orange-bg); border-left-color: var(--orange); }
+
+  .phrase-copy {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    float: right;
+    margin-left: 8px;
+    margin-top: 2px;
+  }
+
+  .phrase-item.copied .phrase-copy { color: var(--green); }
+  .phrase-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  /* PAIN METER */
+  .pain-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+  }
+
+  .pain-lbl { font-size: 11px; color: var(--text-dim); font-weight: 600; white-space: nowrap; }
+
+  .pain-track {
+    flex: 1;
+    height: 8px;
+    background: var(--surface3);
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .pain-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #27ae60, #f39c12, #e74c3c);
+    transition: width 0.25s;
+  }
+
+  .pain-val {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    min-width: 18px;
+    text-align: right;
+  }
+
+  /* STORY */
+  .story-steps { display: flex; flex-direction: column; gap: 4px; }
+
+  .story-step {
+    display: flex;
+    gap: 9px;
+    font-size: 12px;
+    color: var(--text-dim);
+    align-items: flex-start;
+    padding: 3px 0;
+  }
+
+  .step-num-sm {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--blue);
+    flex-shrink: 0;
+    padding-top: 1px;
+    min-width: 16px;
+  }
+
+  /* CLOSE STEPS */
+  .close-steps { display: flex; flex-direction: column; gap: 6px; }
+
+  .close-step {
+    display: flex;
+    gap: 11px;
+    align-items: flex-start;
+    padding: 10px 11px;
+    background: var(--surface2);
+    border-radius: 7px;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+
+  .close-step.current {
+    border-left-color: var(--gold);
+    background: var(--gold-bg);
+    border: 1.5px solid var(--gold-border);
+    border-left: 3px solid var(--gold);
+  }
+
+  .close-step.done-step {
+    opacity: 0.4;
+    border-left-color: var(--green);
+  }
+
+  .step-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    border: 1.5px solid var(--border-strong);
+  }
+
+  .close-step.current .step-circle {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+  }
+
+  .close-step.done-step .step-circle {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+
+  .step-content { flex: 1; }
+
+  .step-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 3px;
+  }
+
+  .close-step.current .step-label { color: var(--gold); }
+
+  .step-phrase {
+    font-size: 12.5px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .step-note {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-style: italic;
+  }
+
+  /* FOLLOW-UP DAYS */
+  .fup-list { display: flex; flex-direction: column; gap: 5px; }
+
+  .fup-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 9px 11px;
+    background: var(--surface2);
+    border-radius: 6px;
+    border-left: 3px solid var(--border);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+
+  .fup-item:hover { border-left-color: var(--blue); background: var(--blue-bg); }
+  .fup-item.fup-done { opacity: 0.4; }
+  .fup-item.fup-done .fup-text { text-decoration: line-through; }
+
+  .fup-day {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+    flex-shrink: 0;
+    min-width: 34px;
+    padding-top: 1px;
+  }
+
+  .fup-content { flex: 1; }
+  .fup-text { font-size: 12.5px; color: var(--text); line-height: 1.45; font-weight: 600; }
+  .fup-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+
+  .fup-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1.5px solid var(--border-strong);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 1px;
+    color: transparent;
+    transition: all 0.12s;
+  }
+
+  .fup-item.fup-done .fup-check { background: var(--green); border-color: var(--green); color: #fff; }
+
+  /* URGENCY BADGES */
+  .urg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+
+  .urg-badge.escasez { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+  .urg-badge.bono { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+  .urg-badge.deadline { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-border); }
+
+  /* NOTES */
+  .notes-area {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 9px 11px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 12.5px;
+    line-height: 1.6;
+    resize: none;
+    min-height: 72px;
+    outline: none;
+    transition: border-color 0.12s;
+  }
+
+  .notes-area:focus { border-color: var(--gold); }
+  .notes-area::placeholder { color: var(--text-muted); }
+
+  /* INFO NOTE */
+  .info-note {
+    font-size: 11px;
+    color: var(--text-dim);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 5px 9px;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  /* RESET */
+  .reset-all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px;
+    background: transparent;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 7px;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.12s;
+    font-family: var(--font);
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+  }
+
+  .reset-all:hover { border-color: var(--red); color: var(--red); background: var(--red-bg); }
+
+  /* BOTTOM NAV */
+  .bottomnav {
+    display: flex;
+    gap: 6px;
+    padding: 9px 14px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .nav-btn {
+    flex: 1;
+    padding: 9px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border-strong);
+    background: var(--surface2);
+    color: var(--text-dim);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.12s;
+    font-family: var(--font);
+    text-transform: uppercase;
+  }
+
+  .nav-btn:hover { border-color: var(--text); color: var(--text); background: var(--surface); }
+
+  .nav-btn.next {
+    background: var(--text);
+    border-color: var(--text);
+    color: #fff;
+  }
+
+  .nav-btn.next:hover { background: #333; }
+
+  /* PHASE 5 & 6 TAB EXTRAS */
+  .phase-tab.orange .phase-name { color: var(--orange); }
+  .phase-tab.orange { border-bottom-color: var(--orange); background: var(--orange-bg); }
+
 </style>
 </head>
 <body>
-<div class="page">
 
-  <div class="header">
-    <div class="eyebrow">David Muñoz · Luque Academy · Q2 2026</div>
-    <h1>Plan <em>mensual</em> de trabajo</h1>
-    <p class="subtitle">Base consistente $1.2K–$1.5K · Bonos por hitos te llevan a $2K+</p>
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-title">⚡ PANEL CLOSER</div>
+  <div class="timer-block">
+    <div class="timer" id="timer">00:00</div>
+    <button class="btn btn-start" id="timerBtn" onclick="toggleTimer()">START</button>
+    <button class="btn btn-reset" onclick="resetTimer()">↺</button>
   </div>
+</div>
 
-  <!-- LÓGICA DEL PLAN -->
-  <div class="section">
-    <div class="plan-logica">
-      <div class="logica-card base">
-        <div class="logica-label">Paso 1 · Base alcanzable</div>
-        <div class="logica-val">$1.2K–$1.5K</div>
-        <div class="logica-desc">
-          <strong>2 MST + 8–10 MDD</strong> en 100 citas Quiz/mes. Esto ya excede el mínimo de 5 ventas y produce ingreso predecible. No depende de eventos ni lanzamientos.
-        </div>
-      </div>
-      <div class="logica-arrow">+</div>
-      <div class="logica-card bonos">
-        <div class="logica-label">Paso 2 · Bonos por hitos</div>
-        <div class="logica-val">+$500–$600</div>
-        <div class="logica-desc">
-          Al exceder hitos de <strong>ventas</strong> (10+, 12+) y <strong>facturación</strong> ($25K, $35K), se activan bonos. Juanjo solo los paga cuando ya ganó más.
-        </div>
-      </div>
-      <div class="logica-arrow">=</div>
-      <div class="logica-card meta">
-        <div class="logica-label">Meta deseada</div>
-        <div class="logica-val">$2,000+</div>
-        <div class="logica-desc">
-          Base + bonos = $2,000–$2,100 en el escenario objetivo. Con todos los bonos activos en escenario optimista: hasta <strong>$2,500</strong>.
-        </div>
-      </div>
+<!-- PHASES -->
+<div class="phases">
+  <div class="phase-tab active" onclick="goPhase(0)" id="tab0">
+    <div class="phase-tab-inner">
+      <span class="phase-num">01</span>
+      <span class="phase-name">RAPPORT</span>
     </div>
   </div>
-
-  <!-- DÓNDE ESTOY -->
-  <div class="section">
-    <div class="section-title">Punto de partida real <span>— datos Feb–Abr 2026</span></div>
-    <div class="diag-grid">
-      <div class="diag-card ok">
-        <div class="diag-label">Ventas promedio/mes</div>
-        <div class="diag-val">6</div>
-        <div class="diag-sub">Mínimo cumplido. Mix: 4.3 Máquina + 1 Maestría + 0.7 Códigos/mes</div>
-      </div>
-      <div class="diag-card alert">
-        <div class="diag-label">Comisión actual/mes</div>
-        <div class="diag-val">$697</div>
-        <div class="diag-sub">Gap a meta base = $503 → se resuelve cambiando mix a 2 MST/mes</div>
-      </div>
-      <div class="diag-card alert">
-        <div class="diag-label">Facturación actual/mes</div>
-        <div class="diag-val">$18,925</div>
-        <div class="diag-sub">Hito bono mínimo en $25K → gap de $6K = ~1 MST extra</div>
-      </div>
-    </div>
-    <div class="diag-insight">
-      <strong>Lo que falta para llegar a la base de $1.5K:</strong> pasar de 1 MST a 2 MST/mes (+$300) y de 4 MDD a 10 MDD/mes (+$540). Total: +$840 sobre el promedio actual. El no-show de Quiz al 58% es la fuga principal — bajarlo a 35% ya da las citas efectivas necesarias para lograrlo.
+  <div class="phase-tab" onclick="goPhase(1)" id="tab1">
+    <div class="phase-tab-inner">
+      <span class="phase-num">02</span>
+      <span class="phase-name">EXCAVAR</span>
     </div>
   </div>
+  <div class="phase-tab" onclick="goPhase(2)" id="tab2">
+    <div class="phase-tab-inner">
+      <span class="phase-num">03</span>
+      <span class="phase-name">SEÑALES</span>
+    </div>
+  </div>
+  <div class="phase-tab" onclick="goPhase(3)" id="tab3">
+    <div class="phase-tab-inner">
+      <span class="phase-num">04</span>
+      <span class="phase-name">CERRAR</span>
+    </div>
+  </div>
+  <div class="phase-tab" onclick="goPhase(4)" id="tab4">
+    <div class="phase-tab-inner">
+      <span class="phase-num">05</span>
+      <span class="phase-name">SIN PAGO</span>
+    </div>
+  </div>
+  <div class="phase-tab" onclick="goPhase(5)" id="tab5">
+    <div class="phase-tab-inner">
+      <span class="phase-num">06</span>
+      <span class="phase-name">FOLLOW-UP</span>
+    </div>
+  </div>
+</div>
 
-  <!-- CALCULADORA -->
-  <div class="section">
-    <div class="section-title">Calculadora de comisión <span>— mueve los sliders</span></div>
-    <div class="calc-wrap">
-      <div class="calc-header">
-        <h3>Comisión base mensual</h3>
-        <div class="calc-totales">
-          <div class="calc-total-item">
-            <div class="calc-total-lbl">Ventas</div>
-            <div class="calc-total-val" id="hdr-ventas">8</div>
-          </div>
-          <div class="calc-divider"></div>
-          <div class="calc-total-item">
-            <div class="calc-total-lbl">Facturación</div>
-            <div class="calc-total-val" id="hdr-fact">$0</div>
-          </div>
-          <div class="calc-divider"></div>
-          <div class="calc-total-item">
-            <div class="calc-total-lbl">Comisión base</div>
-            <div class="calc-total-val gold" id="hdr-com">$0</div>
-          </div>
+<!-- MAIN -->
+<div class="main">
+
+  <!-- FASE 1: RAPPORT -->
+  <div class="panel active" id="panel0">
+    <div class="card gold">
+      <div class="card-title">🤝 APERTURA — 2 a 4 min</div>
+      <div class="q-list">
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">1</div>
+          <div class="q-text">Nombre, ciudad, algo personal — referencia algo que ya sabes de él.</div>
+          <span class="q-tag tag-voss">RAPPORT</span>
         </div>
-      </div>
-      <div class="calc-body">
-        <div class="calc-row header">
-          <div>Producto</div><div>Cantidad</div><div>Ventas</div>
-          <div>Ticket</div><div>Com/v</div><div style="text-align:right">Ingreso</div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">2</div>
+          <div class="q-text">"Cuéntame — ¿qué te llevó a agendar esta llamada hoy?"</div>
+          <span class="q-tag tag-spin">ABRE</span>
         </div>
-        <div class="calc-row">
-          <div class="product-name">Maestría del Dinero<small>Pitch principal · $10K</small></div>
-          <input type="range" id="sl-mst" min="0" max="10" value="2" oninput="recalc()">
-          <div class="range-val" id="rv-mst">2</div>
-          <div class="ticket-cell">$10,000</div>
-          <div class="ticket-cell">$300</div>
-          <div class="result-cell" id="rc-mst">$600</div>
-        </div>
-        <div class="calc-row">
-          <div class="product-name">Máquina del Dinero<small>Downsell · $1,995</small></div>
-          <input type="range" id="sl-mdd" min="0" max="25" value="8" oninput="recalc()">
-          <div class="range-val" id="rv-mdd">8</div>
-          <div class="ticket-cell">$1,995</div>
-          <div class="ticket-cell">$90</div>
-          <div class="result-cell" id="rc-mdd">$720</div>
-        </div>
-        <div class="calc-row">
-          <div class="product-name">Códigos del Dinero<small>Downsell FUP · $420</small></div>
-          <input type="range" id="sl-cdd" min="0" max="10" value="1" oninput="recalc()">
-          <div class="range-val" id="rv-cdd">1</div>
-          <div class="ticket-cell">$420</div>
-          <div class="ticket-cell">$30</div>
-          <div class="result-cell" id="rc-cdd">$30</div>
-        </div>
-        <div class="calc-row" style="border-top:2px solid var(--gold-light);">
-          <div class="product-name" style="font-weight:700;color:var(--navy);">TOTAL</div>
-          <div></div>
-          <div class="range-val" id="rv-total" style="font-size:18px;">11</div>
-          <div class="ticket-cell" style="font-family:'Fraunces',serif;font-weight:700;color:var(--navy);" id="fact-total">—</div>
-          <div></div>
-          <div class="result-cell" style="font-size:22px;color:var(--green);" id="rc-total">$1,350</div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">3</div>
+          <div class="q-text">Upfront contract: "Te hago preguntas. Si puedo ayudarte, te lo digo. Si no, también. ¿Te parece?"</div>
+          <span class="q-tag tag-voss">PERMISO</span>
         </div>
       </div>
     </div>
-
-    <!-- BARRAS DE PROGRESO ESCALONADAS -->
-    <div class="barras-wrap" style="margin-top:16px;">
-      <div class="barras-titulo">¿Dónde estás con estos números?</div>
-
-      <div class="barra-item">
-        <div class="barra-header">
-          <div class="barra-label">
-            Ventas totales
-            <span class="barra-badge badge-base">mín: 5</span>
-          </div>
-          <div class="barra-val" id="bv-ventas">—</div>
-        </div>
-        <div class="barra-track">
-          <div class="barra-fill" id="bf-ventas" style="width:0%"></div>
-        </div>
-        <div class="barra-markers">
-          <span class="barra-marker">0</span>
-          <span class="barra-marker" id="bm-v5">5 mín</span>
-          <span class="barra-marker" id="bm-v10">10 bono I</span>
-          <span class="barra-marker" id="bm-v12">12 bono II</span>
-          <span class="barra-marker">15+</span>
-        </div>
-      </div>
-
-      <div class="barra-item">
-        <div class="barra-header">
-          <div class="barra-label">
-            Comisión base
-            <span class="barra-badge badge-base">base: $1.2K–$1.5K</span>
-          </div>
-          <div class="barra-val" id="bv-com">—</div>
-        </div>
-        <div class="barra-track">
-          <div class="barra-fill" id="bf-com" style="width:0%"></div>
-        </div>
-        <div class="barra-markers">
-          <span class="barra-marker">$0</span>
-          <span class="barra-marker" id="bm-c700">$697 actual</span>
-          <span class="barra-marker" id="bm-c1200">$1.2K base</span>
-          <span class="barra-marker" id="bm-c1500">$1.5K meta</span>
-          <span class="barra-marker">$2K+</span>
-        </div>
-      </div>
-
-      <div class="barra-item">
-        <div class="barra-header">
-          <div class="barra-label">
-            Facturación mensual
-            <span class="barra-badge badge-bono">hitos: $25K · $35K</span>
-          </div>
-          <div class="barra-val" id="bv-fact">—</div>
-        </div>
-        <div class="barra-track">
-          <div class="barra-fill" id="bf-fact" style="width:0%"></div>
-        </div>
-        <div class="barra-markers">
-          <span class="barra-marker">$0</span>
-          <span class="barra-marker" id="bm-f19">$18.9K actual</span>
-          <span class="barra-marker" id="bm-f25">$25K bono I</span>
-          <span class="barra-marker" id="bm-f35">$35K bono II</span>
-          <span class="barra-marker">$50K+</span>
-        </div>
-      </div>
-
-      <div class="barra-item">
-        <div class="barra-header">
-          <div class="barra-label">
-            Total con bonos activos
-            <span class="barra-badge badge-meta">meta: $2,000</span>
-          </div>
-          <div class="barra-val" id="bv-total">—</div>
-        </div>
-        <div class="barra-track">
-          <div class="barra-fill" id="bf-total" style="width:0%"></div>
-        </div>
-        <div class="barra-markers">
-          <span class="barra-marker">$0</span>
-          <span class="barra-marker">$1K</span>
-          <span class="barra-marker" id="bm-t1500">$1.5K base</span>
-          <span class="barra-marker" id="bm-t2000">$2K meta</span>
-          <span class="barra-marker">$2.5K</span>
-        </div>
-      </div>
+    <div class="card">
+      <div class="card-title">📝 NOTAS — prospecto</div>
+      <textarea class="notes-area" placeholder="Nombre · industria · cómo llegó · algo personal que mencionó…"></textarea>
     </div>
   </div>
 
-  <!-- PROPUESTA DE BONOS -->
-  <div class="section">
-    <div class="section-title">Propuesta de bonos <span>— para negociar con Juanjo</span></div>
-    <div class="bonos-wrap">
-      <div class="bonos-header">
-        <h3>Estructura de incentivos propuesta</h3>
-        <div class="bonos-total-wrap">
-          <div class="bonos-total-lbl">Máximo mensual con bonos</div>
-          <div class="bonos-total-val">+$600</div>
+  <!-- FASE 2: EXCAVAR -->
+  <div class="panel" id="panel1">
+
+    <div class="card">
+      <div class="card-title">⚡ PREGUNTAS — toca para marcar usada</div>
+
+      <div class="section-label">Situación — máx 2</div>
+      <div class="q-list">
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">→</div>
+          <div class="q-text">"¿Qué está pasando en tu negocio que te tiene buscando esto ahora?"</div>
+          <span class="q-tag tag-spin">SITUA</span>
+        </div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">→</div>
+          <div class="q-text">"¿Qué es lo que más te frustra de cómo está hoy?"</div>
+          <span class="q-tag tag-spin">PROB</span>
         </div>
       </div>
 
-      <div class="bonos-grid">
-
-        <div class="bono-item activo">
-          <div class="bono-tipo ventas">Hito de ventas · I</div>
-          <div class="bono-nombre">Consistencia básica</div>
-          <div class="bono-hito">≥ 10 ventas/mes</div>
-          <div class="bono-pago">
-            <div class="bono-pago-lbl">Bono fijo</div>
-            <div class="bono-pago-val">+$100</div>
-          </div>
-          <div class="bono-status reto" id="bs-v10">⚡ Reto alcanzable · necesitas +4 sobre promedio</div>
+      <div class="divider"></div>
+      <div class="section-label">Profundización — usa VARIAS, en cualquier orden</div>
+      <div class="q-list">
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">→</div>
+          <div class="q-text">"¿Cómo te afecta eso en tu día a día?"</div>
+          <span class="q-tag tag-hurt">IMPLI</span>
         </div>
-
-        <div class="bono-item activo">
-          <div class="bono-tipo ventas">Hito de ventas · II</div>
-          <div class="bono-nombre">Exceso claro</div>
-          <div class="bono-hito">≥ 12 ventas/mes</div>
-          <div class="bono-pago">
-            <div class="bono-pago-lbl">Bono fijo (acumulable)</div>
-            <div class="bono-pago-val">+$150</div>
-          </div>
-          <div class="bono-status grande" id="bs-v12">★ Requiere sistema operando</div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">→</div>
+          <div class="q-text">"¿Cómo te está afectando en lo personal — energía, familia, tiempo?"</div>
+          <span class="q-tag tag-hurt">IMPLI</span>
         </div>
-
-        <div class="bono-item">
-          <div class="bono-tipo fact">Hito de facturación · I</div>
-          <div class="bono-nombre">Supera la base actual</div>
-          <div class="bono-hito">$25K facturados/mes</div>
-          <div class="bono-pago">
-            <div class="bono-pago-lbl">Bono fijo</div>
-            <div class="bono-pago-val">+$100</div>
-          </div>
-          <div class="bono-status reto" id="bs-f25">⚡ +$6K sobre tu promedio actual</div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">→</div>
+          <div class="q-text">"¿Qué has intentado antes que no funcionó?"</div>
+          <span class="q-tag tag-spin">CICLO</span>
         </div>
-
-        <div class="bono-item">
-          <div class="bono-tipo fact">Hito de facturación · II</div>
-          <div class="bono-nombre">Zona alta</div>
-          <div class="bono-hito">$35K facturados/mes</div>
-          <div class="bono-pago">
-            <div class="bono-pago-lbl">Bono fijo (acumulable)</div>
-            <div class="bono-pago-val">+$200</div>
-          </div>
-          <div class="bono-status grande" id="bs-f35">★ Requiere 3+ MST o 15+ MDD</div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">→</div>
+          <div class="q-text">"¿Cuánto tiempo lo intentaste así?" → "¿Y qué más intentaste?"</div>
+          <span class="q-tag tag-spin">CICLO</span>
         </div>
-
-        <div class="bono-item activo" style="border-bottom:none;">
-          <div class="bono-tipo mst">Maestría garantizada</div>
-          <div class="bono-nombre">⭐ El más fácil de aprobar</div>
-          <div class="bono-hito">≥ 1 MST/mes</div>
-          <div class="bono-pago">
-            <div class="bono-pago-lbl">Bono fijo</div>
-            <div class="bono-pago-val">+$150</div>
-          </div>
-          <div class="bono-status si" id="bs-mst">✓ Muy alcanzable — ya cerraste 1/mes en Q1</div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">→</div>
+          <div class="q-text">"¿Qué pasa si en 12 meses sigues exactamente igual?"</div>
+          <span class="q-tag tag-hurt">COSTO</span>
         </div>
-
-        <div class="bono-item" style="background:var(--cream-dark);border-bottom:none;display:flex;flex-direction:column;justify-content:center;">
-          <div style="font-size:13px;color:var(--gray);line-height:1.7;font-style:italic;">
-            <strong style="color:var(--navy);font-style:normal;">Total máximo si activas todo:</strong><br>
-            Base $1,500 + MST $150 + ventas II $150 + fact II $200 = <span style="font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--green);">$2,000</span><br>
-            <span style="font-size:11px;">El plan está diseñado para que los bonos sean el puente exacto a la meta.</span>
-          </div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">→</div>
+          <div class="q-text">"¿Cuánto dirías que te cuesta esto al mes — en dinero o en tiempo?"</div>
+          <span class="q-tag tag-hurt">CUANT</span>
         </div>
-
-      </div>
-      <div class="bonos-argumento">
-        💬 <strong>Argumento para Juanjo:</strong> "Cuando facturo $35K, Luque recibe ~$33K netos después de mi comisión base. El bono de $200 representa 0.6% de esa utilidad. Propongo compartir ese porcentaje cuando excedo el umbral — solo pagas cuando ya ganaste más."
-      </div>
-    </div>
-  </div>
-
-  <!-- SIMULADOR INTERACTIVO -->
-  <div class="section">
-    <div class="simulador">
-      <h3>Simulador · activa los bonos que alcanzas</h3>
-      <div class="sim-toggle-row">
-        <button class="sim-toggle on" id="tog-mst" onclick="toggleBono('mst')">
-          ⭐ MST garantizada (+$150)
-        </button>
-        <button class="sim-toggle" id="tog-v10" onclick="toggleBono('v10')">
-          Ventas ≥10 (+$100)
-        </button>
-        <button class="sim-toggle" id="tog-v12" onclick="toggleBono('v12')">
-          Ventas ≥12 (+$150)
-        </button>
-        <button class="sim-toggle" id="tog-f25" onclick="toggleBono('f25')">
-          Fact ≥$25K (+$100)
-        </button>
-        <button class="sim-toggle" id="tog-f35" onclick="toggleBono('f35')">
-          Fact ≥$35K (+$200)
-        </button>
-      </div>
-
-      <div class="sim-desglose">
-        <div class="sim-bono-chip" id="chip-mst">
-          <div class="chip-val">+$150</div>
-          <div class="chip-lbl">MST</div>
-        </div>
-        <div class="sim-bono-chip" id="chip-v10">
-          <div class="chip-val">+$100</div>
-          <div class="chip-lbl">10 ventas</div>
-        </div>
-        <div class="sim-bono-chip" id="chip-v12">
-          <div class="chip-val">+$150</div>
-          <div class="chip-lbl">12 ventas</div>
-        </div>
-        <div class="sim-bono-chip" id="chip-f25">
-          <div class="chip-val">+$100</div>
-          <div class="chip-lbl">$25K fact</div>
-        </div>
-        <div class="sim-bono-chip" id="chip-f35">
-          <div class="chip-val">+$200</div>
-          <div class="chip-lbl">$35K fact</div>
-        </div>
-        <div class="sim-bono-chip" style="background:rgba(0,0,0,0.2);border:none;">
-          <div class="chip-val" id="chip-bonos-total" style="color:white;">+$0</div>
-          <div class="chip-lbl">Total bonos</div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">→</div>
+          <div class="q-text">"¿Qué tendría que pasar para que este sea el año en que lo resuelves?"</div>
+          <span class="q-tag tag-spin">NEED</span>
         </div>
       </div>
 
-      <div class="sim-resultado" style="margin-top:16px;">
-        <div class="sim-cell">
-          <div class="sim-cell-lbl">Comisión base (sliders)</div>
-          <div class="sim-cell-val" id="sim-base">$0</div>
+      <div class="divider"></div>
+      <div class="section-label">Etiquetas Voss — después de que habla, siempre con silencio</div>
+      <div class="q-list">
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">E</div>
+          <div class="q-text">"Parece que llevas tiempo dándole vueltas a esto…" → SILENCIO 4 seg</div>
+          <span class="q-tag tag-voss">LABEL</span>
         </div>
-        <div class="sim-cell">
-          <div class="sim-cell-lbl">+ Bonos activos</div>
-          <div class="sim-cell-val" id="sim-bonos">+$0</div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">E</div>
+          <div class="q-text">"Suena como si ya probaste varias cosas y ninguna cerró el hueco…" → SILENCIO</div>
+          <span class="q-tag tag-voss">LABEL</span>
         </div>
-        <div class="sim-cell">
-          <div class="sim-cell-lbl">Total mes</div>
-          <div class="sim-cell-val gold" id="sim-total">$0</div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">E</div>
+          <div class="q-text">"Da la impresión de que hay algo de frustración ahí…" → SILENCIO</div>
+          <span class="q-tag tag-voss">LABEL</span>
+        </div>
+        <div class="q-item" onclick="toggleUsed(this)">
+          <div class="q-bullet">M</div>
+          <div class="q-text">Mirror: repite sus últimas 3 palabras en tono suave → SILENCIO 4 seg</div>
+          <span class="q-tag tag-voss">MIRROR</span>
         </div>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-title">📊 NIVEL DE DOLOR</div>
+      <div class="pain-row">
+        <span class="pain-lbl">Bajo</span>
+        <div class="pain-track" onclick="setPain(event)">
+          <div class="pain-fill" id="painFill" style="width: 30%"></div>
+        </div>
+        <span class="pain-lbl">Alto</span>
+        <span class="pain-val" id="painVal">3</span>
+      </div>
+      <div class="info-note">Si está bajo 7 — sigue excavando. No transiciones todavía.</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title">🎯 HISTORIA — estructura 60-90 seg</div>
+      <div class="story-steps">
+        <div class="story-step"><span class="step-num-sm">01</span>Etiqueta primero → escucha → pausa</div>
+        <div class="story-step"><span class="step-num-sm">02</span>"Me recuerda a [Nombre], un cliente en [industria similar]…"</div>
+        <div class="story-step"><span class="step-num-sm">03</span>Su problema — igual al de él</div>
+        <div class="story-step"><span class="step-num-sm">04</span>Qué hicimos — corto, sin detallar todo</div>
+        <div class="story-step"><span class="step-num-sm">05</span>Resultado concreto — número o cambio real</div>
+        <div class="story-step"><span class="step-num-sm">06</span>Termina: "¿Te resuena algo de eso?"</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📝 DOLOR — anota con sus palabras</div>
+      <textarea class="notes-area" placeholder="Dolor exacto · cuánto le cuesta · qué intentó · usa esto en el resumen y en el cierre…"></textarea>
+    </div>
+
   </div>
 
-  <!-- PLAN SEMANAL -->
-  <div class="section">
-    <div class="section-title">Rutina semanal <span>— acciones L–V para llegar al número</span></div>
-    <div class="semanas">
+  <!-- FASE 3: SEÑALES -->
+  <div class="panel" id="panel2">
 
-      <div class="semana-card">
-        <div class="semana-header">Semana 1 <span class="semana-focus">Activar</span></div>
-        <div class="semana-body">
-          <div class="semana-accion"><div class="dot dot-gold"></div>171 asistentes clase · 13/día mañana · abrir Kryptonita</div>
-          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/tarde · 3 Máq + 2 MST</div>
-          <div class="semana-accion"><div class="dot dot-plum"></div>Mié: Live Máquina 7pm</div>
-          <div class="semana-accion"><div class="dot dot-green"></div>FUP día 0 a todos los zooms</div>
-          <div class="semana-meta">Meta: <strong>1 MST + 3 MDD</strong></div>
+    <div class="card green">
+      <div class="card-title">✅ SEÑALES DE COMPRA — marca las que aparecen</div>
+      <div class="signal-bar">
+        <span class="signal-label">Señales detectadas</span>
+        <div class="signal-dots" id="signalDots">
+          <div class="signal-dot" id="sd0"></div>
+          <div class="signal-dot" id="sd1"></div>
+          <div class="signal-dot" id="sd2"></div>
+          <div class="signal-dot" id="sd3"></div>
+          <div class="signal-dot" id="sd4"></div>
+          <div class="signal-dot" id="sd5"></div>
         </div>
       </div>
-
-      <div class="semana-card">
-        <div class="semana-header">Semana 2 <span class="semana-focus">FUP + cerrar</span></div>
-        <div class="semana-body">
-          <div class="semana-accion"><div class="dot dot-gold"></div>FUP día 3 y 5 de sem 1 · presionar decisión</div>
-          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/tarde</div>
-          <div class="semana-accion"><div class="dot dot-plum"></div>Mié: Live Invitado 7pm</div>
-          <div class="semana-accion"><div class="dot dot-green"></div>87 Tibios Barrido · 7/día mañana</div>
-          <div class="semana-meta">Acum: <strong>1 MST + 6 MDD</strong></div>
+      <div class="signal-gate" id="signalGate">✅ 3 o más señales — ya puedes transicionar al cierre</div>
+      <div class="divider"></div>
+      <div class="check-list" id="signalChecks">
+        <div class="check-item" onclick="toggleSignal(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Usa lenguaje futuro: "cuando empecemos…", "nuestro equipo…"</div>
         </div>
-      </div>
-
-      <div class="semana-card">
-        <div class="semana-header">Semana 3 <span class="semana-focus">Ascender</span></div>
-        <div class="semana-body">
-          <div class="semana-accion"><div class="dot dot-gold"></div>FUP día 7 · cerrar ventana sem 1</div>
-          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/tarde</div>
-          <div class="semana-accion"><div class="dot dot-plum"></div>Mié: Live Maestría 7pm</div>
-          <div class="semana-accion"><div class="dot dot-green"></div>Check-in MDD día 30 → invitar MST</div>
-          <div class="semana-meta">Acum: <strong>2 MST + 9 MDD</strong></div>
+        <div class="check-item" onclick="toggleSignal(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Pregunta por precio, plazos o formas de pago</div>
         </div>
-      </div>
-
-      <div class="semana-card">
-        <div class="semana-header">Semana 4 <span class="semana-focus">Cerrar mes</span></div>
-        <div class="semana-body">
-          <div class="semana-accion"><div class="dot dot-gold"></div>FUP tibios barrido + Tibios CRM</div>
-          <div class="semana-accion"><div class="dot dot-navy"></div>5 citas Quiz/tarde</div>
-          <div class="semana-accion"><div class="dot dot-plum"></div>Mié: Live Caso éxito 7pm</div>
-          <div class="semana-accion"><div class="dot dot-green"></div>Victory viernes · métricas + bonos</div>
-          <div class="semana-meta">Cierre: <strong>2 MST + 12 MDD ≈ $1,680 base</strong></div>
+        <div class="check-item" onclick="toggleSignal(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Pide casos o referencias de clientes parecidos</div>
+        </div>
+        <div class="check-item" onclick="toggleSignal(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Dijo "exacto / eso es / así es" tras tu resumen</div>
+        </div>
+        <div class="check-item" onclick="toggleSignal(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Verbalizó el costo de no actuar con sus propias palabras</div>
+        </div>
+        <div class="check-item" onclick="toggleSignal(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Te pregunta por ti, tu experiencia o tu empresa</div>
         </div>
       </div>
     </div>
+
+    <div class="card red">
+      <div class="card-title">🔴 ANTI-SEÑALES — si aparecen, vuelve a excavar</div>
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">"Interesante…" sin profundizar</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">"Lo pienso / lo consulto" — temprano en la llamada</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Preguntas de información sin emocionarse</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Mira el reloj, otra pantalla, responde monosilábico</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card gold">
+      <div class="card-title">🌉 FRASES DE TRANSICIÓN — toca para copiar</div>
+      <div class="phrase-list">
+        <div class="phrase-item" onclick="copyPhrase(this, 'Creo que tengo una imagen clara de dónde estás. ¿Te gustaría ver cómo lo trabajamos específicamente?')">
+          <span class="phrase-copy">copiar</span>
+          "Creo que tengo una imagen clara de dónde estás. ¿Te gustaría ver cómo lo trabajamos?"
+        </div>
+        <div class="phrase-item" onclick="copyPhrase(this, 'Basado en todo lo que me cuentas, tengo dos o tres ideas concretas para atacar esto. ¿Tiene sentido que te las muestre?')">
+          <span class="phrase-copy">copiar</span>
+          "Basado en lo que me cuentas, tengo ideas concretas. ¿Te las muestro?"
+        </div>
+        <div class="phrase-item" onclick="copyPhrase(this, 'Si te dijera que tengo algo diseñado exactamente para tu situación, ¿lo verías?')">
+          <span class="phrase-copy">copiar</span>
+          "Si te dijera que tengo algo diseñado para tu situación, ¿lo verías?"
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔁 3 CONFIRMACIONES ANTES DE PRESENTAR</div>
+      <div class="check-list">
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Confirmó el problema — dijo "exacto / así es"</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Confirmó la consecuencia / costo de no actuar</div>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box">✓</div>
+          <div class="check-text">Confirmó que quiere cambiar esto ahora</div>
+        </div>
+      </div>
+      <div class="info-note">Los 3 confirmados → presenta la solución</div>
+    </div>
+
   </div>
 
-  <div class="footer">
-    David Muñoz · Luque Academy · <em>Plan mensual Q2 2026</em>
+  <!-- FASE 4: CERRAR EN ZOOM -->
+  <div class="panel" id="panel3">
+    <div class="card">
+      <div class="card-title">🏁 PASOS DEL CIERRE — toca el círculo para avanzar</div>
+      <div class="close-steps" id="closeSteps">
+
+        <div class="close-step current" onclick="advanceStep(0)">
+          <div class="step-circle">1</div>
+          <div class="step-content">
+            <div class="step-label">PRESENTA LA SOLUCIÓN</div>
+            <div class="step-phrase">"Lo que hacemos es [resultado exacto al dolor que dijo] — no el método, el resultado."</div>
+            <div class="step-note">Máx 5-8 min. Usa SUS palabras del dolor.</div>
+          </div>
+        </div>
+
+        <div class="close-step" onclick="advanceStep(1)">
+          <div class="step-circle">2</div>
+          <div class="step-content">
+            <div class="step-label">TRIAL CLOSE</div>
+            <div class="step-phrase">"¿Esto se ve como algo que te ayudaría a resolver lo que platicamos?" → SILENCIO</div>
+            <div class="step-note">No rellenes el silencio. Espera.</div>
+          </div>
+        </div>
+
+        <div class="close-step" onclick="advanceStep(2)">
+          <div class="step-circle">3</div>
+          <div class="step-content">
+            <div class="step-label">PRECIO — ancla al dolor</div>
+            <div class="step-phrase">"La inversión es [precio]. Me dijiste que esto te cuesta [X/mes]. Esto lo resuelve." → SILENCIO</div>
+            <div class="step-note">El que habla primero después del precio, pierde.</div>
+          </div>
+        </div>
+
+        <div class="close-step" onclick="advanceStep(3)">
+          <div class="step-circle">4</div>
+          <div class="step-content">
+            <div class="step-label">MANEJO DE OBJECIÓN</div>
+            <div class="step-phrase">"¿Cuál es tu mayor preocupación ahora mismo?" → escucha → etiqueta → pregunta calibrada</div>
+            <div class="step-note">Acknowledge → Associate → Ask</div>
+          </div>
+        </div>
+
+        <div class="close-step" onclick="advanceStep(4)">
+          <div class="step-circle">5</div>
+          <div class="step-content">
+            <div class="step-label">CIERRE + LINK EN VIVO</div>
+            <div class="step-phrase">"¿Arrancamos? Te mando el link ahora mismo para que quedes registrado mientras hablamos."</div>
+            <div class="step-note">Manda el link de pago DURANTE el Zoom — no después.</div>
+          </div>
+        </div>
+
+        <div class="close-step" onclick="advanceStep(5)">
+          <div class="step-circle">6</div>
+          <div class="step-content">
+            <div class="step-label">REFUERZO POST-SÍ</div>
+            <div class="step-phrase">"Tomaste la decisión correcta. El primer paso es [acción concreta]. Hoy mismo te llega [acceso/email]."</div>
+            <div class="step-note">Previene remordimiento. Confirma próximo paso inmediato.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title">🔴 OBJECIONES FRECUENTES — toca para copiar respuesta</div>
+      <div class="phrase-list">
+        <div class="phrase-item red-phrase" onclick="copyPhrase(this, '¿Qué parte específicamente necesitas pensar? Porque si no le encuentras sentido ahora, tampoco en 2 días. ¿Qué te está frenando realmente?')">
+          <span class="phrase-copy">copiar</span>
+          <strong>"Déjame pensarlo"</strong>
+          <div class="phrase-sub">"¿Qué parte necesitas pensar? Si no tiene sentido ahora, no lo tendrá en 2 días. ¿Qué te frena?"</div>
+        </div>
+        <div class="phrase-item red-phrase" onclick="copyPhrase(this, '¿Quién más estaría involucrado? ¿Podemos incluirlo en la próxima llamada para que esté en la misma página?')">
+          <span class="phrase-copy">copiar</span>
+          <strong>"Lo consulto con mi socio/pareja"</strong>
+          <div class="phrase-sub">"¿Podemos incluirlo en la próxima llamada? Así queda en la misma página."</div>
+        </div>
+        <div class="phrase-item red-phrase" onclick="copyPhrase(this, 'Entiendo. Me dijiste que esto te cuesta X al mes. Si lo resolvemos en 90 días, ¿cómo ves esa inversión comparada con lo que estás perdiendo?')">
+          <span class="phrase-copy">copiar</span>
+          <strong>"Es mucho dinero"</strong>
+          <div class="phrase-sub">"Me dijiste que te cuesta X al mes. En 90 días ya lo recuperas. ¿Cómo lo ves?"</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FASE 5: CIERRE SIN PAGO -->
+  <div class="panel" id="panel4">
+
+    <div class="card orange">
+      <div class="card-title">⚠️ NO CERRÓ EN EL ZOOM — cómo terminar bien</div>
+      <div class="phrase-list">
+        <div class="phrase-item orange-phrase" onclick="copyPhrase(this, 'Entiendo perfectamente. Solo dime — ¿estás evaluando esto seriamente o todavía estás en modo exploración?')">
+          <span class="phrase-copy">copiar</span>
+          <strong>Primero — calibra la intención:</strong>
+          <div class="phrase-sub">"¿Estás evaluando esto en serio o todavía en modo exploración?" → Si dice serio: sigue. Si no: downsell o cierra amable.</div>
+        </div>
+        <div class="phrase-item orange-phrase" onclick="copyPhrase(this, 'Perfecto. ¿Cuándo específicamente vas a tomar la decisión? Dame una fecha concreta.')">
+          <span class="phrase-copy">copiar</span>
+          <strong>Cierra con fecha concreta:</strong>
+          <div class="phrase-sub">"¿Cuándo específicamente vas a tomar la decisión? Dame una fecha." — No "la próxima semana", pide un día.</div>
+        </div>
+        <div class="phrase-item orange-phrase" onclick="copyPhrase(this, 'Bien. Te propongo esto: el [fecha] te marco a las [hora]. Si para entonces seguimos siendo la mejor opción para ti, arrancamos. ¿Te parece?')">
+          <span class="phrase-copy">copiar</span>
+          <strong>Agenda el siguiente paso EN LA LLAMADA:</strong>
+          <div class="phrase-sub">"El [día] te llamo a las [hora]. Si para entonces es la mejor opción, arrancamos. ¿Te parece?" — No termines sin una fecha agendada.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card gold">
+      <div class="card-title">💰 DOWNSELL — si MDD no cierra</div>
+      <div class="phrase-list">
+        <div class="phrase-item" onclick="copyPhrase(this, 'Entiendo que MDD puede ser un paso grande ahora mismo. Tengo algo que te puede dar resultados más rápido con menos inversión. ¿Quieres que te lo cuente?')">
+          <span class="phrase-copy">copiar</span>
+          <strong>Introduce Códigos ($420):</strong>
+          <div class="phrase-sub">"Tengo algo que te da resultados más rápido con menos inversión. ¿Quieres que te lo cuente?" — Solo si ya confirmó que quiere resolver el problema.</div>
+        </div>
+        <div class="phrase-item" onclick="copyPhrase(this, 'La diferencia es que Códigos te da X y Y en menos tiempo. MDD es la solución completa, pero si quieres empezar a moverte ya, Códigos es el primer paso.')">
+          <span class="phrase-copy">copiar</span>
+          <strong>Diferencia Códigos vs MDD:</strong>
+          <div class="phrase-sub">"Códigos te mueve en menos tiempo. MDD es la solución completa. ¿Con cuál empezamos?"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💬 CIERRES DE URGENCIA — para la llamada de decisión</div>
+
+      <div class="section-label">Escasez real</div>
+      <div class="urg-badge escasez">🔴 ESCASEZ</div>
+      <div class="phrase-list">
+        <div class="phrase-item red-phrase" onclick="copyPhrase(this, 'Tenemos cupos limitados este mes — solo quedan X lugares disponibles. Después de eso el precio sube o la cohorte cierra.')">
+          <span class="phrase-copy">copiar</span>
+          "Quedan solo X cupos este mes — después cierra la cohorte."
+          <div class="phrase-sub">Solo úsalo si es real. Si mientes en esto, destruyes la confianza.</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Bonos con fecha límite</div>
+      <div class="urg-badge bono">🎁 BONO</div>
+      <div class="phrase-list">
+        <div class="phrase-item orange-phrase" onclick="copyPhrase(this, 'Si decides antes del [fecha], te incluyo [bono específico] sin costo adicional. Después de esa fecha ya no puedo garantizarlo.')">
+          <span class="phrase-copy">copiar</span>
+          "Si decides antes del [fecha], te incluyo [bono] gratis. Después no puedo garantizarlo."
+          <div class="phrase-sub">El bono debe ser algo que ellos valoren — sesión extra, acceso, consultoría, comunidad.</div>
+        </div>
+        <div class="phrase-item orange-phrase" onclick="copyPhrase(this, 'La sesión de onboarding 1 a 1 conmigo solo la doy a los que entran esta semana. Los que entran después van directo al grupo.')">
+          <span class="phrase-copy">copiar</span>
+          "La sesión 1 a 1 conmigo solo es para los que entran esta semana."
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Deadline de precio</div>
+      <div class="urg-badge deadline">📅 PRECIO</div>
+      <div class="phrase-list">
+        <div class="phrase-item" onclick="copyPhrase(this, 'El precio actual es [X]. El [fecha] sube a [Y]. Si entras antes, quedas con el precio de hoy aunque empieces después.')">
+          <span class="phrase-copy">copiar</span>
+          "El precio sube el [fecha] de X a Y. Entras hoy, quedas con precio actual."
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Costo de no decidir — reactivar el dolor</div>
+      <div class="urg-badge escasez">💸 COSTO</div>
+      <div class="phrase-list">
+        <div class="phrase-item red-phrase" onclick="copyPhrase(this, 'Me dijiste que esto te cuesta X al mes. Llevamos Y días desde que hablamos. Eso ya son Z pesos que podrías haber recuperado.')">
+          <span class="phrase-copy">copiar</span>
+          "Me dijiste que te cuesta X al mes. Ya llevan Y días — eso son $Z que no recuperaste."
+          <div class="phrase-sub">Calcúlalo en vivo con sus propias palabras.</div>
+        </div>
+        <div class="phrase-item red-phrase" onclick="copyPhrase(this, '¿Qué tendría que cambiar en los próximos 6 meses para que esto se resuelva solo, sin hacer nada diferente?')">
+          <span class="phrase-copy">copiar</span>
+          "¿Qué cambiaría en 6 meses si no haces nada diferente?"
+          <div class="phrase-sub">Pregunta calibrada — que él mismo responda que nada cambia.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📝 NOTAS — cierre pendiente</div>
+      <textarea class="notes-area" placeholder="Fecha de decisión prometida · objeción real · cuánto le cuesta al mes · bono que puedes ofrecer…"></textarea>
+    </div>
+
+  </div>
+
+  <!-- FASE 6: FOLLOW-UP -->
+  <div class="panel" id="panel5">
+
+    <div class="card blue">
+      <div class="card-title">📱 SECUENCIA DE FOLLOW-UP — toca para marcar enviado</div>
+
+      <div class="fup-list">
+
+        <div class="fup-item" onclick="toggleFup(this)">
+          <div class="fup-day">DÍA 0</div>
+          <div class="fup-content">
+            <div class="fup-text">WhatsApp — mismo día, 1-2h después</div>
+            <div class="fup-sub">Resumen de la llamada + siguiente paso acordado + fecha concreta. Sin link aún — consolida lo que hablaron.</div>
+          </div>
+          <div class="fup-check">✓</div>
+        </div>
+
+        <div class="fup-item" onclick="toggleFup(this)">
+          <div class="fup-day">DÍA 2</div>
+          <div class="fup-content">
+            <div class="fup-text">Audio WhatsApp — 60 a 90 segundos</div>
+            <div class="fup-sub">"Pensando en lo que platicamos me acordé de [cliente similar]. Te cuento en 2 minutos qué hicimos." — Personal, íntimo, muestra que pensaste en él.</div>
+          </div>
+          <div class="fup-check">✓</div>
+        </div>
+
+        <div class="fup-item" onclick="toggleFup(this)">
+          <div class="fup-day">DÍA 4</div>
+          <div class="fup-content">
+            <div class="fup-text">Caso de éxito — WhatsApp o email</div>
+            <div class="fup-sub">Cliente parecido a él, mismo dolor, resultado concreto. "No para presionarte — para que tengas más contexto antes de decidir."</div>
+          </div>
+          <div class="fup-check">✓</div>
+        </div>
+
+        <div class="fup-item" onclick="toggleFup(this)">
+          <div class="fup-day">DÍA 6</div>
+          <div class="fup-content">
+            <div class="fup-text">Pregunta calibrada — reactiva el dolor</div>
+            <div class="fup-sub">"[Nombre], no te quiero apurar. Solo una pregunta: ¿qué es lo que te tiene en pausa?" → Espera respuesta. No llenes el silencio.</div>
+          </div>
+          <div class="fup-check">✓</div>
+        </div>
+
+        <div class="fup-item" onclick="toggleFup(this)">
+          <div class="fup-day">DÍA 9</div>
+          <div class="fup-content">
+            <div class="fup-text">Urgencia — bono o fecha límite</div>
+            <div class="fup-sub">"El [fecha] se cierra el precio / el bono / el cupo. No te escribo para presionarte — te aviso porque me interesa que entres con las mejores condiciones."</div>
+          </div>
+          <div class="fup-check">✓</div>
+        </div>
+
+        <div class="fup-item" onclick="toggleFup(this)">
+          <div class="fup-day">DÍA 12</div>
+          <div class="fup-content">
+            <div class="fup-text">Video corto o Loom — máx 90 seg</div>
+            <div class="fup-sub">Cara a cara. "Te grabo esto porque me parece más claro que escribirlo." Responde la duda principal que dejó sin resolver en el Zoom.</div>
+          </div>
+          <div class="fup-check">✓</div>
+        </div>
+
+        <div class="fup-item" onclick="toggleFup(this)">
+          <div class="fup-day">DÍA 15</div>
+          <div class="fup-content">
+            <div class="fup-text">Costo de no decidir — en números</div>
+            <div class="fup-sub">"Me dijiste que te cuesta X al mes. Ya llevamos 15 días — son $[15 días × costo diario]. Solo para que lo tengas presente."</div>
+          </div>
+          <div class="fup-check">✓</div>
+        </div>
+
+        <div class="fup-item" onclick="toggleFup(this)">
+          <div class="fup-day">DÍA 18</div>
+          <div class="fup-content">
+            <div class="fup-text">Pregunta de cierre directa</div>
+            <div class="fup-sub">"[Nombre], ¿qué necesitarías ver hoy para que esto sea un sí? Dímelo con confianza — si no es el momento, también me lo dices."</div>
+          </div>
+          <div class="fup-check">✓</div>
+        </div>
+
+        <div class="fup-item" onclick="toggleFup(this)">
+          <div class="fup-day">DÍA 21</div>
+          <div class="fup-content">
+            <div class="fup-text">Breakup — pregunta orientada al "no"</div>
+            <div class="fup-sub">"[Nombre], asumo que esto ya no es prioridad para ti. ¿Debería cerrar el archivo y dejar de escribirte?" → Genera la respuesta más honesta. Si dice "no, sí me interesa" — reagenda.</div>
+          </div>
+          <div class="fup-check">✓</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🚫 LO QUE NUNCA FUNCIONA EN FOLLOW-UP</div>
+      <div class="phrase-list">
+        <div class="phrase-item red-phrase">❌ "¿Pudiste ver mi propuesta?"</div>
+        <div class="phrase-item red-phrase">❌ Varios mensajes seguidos sin respuesta</div>
+        <div class="phrase-item red-phrase">❌ Repetir el mismo mensaje con otras palabras</div>
+        <div class="phrase-item red-phrase">❌ Mandar link de pago sin contexto</div>
+        <div class="phrase-item red-phrase">❌ Audios de más de 2 minutos</div>
+        <div class="phrase-item red-phrase">❌ Urgencia falsa — si lo descubren, pierdes todo</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📝 NOTAS — seguimiento</div>
+      <textarea class="notes-area" placeholder="Último contacto · qué respondió · próxima acción · fecha límite real que puedes usar…"></textarea>
+    </div>
+
+    <button class="reset-all" onclick="resetAll()">↺ Reiniciar todo para nueva llamada</button>
+
   </div>
 
 </div>
 
+<!-- BOTTOM NAV -->
+<div class="bottomnav">
+  <button class="nav-btn" onclick="prevPhase()">← Atrás</button>
+  <button class="nav-btn next" onclick="nextPhase()">Siguiente →</button>
+</div>
+
 <script>
-// ============================================================
-// ESTADO BONOS
-// ============================================================
-const bonosState = { mst: true, v10: false, v12: false, f25: false, f35: false };
-const bonosVal = { mst: 150, v10: 100, v12: 150, f25: 100, f35: 200 };
+  let currentPhase = 0;
+  let timerInterval = null;
+  let timerSeconds = 0;
+  let timerRunning = false;
 
-function toggleBono(key) {
-  bonosState[key] = !bonosState[key];
-  document.getElementById('tog-' + key).classList.toggle('on', bonosState[key]);
-  document.getElementById('chip-' + key).classList.toggle('active', bonosState[key]);
-  recalc();
-}
-
-function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
-function fmtK(n) {
-  if (n >= 1000) return '$' + (n / 1000).toFixed(0) + 'K';
-  return '$' + Math.round(n);
-}
-
-function recalc() {
-  const mst = parseInt(document.getElementById('sl-mst').value);
-  const mdd = parseInt(document.getElementById('sl-mdd').value);
-  const cdd = parseInt(document.getElementById('sl-cdd').value);
-
-  document.getElementById('rv-mst').textContent = mst;
-  document.getElementById('rv-mdd').textContent = mdd;
-  document.getElementById('rv-cdd').textContent = cdd;
-
-  const comMst = mst * 300;
-  const comMdd = mdd * 90;
-  const comCdd = cdd * 30;
-  const totalCom = comMst + comMdd + comCdd;
-  const totalVentas = mst + mdd + cdd;
-  const totalFact = mst * 10000 + mdd * 1995 + cdd * 420;
-
-  document.getElementById('rc-mst').textContent = fmt(comMst);
-  document.getElementById('rc-mdd').textContent = fmt(comMdd);
-  document.getElementById('rc-cdd').textContent = fmt(comCdd);
-  document.getElementById('rc-total').textContent = fmt(totalCom);
-  document.getElementById('rv-total').textContent = totalVentas;
-  document.getElementById('fact-total').textContent = fmtK(totalFact);
-  document.getElementById('hdr-ventas').textContent = totalVentas;
-  document.getElementById('hdr-fact').textContent = fmtK(totalFact);
-  document.getElementById('hdr-com').textContent = fmt(totalCom);
-
-  // ---- BARRAS ----
-  // Ventas
-  const vPct = Math.min((totalVentas / 15) * 100, 100);
-  const bfV = document.getElementById('bf-ventas');
-  bfV.style.width = vPct + '%';
-  bfV.className = 'barra-fill ' + (totalVentas >= 12 ? 'fill-green' : totalVentas >= 10 ? 'fill-gold' : totalVentas >= 5 ? 'fill-orange' : 'fill-red');
-  document.getElementById('bv-ventas').textContent = totalVentas + ' ventas';
-  document.getElementById('bm-v5').className = 'barra-marker' + (totalVentas >= 5 ? ' reached' : '');
-  document.getElementById('bm-v10').className = 'barra-marker' + (totalVentas >= 10 ? ' reached' : totalVentas >= 5 ? ' active' : '');
-  document.getElementById('bm-v12').className = 'barra-marker' + (totalVentas >= 12 ? ' reached' : totalVentas >= 10 ? ' active' : '');
-
-  // Comisión
-  const cPct = Math.min((totalCom / 2000) * 100, 100);
-  const bfC = document.getElementById('bf-com');
-  bfC.style.width = cPct + '%';
-  bfC.className = 'barra-fill ' + (totalCom >= 1500 ? 'fill-green' : totalCom >= 1200 ? 'fill-gold' : totalCom >= 697 ? 'fill-orange' : 'fill-red');
-  document.getElementById('bv-com').textContent = fmt(totalCom);
-  document.getElementById('bm-c700').className = 'barra-marker' + (totalCom >= 697 ? ' reached' : '');
-  document.getElementById('bm-c1200').className = 'barra-marker' + (totalCom >= 1200 ? ' reached' : totalCom >= 697 ? ' active' : '');
-  document.getElementById('bm-c1500').className = 'barra-marker' + (totalCom >= 1500 ? ' reached' : totalCom >= 1200 ? ' active' : '');
-
-  // Facturación
-  const fPct = Math.min((totalFact / 50000) * 100, 100);
-  const bfF = document.getElementById('bf-fact');
-  bfF.style.width = fPct + '%';
-  bfF.className = 'barra-fill ' + (totalFact >= 35000 ? 'fill-green' : totalFact >= 25000 ? 'fill-gold' : totalFact >= 18925 ? 'fill-orange' : 'fill-red');
-  document.getElementById('bv-fact').textContent = fmtK(totalFact);
-  document.getElementById('bm-f19').className = 'barra-marker' + (totalFact >= 18925 ? ' reached' : '');
-  document.getElementById('bm-f25').className = 'barra-marker' + (totalFact >= 25000 ? ' reached' : totalFact >= 18925 ? ' active' : '');
-  document.getElementById('bm-f35').className = 'barra-marker' + (totalFact >= 35000 ? ' reached' : totalFact >= 25000 ? ' active' : '');
-
-  // ---- BONOS ----
-  let totalBonos = 0;
-  Object.keys(bonosState).forEach(k => {
-    if (bonosState[k]) totalBonos += bonosVal[k];
-  });
-  const totalFinal = totalCom + totalBonos;
-
-  // Barra total con bonos
-  const tPct = Math.min((totalFinal / 2500) * 100, 100);
-  const bfT = document.getElementById('bf-total');
-  bfT.style.width = tPct + '%';
-  bfT.className = 'barra-fill ' + (totalFinal >= 2000 ? 'fill-green' : totalFinal >= 1500 ? 'fill-gold' : totalFinal >= 1200 ? 'fill-orange' : 'fill-red');
-  document.getElementById('bv-total').textContent = fmt(totalFinal);
-  document.getElementById('bm-t1500').className = 'barra-marker' + (totalFinal >= 1500 ? ' reached' : '');
-  document.getElementById('bm-t2000').className = 'barra-marker' + (totalFinal >= 2000 ? ' reached' : totalFinal >= 1500 ? ' active' : '');
-
-  // Status de bonos individuales
-  document.getElementById('bs-mst').textContent = mst >= 1
-    ? '✓ Ya cumpliste con ' + mst + ' MST'
-    : '⚠ Necesitas al menos 1 MST';
-  document.getElementById('bs-mst').className = 'bono-status ' + (mst >= 1 ? 'si' : 'reto');
-
-  document.getElementById('bs-v10').textContent = totalVentas >= 10
-    ? '✓ Alcanzado (' + totalVentas + ' ventas)'
-    : '⚡ Faltan ' + (10 - totalVentas) + ' ventas para activarlo';
-  document.getElementById('bs-v10').className = 'bono-status ' + (totalVentas >= 10 ? 'si' : 'reto');
-
-  document.getElementById('bs-v12').textContent = totalVentas >= 12
-    ? '✓ Alcanzado'
-    : '★ Faltan ' + (12 - totalVentas) + ' ventas';
-  document.getElementById('bs-v12').className = 'bono-status ' + (totalVentas >= 12 ? 'si' : 'grande');
-
-  document.getElementById('bs-f25').textContent = totalFact >= 25000
-    ? '✓ Alcanzado (' + fmtK(totalFact) + ')'
-    : '⚡ Faltan ' + fmtK(25000 - totalFact) + ' de facturación';
-  document.getElementById('bs-f25').className = 'bono-status ' + (totalFact >= 25000 ? 'si' : 'reto');
-
-  document.getElementById('bs-f35').textContent = totalFact >= 35000
-    ? '✓ Alcanzado'
-    : '★ Faltan ' + fmtK(35000 - totalFact);
-  document.getElementById('bs-f35').className = 'bono-status ' + (totalFact >= 35000 ? 'si' : 'grande');
-
-  // Simulador
-  document.getElementById('sim-base').textContent = fmt(totalCom);
-  document.getElementById('sim-bonos').textContent = '+' + fmt(totalBonos);
-  document.getElementById('sim-total').textContent = fmt(totalFinal);
-  document.getElementById('chip-bonos-total').textContent = '+' + fmt(totalBonos);
-}
-
-// Sync toggles con estado inicial
-Object.keys(bonosState).forEach(k => {
-  if (bonosState[k]) {
-    document.getElementById('tog-' + k).classList.add('on');
-    document.getElementById('chip-' + k).classList.add('active');
+  function toggleTimer() {
+    if (timerRunning) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      document.getElementById('timerBtn').textContent = 'START';
+      document.getElementById('timerBtn').className = 'btn btn-start';
+    } else {
+      timerInterval = setInterval(() => {
+        timerSeconds++;
+        updateTimerDisplay();
+      }, 1000);
+      timerRunning = true;
+      document.getElementById('timerBtn').textContent = 'STOP';
+      document.getElementById('timerBtn').className = 'btn btn-stop';
+    }
   }
-});
 
-recalc();
+  function updateTimerDisplay() {
+    const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+    const s = (timerSeconds % 60).toString().padStart(2, '0');
+    const el = document.getElementById('timer');
+    el.textContent = `${m}:${s}`;
+    el.className = 'timer';
+    if (timerSeconds > 2400) el.className = 'timer danger';
+    else if (timerSeconds > 1800) el.className = 'timer warning';
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    timerSeconds = 0;
+    document.getElementById('timer').textContent = '00:00';
+    document.getElementById('timer').className = 'timer';
+    document.getElementById('timerBtn').textContent = 'START';
+    document.getElementById('timerBtn').className = 'btn btn-start';
+  }
+
+  function goPhase(n) {
+    document.querySelectorAll('.panel').forEach((p, i) => p.classList.toggle('active', i === n));
+    document.querySelectorAll('.phase-tab').forEach((t, i) => {
+      t.classList.remove('active', 'done');
+      if (i === n) t.classList.add('active');
+      else if (i < n) t.classList.add('done');
+    });
+    currentPhase = n;
+  }
+
+  function nextPhase() { if (currentPhase < 5) goPhase(currentPhase + 1); }
+  function prevPhase() { if (currentPhase > 0) goPhase(currentPhase - 1); }
+
+  function toggleUsed(el) {
+    el.classList.toggle('used');
+    const b = el.querySelector('.q-bullet');
+    if (el.classList.contains('used')) {
+      b.dataset.orig = b.textContent;
+      b.textContent = '✓';
+    } else {
+      b.textContent = b.dataset.orig || '→';
+    }
+  }
+
+  function toggleCheck(el) { el.classList.toggle('checked'); }
+
+  function toggleSignal(el) {
+    el.classList.toggle('checked');
+    const checks = document.querySelectorAll('#signalChecks .check-item.checked');
+    const count = checks.length;
+    for (let i = 0; i < 6; i++) {
+      const dot = document.getElementById(`sd${i}`);
+      if (dot) dot.classList.toggle('lit', i < count);
+    }
+    const gate = document.getElementById('signalGate');
+    if (gate) gate.classList.toggle('visible', count >= 3);
+  }
+
+  function setPain(e) {
+    const track = e.currentTarget;
+    const rect = track.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const val = Math.round(pct * 10);
+    document.getElementById('painFill').style.width = (val * 10) + '%';
+    document.getElementById('painVal').textContent = val;
+  }
+
+  function advanceStep(index) {
+    const steps = document.querySelectorAll('#closeSteps .close-step');
+    steps.forEach((s, i) => {
+      s.classList.remove('current', 'done-step');
+      if (i <= index) s.classList.add('done-step');
+    });
+    if (index + 1 < steps.length) {
+      steps[index + 1].classList.remove('done-step');
+      steps[index + 1].classList.add('current');
+    }
+  }
+
+  function toggleFup(el) { el.classList.toggle('fup-done'); }
+
+  function copyPhrase(el, text) {
+    const txt = text || el.querySelector('.phrase-sub')?.textContent || el.textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(txt).then(() => {
+        const span = el.querySelector('.phrase-copy');
+        const orig = span ? span.textContent : '';
+        if (span) { span.textContent = '✓ copiado'; el.classList.add('copied'); }
+        setTimeout(() => {
+          if (span) { span.textContent = orig; el.classList.remove('copied'); }
+        }, 1500);
+      });
+    }
+  }
+
+  function resetAll() {
+    if (!confirm('¿Reiniciar todo para nueva llamada?')) return;
+    document.querySelectorAll('.q-item').forEach(el => {
+      el.classList.remove('used');
+      const b = el.querySelector('.q-bullet');
+      if (b && b.dataset.orig) b.textContent = b.dataset.orig;
+    });
+    document.querySelectorAll('.check-item').forEach(el => el.classList.remove('checked'));
+    document.querySelectorAll('.fup-item').forEach(el => el.classList.remove('fup-done'));
+    document.querySelectorAll('.notes-area').forEach(el => el.value = '');
+    document.getElementById('painFill').style.width = '30%';
+    document.getElementById('painVal').textContent = '3';
+    for (let i = 0; i < 6; i++) document.getElementById(`sd${i}`)?.classList.remove('lit');
+    document.getElementById('signalGate')?.classList.remove('visible');
+    const steps = document.querySelectorAll('#closeSteps .close-step');
+    steps.forEach((s, i) => {
+      s.classList.remove('current', 'done-step');
+      if (i === 0) s.classList.add('current');
+    });
+    resetTimer();
+    goPhase(0);
+  }
+
+  document.querySelectorAll('.q-bullet').forEach(b => { b.dataset.orig = b.textContent; });
 </script>
 </body>
 </html>
