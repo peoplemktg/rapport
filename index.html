@@ -109,6 +109,61 @@
   .btn-reset { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
   .btn-reset:hover { background: rgba(255,255,255,0.25); }
 
+  /* PAIN BAR IN TOPBAR */
+  .topbar-pain {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex: 1;
+    max-width: 180px;
+    margin: 0 12px;
+  }
+
+  .topbar-pain-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+  }
+
+  .topbar-pain-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .topbar-pain-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #2ecc71, #f5c842, #e74c3c);
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .topbar-pain-val {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    min-width: 16px;
+    text-align: right;
+  }
+
+  .topbar-pain-gate {
+    font-size: 9px;
+    font-weight: 700;
+    color: #2ecc71;
+    white-space: nowrap;
+    display: none;
+  }
+
+  .topbar-pain-gate.visible { display: block; }
+
   /* PHASE TABS */
   .phases {
     display: flex;
@@ -744,6 +799,14 @@
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-title">⚡ PANEL CLOSER</div>
+  <div class="topbar-pain">
+    <span class="topbar-pain-label">DOLOR</span>
+    <div class="topbar-pain-track">
+      <div class="topbar-pain-fill" id="topPainFill"></div>
+    </div>
+    <span class="topbar-pain-val" id="topPainVal">0</span>
+    <span class="topbar-pain-gate" id="topPainGate">▶ CIERRA</span>
+  </div>
   <div class="timer-block">
     <div class="timer" id="timer">00:00</div>
     <button class="btn btn-start" id="timerBtn" onclick="toggleTimer()">START</button>
@@ -913,10 +976,10 @@
       <div class="pain-row">
         <span class="pain-lbl">Bajo</span>
         <div class="pain-track" onclick="setPain(event)">
-          <div class="pain-fill" id="painFill" style="width: 30%"></div>
+          <div class="pain-fill" id="painFill" style="width: 0%"></div>
         </div>
         <span class="pain-lbl">Alto</span>
-        <span class="pain-val" id="painVal">3</span>
+        <span class="pain-val" id="painVal">0</span>
       </div>
       <div class="info-note">Si está bajo 7 — sigue excavando. No transiciones todavía.</div>
     </div>
@@ -1412,6 +1475,41 @@
   function nextPhase() { if (currentPhase < 5) goPhase(currentPhase + 1); }
   function prevPhase() { if (currentPhase > 0) goPhase(currentPhase - 1); }
 
+  // Pain question tags that count toward pain score
+  const PAIN_TAGS = ['IMPLI', 'COSTO', 'CUANT', 'CICLO', 'NEED', 'LABEL', 'MIRROR'];
+  // Max pain questions available (IMPLI×2 + COSTO + CUANT + CICLO×2 + NEED + LABEL×3 + MIRROR = 11)
+  const PAIN_MAX = 11;
+
+  function updatePainFromQuestions() {
+    // Count used pain questions
+    const allQItems = document.querySelectorAll('#panel1 .q-item.used');
+    let painCount = 0;
+    allQItems.forEach(item => {
+      const tag = item.querySelector('.q-tag');
+      if (tag) {
+        const tagText = tag.textContent.trim();
+        if (PAIN_TAGS.includes(tagText)) painCount++;
+      }
+    });
+    // Scale to 0-10
+    const val = Math.min(10, Math.round((painCount / PAIN_MAX) * 10));
+    const pct = (val / 10) * 100;
+
+    // Update topbar pain bar
+    document.getElementById('topPainFill').style.width = pct + '%';
+    document.getElementById('topPainVal').textContent = val;
+
+    // Show "CIERRA" indicator when pain >= 7
+    const gate = document.getElementById('topPainGate');
+    if (gate) gate.classList.toggle('visible', val >= 7);
+
+    // Also keep old pain card in sync
+    const oldFill = document.getElementById('painFill');
+    const oldVal = document.getElementById('painVal');
+    if (oldFill) oldFill.style.width = pct + '%';
+    if (oldVal) oldVal.textContent = val;
+  }
+
   function toggleUsed(el) {
     el.classList.toggle('used');
     const b = el.querySelector('.q-bullet');
@@ -1421,6 +1519,7 @@
     } else {
       b.textContent = b.dataset.orig || '→';
     }
+    updatePainFromQuestions();
   }
 
   function toggleCheck(el) { el.classList.toggle('checked'); }
@@ -1484,8 +1583,11 @@
     document.querySelectorAll('.check-item').forEach(el => el.classList.remove('checked'));
     document.querySelectorAll('.fup-item').forEach(el => el.classList.remove('fup-done'));
     document.querySelectorAll('.notes-area').forEach(el => el.value = '');
-    document.getElementById('painFill').style.width = '30%';
-    document.getElementById('painVal').textContent = '3';
+    document.getElementById('painFill').style.width = '0%';
+    document.getElementById('painVal').textContent = '0';
+    document.getElementById('topPainFill').style.width = '0%';
+    document.getElementById('topPainVal').textContent = '0';
+    document.getElementById('topPainGate')?.classList.remove('visible');
     for (let i = 0; i < 6; i++) document.getElementById(`sd${i}`)?.classList.remove('lit');
     document.getElementById('signalGate')?.classList.remove('visible');
     const steps = document.querySelectorAll('#closeSteps .close-step');
