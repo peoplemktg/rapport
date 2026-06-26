@@ -3,251 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistemas · Bonos · Objeciones — Luque Academy</title>
+<title>Script Luque Academy</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0d0b08;--card:#1a1710;--card2:#242118;--line:#353020;
-  --gold:#e8b84b;--goldL:#f5d585;--goldBg:#352c10;
-  --white:#fff;--text:#e8e4d8;--muted:#8a8470;
-  --green:#5cc68a;--greenBg:#122a1a;
-  --red:#e87070;--redBg:#2e1414;
-  --blue:#6aabea;--blueBg:#102438;
-  --purple:#a87cf5;--purpleBg:#21183a;
+  --bg:#f5f3ef;
+  --surface:#ffffff;
+  --surface2:#f0ede8;
+  --line:#e2ddd6;
+  --gold:#c8941a;
+  --goldL:#e0a820;
+  --goldBg:#fdf6e3;
+  --white:#fff;
+  --text:#2a2520;
+  --muted:#9a9080;
+  --green:#1d7a42;
+  --greenBg:#edf7f1;
+  --red:#b83030;
+  --redBg:#fdf0f0;
+  --purple:#5a2d9a;
+  --purpleBg:#f3eefc;
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+*{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:500;font-size:17px;line-height:1.65;-webkit-text-size-adjust:100%;padding-bottom:80px;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;font-weight:500;padding-bottom:60px;-webkit-text-size-adjust:100%;}
 
-.top{position:sticky;top:0;z-index:50;background:rgba(13,11,8,0.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
-.brand{padding:12px 18px 8px;}
-.brand-k{font-size:10px;letter-spacing:3px;color:var(--goldL);text-transform:uppercase;font-weight:700;}
-.brand-t{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:var(--white);line-height:1;margin-top:2px;}
-.nav{display:flex;gap:6px;padding:0 14px 10px;overflow-x:auto;}
+/* TOP */
+.top{position:sticky;top:0;z-index:50;background:rgba(245,243,239,0.97);backdrop-filter:blur(6px);border-bottom:1.5px solid var(--line);}
+.brand-row{display:flex;align-items:baseline;gap:10px;padding:12px 18px 8px;}
+.brand-k{font-size:10px;letter-spacing:2.5px;color:var(--muted);text-transform:uppercase;font-weight:700;}
+.brand-t{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--text);letter-spacing:1px;line-height:1;}
+.nav{display:flex;gap:5px;padding:0 14px 10px;overflow-x:auto;}
 .nav::-webkit-scrollbar{display:none;}
-.nav-btn{padding:8px 16px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border:2px solid var(--line);background:transparent;border-radius:20px;white-space:nowrap;transition:all 0.15s;}
-.nav-btn.on{color:#1a1206;background:var(--gold);border-color:var(--gold);}
+.nb{padding:7px 16px;font-size:12px;font-weight:700;color:var(--muted);border:1.5px solid var(--line);background:transparent;border-radius:20px;white-space:nowrap;cursor:pointer;transition:all .15s;}
+.nb.on{color:#fff;background:var(--text);border-color:var(--text);}
 
-main{max-width:740px;margin:0 auto;padding:18px 14px;}
+main{max-width:680px;margin:0 auto;padding:20px 16px;}
 .pg{display:none;}.pg.on{display:block;}
 
-.ph{margin-bottom:22px;}
-.ph-tag{font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:5px;}
-.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,7vw,42px);color:var(--white);letter-spacing:1px;line-height:1.05;}
-.ph-sub{font-size:15px;color:var(--muted);margin-top:7px;line-height:1.6;}
+/* PAGE HEADER */
+.ph{margin-bottom:24px;padding-bottom:20px;border-bottom:1.5px solid var(--line);}
+.ph-s{font-size:10px;letter-spacing:2.5px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:5px;}
+.ph-t{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,7vw,40px);color:var(--text);line-height:1.05;letter-spacing:.5px;}
+.ph-d{font-size:14px;color:var(--muted);margin-top:7px;line-height:1.55;}
 
-/* PRODUCT TABS */
-.ptabs{display:flex;gap:7px;margin-bottom:20px;}
-.ptab{flex:1;padding:11px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border:2px solid var(--line);background:var(--card);border-radius:10px;text-align:center;transition:all 0.15s;}
-.ptab.on{color:#1a1206;background:var(--gold);border-color:var(--gold);}
-.psec{display:none;}.psec.on{display:block;}
+/* STEP */
+.s{margin-bottom:0;padding:20px 0;border-bottom:1.5px solid var(--line);}
+.s:last-child{border-bottom:none;}
+.s-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;}
+.s-num{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--gold);min-width:28px;text-align:center;flex-shrink:0;line-height:1;margin-top:3px;font-weight:700;}
+.s-meta{flex:1;}
+.s-tag{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:3px;}
+.s-name{font-size:17px;font-weight:800;color:var(--text);line-height:1.2;}
+.s-time{font-size:11px;color:var(--muted);font-weight:600;margin-top:3px;}
 
-/* SYSTEM CARD */
-.sys{background:var(--card);border-radius:14px;margin-bottom:14px;border:1.5px solid var(--line);overflow:hidden;}
-.sys-head{display:flex;align-items:flex-start;gap:13px;padding:16px 17px 14px;}
-.sys-badge{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#1a1206;background:var(--gold);min-width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;letter-spacing:0.5px;}
-.sys-meta{flex:1;}
-.sys-n{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:3px;}
-.sys-title{font-size:18px;font-weight:800;color:var(--white);line-height:1.2;}
-.sys-promise{font-size:14px;color:var(--goldL);font-style:italic;margin-top:4px;line-height:1.5;}
-.sys-val{font-size:12px;font-weight:700;color:var(--green);margin-top:5px;}
-.sys-body{padding:0 17px 17px;}
-.sys-trigger{background:var(--card2);border-radius:9px;padding:11px 14px;margin-bottom:11px;}
-.sys-trigger-l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px;}
-.sys-trigger-txt{font-size:15px;color:var(--gold);font-weight:700;line-height:1.5;}
-.sys-results{margin-bottom:11px;}
-.sys-results-l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:8px;}
-.sys-result{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--text);line-height:1.55;font-weight:500;}
-.sys-result:last-child{border:none;}
-.sys-result::before{content:'✓';color:var(--green);font-weight:800;flex-shrink:0;margin-top:1px;}
-.sys-pitch{background:var(--goldBg);border-left:4px solid var(--gold);border-radius:8px;padding:11px 14px;font-size:15px;line-height:1.65;color:#f5e2b0;font-weight:600;}
-.sys-pitch::before{content:'💬  ';}
-.sys-tools{margin-top:10px;}
-.sys-tools-l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:7px;}
-.sys-tool{font-size:14px;color:var(--text);padding:5px 0;border-bottom:1px solid var(--line);line-height:1.55;}
-.sys-tool:last-child{border:none;}
-.sys-tool::before{content:'📎  ';}
+/* SAY — frase a decir */
+.say{margin:12px 0;padding-left:14px;border-left:3px solid var(--gold);}
+.say-l{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:5px;}
+.say-t{font-size:17px;line-height:1.8;color:var(--text);font-weight:500;}
+.say-t::before{content:'\201C';color:var(--goldL);font-weight:700;}
+.say-t::after{content:'\201D';color:var(--goldL);font-weight:700;}
 
-/* MAESTRIA RESULTADO */
-.mres{background:var(--card);border-radius:14px;margin-bottom:14px;border:1.5px solid var(--line);overflow:hidden;}
-.mres-head{display:flex;align-items:flex-start;gap:13px;padding:16px 17px 14px;}
-.mres-num{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--white);background:var(--purple);min-width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.mres-meta{flex:1;}
-.mres-n{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--purple);font-weight:700;margin-bottom:3px;}
-.mres-title{font-size:18px;font-weight:800;color:var(--white);line-height:1.2;}
-.mres-sub{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.5;}
-.mres-body{padding:0 17px 17px;}
-.mres-trigger{background:var(--purpleBg);border-radius:9px;padding:11px 14px;margin-bottom:11px;border-left:4px solid var(--purple);}
-.mres-trigger-l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px;}
-.mres-trigger-txt{font-size:15px;color:var(--purple);font-weight:700;line-height:1.5;}
-.mres-results-l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:8px;}
-.mres-result{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--text);line-height:1.55;font-weight:500;}
-.mres-result:last-child{border:none;}
-.mres-result::before{content:'✓';color:var(--purple);font-weight:800;flex-shrink:0;margin-top:1px;}
-.mres-pitch{background:var(--purpleBg);border-left:4px solid var(--purple);border-radius:8px;padding:11px 14px;font-size:15px;line-height:1.65;color:#d4b8ff;font-weight:600;margin-top:10px;}
-.mres-pitch::before{content:'💬  ';}
+/* PREGUNTA PRINCIPAL */
+.qmain{margin:12px 0 6px;}
+.qmain-txt{font-size:17px;font-weight:700;color:var(--text);line-height:1.4;}
+.qmain-txt::before{content:'❓  ';}
 
-/* BONOS */
-.bono{background:var(--card);border-radius:14px;margin-bottom:12px;border:1.5px solid var(--line);}
-.bono.urgente{border-color:var(--red);}
-.bono-head{display:flex;align-items:flex-start;gap:12px;padding:15px 16px 12px;}
-.bono-icon{font-size:22px;flex-shrink:0;margin-top:1px;}
-.bono-meta{flex:1;}
-.bono-n{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;margin-bottom:3px;}
-.bono-n.gold{color:var(--gold);}
-.bono-n.red{color:var(--red);}
-.bono-title{font-size:17px;font-weight:800;color:var(--white);line-height:1.2;}
-.bono-val{font-size:13px;font-weight:800;color:var(--green);margin-top:4px;}
-.bono-body{padding:0 16px 16px;}
-.bono-desc{font-size:15px;color:var(--text);line-height:1.65;margin-bottom:10px;font-weight:500;}
-.bono-when{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;padding:4px 12px;border-radius:7px;background:var(--redBg);color:var(--red);margin-bottom:10px;}
-.bono-when::before{content:'⏰';}
-.bono-uso{background:var(--goldBg);border-radius:8px;padding:10px 13px;font-size:14px;color:#f5e2b0;line-height:1.6;font-weight:600;}
-.bono-uso::before{content:'🎯  Uso: ';}
-.bono-cierre{background:var(--greenBg);border-radius:8px;padding:11px 14px;font-size:15px;color:#bff0d2;line-height:1.65;font-weight:600;margin-top:10px;}
-.bono-cierre::before{content:'💬  ';}
+/* PREGUNTAS DE SEGUIMIENTO — cajon suave */
+.qsubs{background:var(--surface2);border-radius:10px;padding:12px 14px;margin:6px 0 10px 0;}
+.qsub{font-size:14px;color:var(--text);padding:5px 0;border-bottom:1px solid var(--line);line-height:1.55;padding-left:16px;position:relative;}
+.qsub:last-child{border:none;padding-bottom:0;}
+.qsub:first-child{padding-top:0;}
+.qsub::before{content:'↳';color:var(--gold);font-weight:700;position:absolute;left:0;font-size:13px;top:6px;}
 
-/* OBJECIONES — ARBOL */
-.obj-card{background:var(--card);border-radius:14px;margin-bottom:16px;border:1.5px solid var(--line);overflow:hidden;}
-.obj-top{padding:15px 17px 13px;border-bottom:1px solid var(--line);}
-.obj-q{font-size:18px;font-weight:800;color:var(--red);line-height:1.3;}
-.obj-q::before{content:'❝  ';}
-.obj-raiz{font-size:14px;color:var(--muted);margin-top:6px;font-style:italic;line-height:1.5;}
-.obj-body{padding:14px 17px;}
-.obj-pregunta{background:var(--card2);border-radius:9px;padding:12px 14px;margin-bottom:12px;}
-.obj-pregunta-l{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:6px;}
-.obj-pregunta-txt{font-size:16px;color:var(--white);font-weight:700;line-height:1.4;}
-.obj-pregunta-txt::before{content:'❓  ';}
-.obj-ramas{margin-top:8px;}
-.obj-rama{background:var(--bg);border-radius:9px;padding:12px 14px;margin-bottom:8px;border-left:4px solid var(--line);}
-.obj-rama.v1{border-left-color:var(--green);}
-.obj-rama.v2{border-left-color:var(--gold);}
-.obj-rama.v3{border-left-color:var(--red);}
-.obj-rama-cond{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;}
-.v1 .obj-rama-cond{color:var(--green);}
-.v2 .obj-rama-cond{color:var(--gold);}
-.v3 .obj-rama-cond{color:var(--red);}
-.obj-rama-resp{font-size:15px;color:var(--white);line-height:1.7;font-weight:500;}
-.obj-rama-resp::before{content:'→  ';font-weight:800;}
-.v1 .obj-rama-resp::before{color:var(--green);}
-.v2 .obj-rama-resp::before{color:var(--gold);}
-.v3 .obj-rama-resp::before{color:var(--red);}
-.obj-rama-tip{font-size:13px;color:var(--muted);margin-top:7px;font-style:italic;line-height:1.55;}
+/* NIVEL LABEL */
+.nlbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:700;margin:16px 0 8px;}
 
-.hr{height:1px;background:var(--line);margin:22px 0;}
-.sec-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:5px;}
-.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,4.5vw,28px);color:var(--white);letter-spacing:0.5px;margin-bottom:14px;}
+/* CALLOUTS — sin cajones de color, solo tipografia */
+.warn{font-size:14px;color:var(--red);line-height:1.6;margin:10px 0;font-weight:600;padding-left:14px;border-left:2px solid var(--red);}
+.key{font-size:14px;color:var(--gold);line-height:1.6;margin:10px 0;font-weight:600;padding-left:14px;border-left:2px solid var(--gold);}
+.key b{color:var(--goldL);}
+.note{font-size:14px;color:var(--muted);line-height:1.6;margin:10px 0;font-style:italic;}
+.note b{color:var(--text);font-style:normal;}
+.quiet{font-size:14px;color:var(--purple);line-height:1.6;margin:10px 0;font-weight:700;padding-left:14px;border-left:2px solid var(--purple);}
 
-.key-box{background:var(--goldBg);border-left:4px solid var(--gold);border-radius:10px;padding:13px 15px;margin:12px 0;font-size:15px;line-height:1.65;color:#f5e2b0;font-weight:600;}
-.key-box::before{content:'🔑  ';}
-.key-box b{color:var(--goldL);}
-.warn-box{background:var(--redBg);border-left:4px solid var(--red);border-radius:10px;padding:13px 15px;margin:12px 0;font-size:15px;line-height:1.65;color:#f5c4c4;font-weight:600;}
-.warn-box::before{content:'⚠️  ';}
+/* AREA — excavar */
+.area{margin-bottom:28px;padding-bottom:28px;border-bottom:1.5px solid var(--line);}
+.area:last-child{border-bottom:none;}
+.area-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+.area-icon{font-size:22px;flex-shrink:0;margin-top:1px;}
+.area-meta{flex:1;}
+.area-name{font-size:17px;font-weight:800;color:var(--text);line-height:1.2;}
+.area-when{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.5;}
+.area-q{padding:9px 0;border-bottom:1px solid var(--line);}
+.area-q:last-child{border:none;padding-bottom:0;}
+.area-q-txt{font-size:16px;color:var(--text);font-weight:700;line-height:1.4;}
+.area-q-txt::before{content:'❓  ';}
+.area-q-sub{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.5;font-style:italic;padding-left:22px;}
+.area-anchor{font-size:14px;color:var(--gold);line-height:1.6;margin-top:14px;font-weight:600;padding-left:14px;border-left:2px solid var(--gold);}
 
-.rule{background:var(--goldBg);border:1.5px solid var(--gold);border-radius:12px;padding:18px;margin-top:22px;text-align:center;}
-.rule-l{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:7px;}
-.rule-t{font-size:17px;color:var(--white);font-weight:700;line-height:1.5;}
+/* CIERRE */
+.cc{margin-bottom:24px;padding-bottom:24px;border-bottom:1.5px solid var(--line);}
+.cc:last-child{border-bottom:none;}
+.cc-t{font-size:16px;font-weight:800;color:var(--text);margin-bottom:3px;}
+.cc-w{font-size:12px;color:var(--muted);margin-bottom:12px;}
+.cc-say{font-size:17px;line-height:1.8;color:var(--text);font-weight:500;padding-left:14px;border-left:3px solid var(--gold);margin-bottom:8px;}
+.cc-say::before{content:'\201C';color:var(--goldL);font-weight:700;}
+.cc-say::after{content:'\201D';color:var(--goldL);font-weight:700;}
+.cc-tip{font-size:14px;color:var(--muted);line-height:1.55;font-style:italic;}
 
-footer{text-align:center;padding:26px 16px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:600;}
+/* MSG */
+.mc{margin-bottom:24px;padding-bottom:24px;border-bottom:1.5px solid var(--line);}
+.mc:last-child{border-bottom:none;}
+.mc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.mc-t{font-size:15px;font-weight:800;color:var(--text);}
+.mc-w{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px;}
+.cp-btn{font-size:12px;font-weight:800;color:#fff;background:var(--text);border:none;padding:8px 16px;border-radius:20px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .15s;}
+.cp-btn.ok{background:var(--green);}
+.mc-body{background:var(--surface2);border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.75;color:var(--text);white-space:pre-wrap;}
 
-/* ===== Script page CSS ===== */
-.paso{margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid var(--line);}
-.paso:last-child{border-bottom:none;}
-.paso-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px);}
-.paso-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;}
-.paso-num{font-family:'Bebas Neue',sans-serif;font-size:18px;color:#1a1206;background:var(--gold);min-width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
-.paso-meta{}
-.paso-tag{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:3px;}
-.paso-name{font-size:20px;font-weight:800;color:var(--white);line-height:1.2;}
-.paso-time{font-size:12px;color:var(--muted);font-weight:600;margin-top:3px;}
-.say{background:var(--card);border-radius:10px;padding:16px 18px;margin:14px 0;border-left:5px solid var(--gold);}
-.say-lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:9px;}
-.say-txt{font-size:19px;line-height:1.8;color:var(--white);font-weight:500;}
-.say-txt::before{content:'"';color:var(--goldL);}
-.say-txt::after{content:'"';color:var(--goldL);}
-.q-section{margin:16px 0;}
-.q-main-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:10px;}
-.q-main{background:var(--card2);border-radius:10px;padding:14px 16px;margin-bottom:8px;}
-.q-main-txt{font-size:17px;font-weight:700;color:var(--white);line-height:1.4;}
-.q-main-txt::before{content:'❓  ';color:var(--gold);}
-.q-why{font-size:14px;color:var(--muted);font-style:italic;margin-top:7px;line-height:1.6;}
-.q-subs{margin-top:10px;}
-.q-sub-label{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px;padding-left:4px;}
-.q-sub{font-size:15px;color:var(--text);padding:6px 0 6px 16px;border-bottom:1px solid var(--line);line-height:1.6;position:relative;}
-.q-sub:last-child{border:none;}
-.q-sub::before{content:'↳';color:var(--gold);font-weight:700;position:absolute;left:0;}
-.why-box{background:var(--greenBg);border-left:4px solid var(--green);border-radius:10px;padding:13px 15px;margin:12px 0;font-size:15px;line-height:1.65;color:#bff0d2;font-weight:600;}
-.why-box b{color:var(--green);}
-.why-box::before{content:'💡  ';}
-.warn-box{background:var(--redBg);border-left:4px solid var(--red);border-radius:10px;padding:13px 15px;margin:12px 0;font-size:15px;line-height:1.65;color:#f5c4c4;font-weight:600;}
-.warn-box b{color:var(--red);}
-.warn-box::before{content:'⚠️  ';}
-.key-box{background:var(--goldBg);border-left:4px solid var(--gold);border-radius:10px;padding:13px 15px;margin:12px 0;font-size:15px;line-height:1.65;color:#f5e2b0;font-weight:600;}
-.key-box::before{content:'🔑  ';}
-.key-box b{color:var(--goldL);}
-.quiet-box{background:#1a1728;border-radius:10px;padding:11px 14px;margin:12px 0;font-size:14px;color:#b89cf9;font-weight:800;text-align:center;letter-spacing:1px;}
-.quiet-box::before{content:'🤫  ';}
-.tip{font-size:15px;color:var(--text);margin:10px 0;line-height:1.65;}
-.tip b{color:var(--white);}
-.signal{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);}
-.signal:last-child{border:none;}
-.signal-dot{width:10px;height:10px;border-radius:50%;margin-top:6px;flex-shrink:0;}
-.signal-dot.g{background:var(--green);}
-.signal-dot.r{background:var(--red);}
-.signal-t{font-size:15px;color:var(--text);line-height:1.6;}
-.signal-t b{color:var(--white);}
-.plans{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
-@media(max-width:460px){.plans{grid-template-columns:1fr;}}
-.plan{background:var(--card2);border:1.5px solid var(--line);border-radius:12px;padding:16px;text-align:center;position:relative;}
-.plan.best{border-color:var(--gold);}
-.plan-bdg{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a1206;font-size:10px;font-weight:800;letter-spacing:1px;padding:2px 12px;border-radius:10px;white-space:nowrap;text-transform:uppercase;}
-.plan-n{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--white);letter-spacing:1px;}
-.plan-p{font-size:26px;font-weight:800;color:var(--goldL);}
-.plan-s{font-size:12px;color:var(--muted);margin-bottom:10px;font-weight:600;}
-.plan-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:10px;font-style:italic;}
-.plan-i{list-style:none;text-align:left;}
-.plan-i li{font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid var(--line);font-weight:500;line-height:1.5;}
-.plan-i li:last-child{border:none;}
-.plan-i li::before{content:'✓ ';color:var(--green);font-weight:700;}
-.fu-card{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:15px 16px;margin-bottom:10px;}
-.fu-title{font-size:16px;font-weight:800;color:var(--white);margin-bottom:4px;}
-.fu-when{font-size:12px;color:var(--gold);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;}
-.fu-body{font-size:15px;line-height:1.7;color:var(--text);}
-.fu-body b{color:var(--white);}
-.msg-card{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:15px 16px;margin-bottom:12px;}
-.msg-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px;}
-.msg-title{font-size:16px;font-weight:800;color:var(--white);}
-.msg-when{font-size:12px;color:var(--muted);font-weight:600;margin-top:2px;}
-.copy-btn{font-size:13px;font-weight:800;color:#1a1206;background:var(--gold);border:none;padding:9px 15px;border-radius:8px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all 0.15s;}
-.copy-btn.done{background:var(--green);color:#0a2015;}
-.msg-body{background:var(--card2);border-radius:8px;padding:13px 15px;font-size:15px;line-height:1.75;color:var(--text);white-space:pre-wrap;font-weight:500;}
-.ph{margin-bottom:22px;}
-.ph-tag{font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:5px;}
-.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,7vw,42px);color:var(--white);letter-spacing:1px;line-height:1.05;}
-.ph-sub{font-size:15px;color:var(--muted);margin-top:7px;line-height:1.6;}
-.cierre-card{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:16px 17px;margin-bottom:14px;}
-.cierre-title{font-size:17px;font-weight:800;color:var(--goldL);margin-bottom:4px;}
-.cierre-when{font-size:13px;color:var(--muted);margin-bottom:12px;font-style:italic;}
-.cierre-say{background:var(--card2);border-left:4px solid var(--gold);border-radius:8px;padding:14px 16px;font-size:17px;line-height:1.8;color:var(--white);font-weight:500;margin-bottom:10px;}
-.cierre-say::before{content:'"';color:var(--goldL);}
-.cierre-say::after{content:'"';color:var(--goldL);}
-.cierre-tip{font-size:14px;color:var(--muted);line-height:1.6;font-style:italic;}
+/* RULE */
+.rule{background:var(--goldBg);border:1.5px solid var(--goldL);border-radius:12px;padding:18px;margin-top:24px;text-align:center;}
+.rule-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:6px;}
+.rule-t{font-size:16px;color:var(--text);font-weight:700;line-height:1.45;}
 
+.hr{height:1px;background:var(--line);margin:16px 0;}
+
+footer{text-align:center;padding:24px 14px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;}
 </style>
 </head>
 <body>
 
 <div class="top">
-  <div class="brand">
-    <div class="brand-k">Closer Consultivo · Luque Academy</div>
-    <div class="brand-t">GUIA COMPLETA DE VENTAS</div>
+  <div class="brand-row">
+    <div class="brand-k">Luque Academy</div>
+    <div class="brand-t">SCRIPT DE VENTAS</div>
   </div>
   <div class="nav">
-    <button class="nav-btn on" onclick="go('script',this)">Script</button>
-    <button class="nav-btn" onclick="go('followup',this)">Follow Up</button>
-    <button class="nav-btn" onclick="go('sistemas',this)">Sistemas</button>
-    <button class="nav-btn" onclick="go('bonos',this)">Bonos</button>
-    <button class="nav-btn" onclick="go('objeciones',this)">Objeciones</button>
+    <button class="nb on" onclick="go('script',this)">Script</button>
+    <button class="nb" onclick="go('excavar',this)">Excavar por Area</button>
+    <button class="nb" onclick="go('cierre',this)">Cierre</button>
+    <button class="nb" onclick="go('msg',this)">Mensajes</button>
   </div>
 </div>
 
@@ -255,1236 +151,565 @@ footer{text-align:center;padding:26px 16px;font-size:11px;letter-spacing:1.5px;t
 
 <!-- ============ SCRIPT ============ -->
 <div class="pg on" id="pg-script">
-
   <div class="ph">
-    <div class="ph-tag">Jose Pena · 10 Pasos</div>
-    <div class="ph-title">Script Completo</div>
-    <div class="ph-sub">Maquina del Dinero $1,995 · Maestria del Dinero $10,000. Diagnosticas como medico, no vendes como vendedor.</div>
+    <div class="ph-s">Jose Pena · 10 Pasos</div>
+    <div class="ph-t">Script de Ventas</div>
+    <div class="ph-d">Maquina $1,995 · Maestria $10,000 · Una pregunta principal por paso con seguimiento si necesitas mas profundidad.</div>
   </div>
 
   <!-- PASO 1 -->
-  <div class="paso">
-    <div class="paso-head">
-      <div class="paso-num">1</div>
-      <div class="paso-meta">
-        <div class="paso-tag">Introduccion</div>
-        <div class="paso-name">Rapport rapido — maximo 30 segundos</div>
-        <div class="paso-time">30 seg</div>
+  <div class="s">
+    <div class="s-top">
+      <div class="s-num">01</div>
+      <div class="s-meta">
+        <div class="s-tag">Introduccion</div>
+        <div class="s-name">Rapport — maximo 30 segundos</div>
+        <div class="s-time">30 seg</div>
       </div>
     </div>
-    <div class="say"><div class="say-lbl">Di exactamente</div><div class="say-txt">Hola [nombre], como estas? Te saludo desde Bogota, tu donde te encuentras hoy? Que bueno! Bueno vamos a empezar.</div></div>
-    <div class="why-box">El rapport largo mata la autoridad. 30 segundos de calor humano es suficiente. Si hablas del clima 10 minutos, te perciben como vendedor desesperado. La brevedad genera respeto.</div>
-    <div class="warn-box"><b>Evita:</b> politica, clima, preguntas largas sobre su vida.</div>
+    <div class="say"><div class="say-l">Di</div><div class="say-t">Hola [nombre], como estas? Te saludo desde Bogota — tu donde te encuentras hoy? Que bueno. Arrancamos?</div></div>
+    <div class="warn">No hablar de clima, politica ni vida personal. 30 segundos y a la llamada.</div>
   </div>
 
   <!-- PASO 2 -->
-  <div class="paso">
-    <div class="paso-head">
-      <div class="paso-num">2</div>
-      <div class="paso-meta">
-        <div class="paso-tag">Posicionamiento</div>
-        <div class="paso-name">Establece las reglas — tu eres quien decide</div>
-        <div class="paso-time">45 seg</div>
+  <div class="s">
+    <div class="s-top">
+      <div class="s-num">02</div>
+      <div class="s-meta">
+        <div class="s-tag">Posicionamiento</div>
+        <div class="s-name">Pones las reglas — tu decides si le ofreces el cupo</div>
+        <div class="s-time">45 seg</div>
       </div>
     </div>
-    <div class="say"><div class="say-lbl">Di</div><div class="say-txt">El proposito de esta llamada es ver si nuestro programa va a solucionar el problema que tu tienes. Si siento que te puede ayudar, te lo voy a ofrecer; pero si siento que no, tambien te lo voy a decir.</div></div>
-    <div class="say"><div class="say-lbl">Di (2A — pre-objecion "lo pienso")</div><div class="say-txt">Si al final veo que te puedo ayudar, te voy a ofrecer un bono de accion rapida simplemente por tomar la decision hoy.</div></div>
-    <div class="say"><div class="say-lbl">Di (2B — pre-objecion "lo hablo con mi pareja")</div><div class="say-txt">Antes de empezar, hay alguien mas que deberia estar en esta llamada, como tu pareja o socio que te ayude a tomar decisiones importantes?</div></div>
-    <div class="why-box">El "pero" baja la guardia. Te posicionas como Harvard donde la gente aplica para que los acepten. Tu no necesitas vender — tu decides si le ofreces el cupo.</div>
-    <div class="warn-box"><b>Si necesita a alguien mas:</b> "Para que esta sesion sea util para los dos, agendamos cuando esten juntos. Que dia les queda bien?" REAGENDA. No sigas sin el decisor.</div>
-    <div class="tip">Espera el "si" de cada pregunta. Ese micro-compromiso ya inicio el proceso.</div>
+    <div class="say"><div class="say-l">Di</div><div class="say-t">El proposito de esta llamada es ver si nuestro programa va a solucionar el problema que tu tienes. Si siento que te puede ayudar, te lo voy a ofrecer; pero si siento que no, tambien te lo voy a decir.</div></div>
+    <div class="say"><div class="say-l">Di (2A — elimina el "lo pienso" desde el inicio)</div><div class="say-t">Si al final veo que te puedo ayudar, te voy a ofrecer un bono de accion rapida por tomar la decision hoy.</div></div>
+    <div class="say"><div class="say-l">Di (2B — detecta si hay otro decisor)</div><div class="say-t">Antes de empezar, hay alguien mas que deberia estar en esta llamada — como tu pareja o socio — para tomar decisiones importantes?</div></div>
+    <div class="warn">Si necesita a alguien: "Agendamos cuando esten los dos." REAGENDA. No sigas sin el decisor.</div>
   </div>
 
   <!-- PASO 3 -->
-  <div class="paso">
-    <div class="paso-head">
-      <div class="paso-num">3</div>
-      <div class="paso-meta">
-        <div class="paso-tag">Por que estas aqui</div>
-        <div class="paso-name">Filtra por pilares — encuadra la conversacion</div>
-        <div class="paso-time">2 min</div>
+  <div class="s">
+    <div class="s-top">
+      <div class="s-num">03</div>
+      <div class="s-meta">
+        <div class="s-tag">Filtro por pilares</div>
+        <div class="s-name">Encuadra la conversacion en lo que te importa</div>
+        <div class="s-time">1 min</div>
       </div>
     </div>
-    <div class="say"><div class="say-lbl">Di</div><div class="say-txt">Para que un empresario pueda escalar y recuperar su tiempo necesita tres cosas: un equipo que funcione sin el, un flujo de clientes estable, y claridad de cuanto le queda limpio al mes. De estas tres areas, en cual sientes que necesitas mas ayuda hoy?</div></div>
-    <div class="why-box">En lugar de que el prospecto hable de mil problemas dispersos, encuadras en los 3 pilares de tu oferta. La respuesta es el hilo de todo el discovery. <b>Anota exactamente que pilar menciona primero.</b> Ese es el dolor mas urgente.</div>
-    <div class="tip">Si dice "en las tres" — bien. Tienes mucho material. El que menciona primero es el que mas duele.</div>
+    <div class="say"><div class="say-l">Di</div><div class="say-t">Para que un empresario pueda escalar y recuperar su tiempo necesita tres cosas: equipo que funcione sin el, flujo de clientes estable, y claridad de cuanto le queda limpio. De estas tres, en cual necesitas mas ayuda hoy?</div></div>
+    <div class="key">Anota el pilar que menciona primero. Es el dolor mas urgente. Por ahi va la excavacion.</div>
   </div>
 
   <!-- PASO 4 -->
-  <div class="paso">
-    <div class="paso-head">
-      <div class="paso-num">4</div>
-      <div class="paso-meta">
-        <div class="paso-tag">Situacion actual</div>
-        <div class="paso-name">Entiende el contexto de su negocio hoy</div>
-        <div class="paso-time">4 min</div>
+  <div class="s">
+    <div class="s-top">
+      <div class="s-num">04</div>
+      <div class="s-meta">
+        <div class="s-tag">Situacion actual</div>
+        <div class="s-name">Entiende el contexto del negocio hoy</div>
+        <div class="s-time">3 min</div>
       </div>
     </div>
-    <div class="q-section">
-      <div class="q-main-label">Pregunta principal</div>
-      <div class="q-main">
-        <div class="q-main-txt">Cuentame un poco de tu negocio hoy. A que te dedicas, cuanto tiempo llevas, cuantas personas tienes?</div>
-        <div class="q-why">El contexto define la gravedad del problema. No es lo mismo 3 empleados que 20. No es lo mismo 1 ano que 10. El contexto te dice que tan serio es el dolor y cuanto puede pagar.</div>
-      </div>
-      <div class="q-subs">
-        <div class="q-sub-label">Si necesitas mas contexto:</div>
-        <div class="q-sub">A que se dedica exactamente, cual es el producto o servicio principal?</div>
-        <div class="q-sub">De donde vienen la mayoria de tus clientes hoy?</div>
-        <div class="q-sub">Como estan los ingresos: estables, creciendo o estancados?</div>
-        <div class="q-sub">Cuanto tiempo llevas en ese punto?</div>
-      </div>
+    <div class="qmain"><div class="qmain-txt">Cuentame del negocio — a que te dedicas, cuanto tiempo llevas, cuantas personas tienes?</div></div>
+    <div class="qsubs">
+      <div class="qsub">De donde vienen la mayoria de tus clientes hoy?</div>
+      <div class="qsub">Los ingresos estan estables, creciendo o estancados?</div>
+      <div class="qsub">Cuanto tiempo llevas en ese punto?</div>
     </div>
-    <div class="warn-box"><b>Nunca minimices el negocio ni el problema.</b> Si suena facil, el prospecto piensa que puede solo y no te compra.</div>
+    <div class="warn">Nunca minimices el negocio. Si parece facil de resolver, el prospecto piensa que puede solo y no compra.</div>
   </div>
 
   <!-- PASO 5 -->
-  <div class="paso">
-    <div class="paso-head">
-      <div class="paso-num">5</div>
-      <div class="paso-meta">
-        <div class="paso-tag">Meta ideal — Punto B</div>
-        <div class="paso-name">Conecta con el sueno — pinta a donde quiere llegar</div>
-        <div class="paso-time">3 min</div>
+  <div class="s">
+    <div class="s-top">
+      <div class="s-num">05</div>
+      <div class="s-meta">
+        <div class="s-tag">Meta ideal — Punto B</div>
+        <div class="s-name">Pinta a donde quiere llegar — tono pausado, serio</div>
+        <div class="s-time">3 min</div>
       </div>
     </div>
-    <div class="tip">Tono pausado y serio. Esta pregunta no se hace rapido. La pausa antes de hacerla aumenta el peso.</div>
-    <div class="q-section">
-      <div class="q-main-label">Pregunta principal</div>
-      <div class="q-main">
-        <div class="q-main-txt">Si esto estuviera resuelto en los proximos 12 meses, como se veria tu negocio? Y como se veria tu vida?</div>
-        <div class="q-why">Haces que el Punto B se vea grande y lejano respecto al Punto A. Mientras mas clara sea la diferencia entre donde esta y donde quiere estar, mas urgente se vuelve resolver el problema. <b>Anota sus palabras exactas</b> — las usas en el cierre.</div>
-      </div>
-      <div class="q-subs">
-        <div class="q-sub-label">Para profundizar en el sueno:</div>
-        <div class="q-sub">Si el negocio funcionara sin ti, como usarias ese tiempo?</div>
-        <div class="q-sub">Que significaria para tu familia tener eso resuelto?</div>
-        <div class="q-sub">Cuando creaste el negocio, cual era el sueno original?</div>
-        <div class="q-sub">Hoy sientes que ese sueno sigue vivo o se fue alejando?</div>
-      </div>
+    <div class="qmain"><div class="qmain-txt">Si esto estuviera resuelto en 12 meses, como se veria tu negocio? Y como se veria tu vida?</div></div>
+    <div class="qsubs">
+      <div class="qsub">Si el negocio funcionara sin ti, como usarias ese tiempo?</div>
+      <div class="qsub">Que significaria para tu familia tener esto resuelto?</div>
+      <div class="qsub">Cuando creaste el negocio, cual era el sueno original?</div>
+      <div class="qsub">Hoy sientes que ese sueno sigue vivo o se fue alejando?</div>
     </div>
-    <div class="why-box">Esta pregunta conecta con la identidad. El empresario atrapado en la operacion siente que traiciono su sueno. Cuando lo verbaliza, la urgencia se vuelve emocional y las decisiones emocionales son mas faciles de tomar.</div>
+    <div class="key">Anota sus palabras exactas. Las usas en el cierre.</div>
   </div>
 
   <!-- PASO 6 -->
-  <div class="paso">
-    <div class="paso-head">
-      <div class="paso-num">6</div>
-      <div class="paso-meta">
-        <div class="paso-tag">Examinar el dolor — LA MAS IMPORTANTE</div>
-        <div class="paso-name">Excava en 3 niveles hasta llegar al dolor real</div>
-        <div class="paso-time">12-15 min</div>
+  <div class="s">
+    <div class="s-top">
+      <div class="s-num">06</div>
+      <div class="s-meta">
+        <div class="s-tag">Examinar el dolor — LA MAS IMPORTANTE</div>
+        <div class="s-name">Excava en 3 niveles — no te quedes en la superficie</div>
+        <div class="s-time">12 min</div>
       </div>
     </div>
-    <div class="why-box">Como un medico que presiona para encontrar donde duele mas. El dolor superficial es lo que dice. El dolor profundo es lo que siente pero no expresa facilmente. La mayoria de closers se queda en el nivel 1. Por eso no cierra.</div>
+
+    <div class="nlbl">Nivel 1 — Abre el dolor · identifica el area</div>
+    <div class="qmain"><div class="qmain-txt">Que has intentado antes para resolver esto?</div></div>
+    <div class="qsubs">
+      <div class="qsub">Por que crees que no funciono?</div>
+      <div class="qsub">Cuanto tiempo o dinero invertiste en eso?</div>
+      <div class="qsub">Como se ve en tu dia a dia concretamente?</div>
+      <div class="qsub">Dame un ejemplo de la semana pasada donde esto te afecto.</div>
+    </div>
+
+    <div class="key">Cuando el prospecto menciona un area concreta ("no se donde va el dinero", "todo depende de mi", "no tengo clientes") — PARA aqui y pasa a la pestana <b>Excavar por Area</b>. Esas preguntas reemplazan el Nivel 2 y 3 y terminan con el numero que necesitas para anclar el precio.</div>
 
     <div class="hr"></div>
-    <div class="q-main-label" style="color:var(--gold);font-size:13px;margin-bottom:12px;">NIVEL 1 — Abre el dolor</div>
 
-    <div class="q-section">
-      <div class="q-main">
-        <div class="q-main-txt">Que has intentado hacer para solucionar esto antes?</div>
-        <div class="q-why">Revela los intentos fallidos previos. Cuando te cuente que intento, tienes la municion para mostrar por que tu solucion es diferente. Escucha sin interrumpir.</div>
-      </div>
-      <div class="q-subs">
-        <div class="q-sub">Cuanto tiempo le dedicaste a eso?</div>
-        <div class="q-sub">Cuanto dinero invertiste en ese intento?</div>
-        <div class="q-sub">Que paso exactamente — por que sientes que no funciono?</div>
-        <div class="q-sub">Lo intentaste una sola vez o varias veces?</div>
-      </div>
-    </div>
-
-    <div class="q-section">
-      <div class="q-main">
-        <div class="q-main-txt">Como se ve ese problema en tu dia a dia concretamente?</div>
-        <div class="q-why">Hace que el prospecto describa el dolor en imagenes concretas, no en abstracciones. "No tengo equipo" es abstracto. "Cada vez que me voy todo se paraliza" duele mas.</div>
-      </div>
-      <div class="q-subs">
-        <div class="q-sub">Que pasa exactamente cuando tu no estas?</div>
-        <div class="q-sub">Dame un ejemplo de la semana pasada donde esto te afecto.</div>
-        <div class="q-sub">A que hora terminas de trabajar normalmente?</div>
-        <div class="q-sub">Trabajas los fines de semana por esto?</div>
-      </div>
-    </div>
+    <div class="nlbl">Nivel 2 — Cuantifica · Solo si no fue a Excavar por Area</div>
+    <div class="qmain"><div class="qmain-txt">Si le pones un numero, cuanto te cuesta por mes no tener esto resuelto?</div></div>
+    <div class="quiet">Silencio. Deja que calcule. No lo rescates.</div>
+    <div class="qmain"><div class="qmain-txt">Y eso en un ano seria...?</div></div>
+    <div class="key">Di el numero en voz alta: "Entonces hablamos de $X al ano." Ese es tu ancla para el precio.</div>
 
     <div class="hr"></div>
-    <div class="q-main-label" style="color:var(--gold);font-size:13px;margin-bottom:12px;">NIVEL 2 — Cuantifica el dolor</div>
 
-    <div class="q-section">
-      <div class="q-main">
-        <div class="q-main-txt">Cuanto tiempo llevas sintiendote asi?</div>
-        <div class="q-why">La duracion multiplica el costo. Si llevan 2 anos y el problema cuesta $2,000/mes, son $48,000 perdidos. Ese numero hace que cualquier precio del programa parezca pequeno.</div>
-      </div>
-      <div class="q-subs">
-        <div class="q-sub">Y en todo ese tiempo, como ha afectado el crecimiento del negocio?</div>
-        <div class="q-sub">Cuanto crees que has dejado de ganar por no tener esto resuelto?</div>
-      </div>
+    <div class="nlbl">Nivel 3 — Dolor de identidad · Solo si no fue a Excavar por Area</div>
+    <div class="qmain"><div class="qmain-txt">Como te afecta esto fuera del negocio — tu familia, tu tranquilidad?</div></div>
+    <div class="qsubs">
+      <div class="qsub">Cuantas horas ves a tu familia entre semana?</div>
+      <div class="qsub">Cuando fue la ultima vez que te fuiste de vacaciones sin conectarte?</div>
+      <div class="qsub">Hay algo que hayas sacrificado por estar tan metido en la operacion?</div>
     </div>
-
-    <div class="q-section">
-      <div class="q-main">
-        <div class="q-main-txt">Si le pones un numero, cuanto te cuesta por mes no tener esto resuelto — entre tiempo perdido, ventas que no cierras, decisiones que no se toman?</div>
-        <div class="q-why">Este numero es tu ancla para el precio. Lo guardas y lo usas cuando presentes la inversion. El prospecto mismo construyo la justificacion de por que el programa vale lo que vale.</div>
-      </div>
-    </div>
-    <div class="quiet-box">Silencio cuando calcule. No lo rescates. Deja que sufra el numero un momento.</div>
-    <div class="q-section">
-      <div class="q-main">
-        <div class="q-main-txt">Y eso en un ano seria aproximadamente...?</div>
-        <div class="q-why">Cuando multiplicas por 12, el numero se vuelve imposible de ignorar. Di el numero en voz alta: "Entonces hablamos de $X al ano."</div>
-      </div>
-    </div>
-    <div class="key-box"><b>Ese numero es tu ancla.</b> Guardalo. Es lo que usas al final: "El programa cuesta $1,995. En 2 meses ya se pago solo con lo que dejas de perder."</div>
-
-    <div class="hr"></div>
-    <div class="q-main-label" style="color:var(--gold);font-size:13px;margin-bottom:12px;">NIVEL 3 — El dolor de identidad (aqui esta el cierre)</div>
-
-    <div class="q-section">
-      <div class="q-main">
-        <div class="q-main-txt">Como te afecta esto fuera del negocio — en tu vida personal, tu familia, tu tranquilidad?</div>
-        <div class="q-why">El dolor funcional es el problema del negocio. El dolor de identidad es quien se siente que es como persona por no haberlo resuelto. Cuando toques esto, el tono cambia. El prospecto baja la voz, hay pausa, hay emocion. Ahi esta el cierre real.</div>
-      </div>
-      <div class="q-subs">
-        <div class="q-sub">Cuantas horas ves a tu familia entre semana?</div>
-        <div class="q-sub">Cuando fue la ultima vez que te fuiste de vacaciones sin conectarte?</div>
-        <div class="q-sub">Como esta afectando esto tu tranquilidad, tu sueno, tu energia?</div>
-        <div class="q-sub">Hay algo que hayas sacrificado por estar tan metido en la operacion?</div>
-      </div>
-    </div>
-
-    <div class="why-box"><b>Senal de que llegaste al dolor profundo:</b> baja la voz, hace una pausa larga, dice "te soy honesto..." o "la verdad es que...". Cuando eso pase: no hables. Espera. Lo que viene despues es el dolor real. El cierre esta ahi.</div>
+    <div class="note"><b>Señal de que llegaste al fondo:</b> baja la voz, pausa larga, dice "te soy honesto..." — no hables. Espera. Ahi esta el cierre.</div>
   </div>
 
   <!-- PASO 7 -->
-  <div class="paso">
-    <div class="paso-head">
-      <div class="paso-num">7</div>
-      <div class="paso-meta">
-        <div class="paso-tag">Por que ahora</div>
-        <div class="paso-name">El prospecto se convence solo de la urgencia</div>
-        <div class="paso-time">3 min</div>
+  <div class="s">
+    <div class="s-top">
+      <div class="s-num">07</div>
+      <div class="s-meta">
+        <div class="s-tag">Por que ahora</div>
+        <div class="s-name">El prospecto se convence solo de la urgencia</div>
+        <div class="s-time">2 min</div>
       </div>
     </div>
-    <div class="q-section">
-      <div class="q-main-label">Pregunta principal</div>
-      <div class="q-main">
-        <div class="q-main-txt">Por que sientes que ahora es el momento correcto de solucionar esto? Por que no dejarlo para 6 meses despues?</div>
-        <div class="q-why">El prospecto construye sus propios argumentos de urgencia. Lo que diga aqui es la razon real por la que quiere comprar. Anota. Si al final dice "lo pienso", devuelves sus propias palabras: "Pero me dijiste que [lo que dijo]..."</div>
-      </div>
+    <div class="qmain"><div class="qmain-txt">Por que sientes que ahora es el momento? Por que no dejarlo para 6 meses despues?</div></div>
+    <div class="qsubs">
+      <div class="qsub">Que es lo que hace que este momento sea diferente a los anteriores?</div>
+      <div class="qsub">Que pasaria si esto sigue igual otros 12 meses?</div>
+      <div class="qsub">Y en tu vida personal, cuanto tiempo mas puedes seguir asi?</div>
     </div>
-    <div class="quiet-box">Silencio total despues de preguntar. El que habla primero pierde.</div>
-    <div class="q-section">
-      <div class="q-subs">
-        <div class="q-sub-label">Si la respuesta es vaga, profundiza:</div>
-        <div class="q-sub">Que es lo que hace que este momento sea diferente a los anteriores?</div>
-        <div class="q-sub">Que pasaria en tu negocio si esto sigue igual otros 12 meses?</div>
-        <div class="q-sub">Y en tu vida personal, cuanto tiempo mas puedes seguir a este ritmo?</div>
-      </div>
-    </div>
+    <div class="quiet">Silencio total despues de preguntar. El que habla primero pierde.</div>
+    <div class="key">Anota lo que diga. Si al final dice "lo pienso" — devuelves sus propias palabras de este paso.</div>
   </div>
 
-  <!-- PASO 8 — TRANSICION -->
-  <div class="paso">
-    <div class="paso-head">
-      <div class="paso-num">8</div>
-      <div class="paso-meta">
-        <div class="paso-tag">Transicion</div>
-        <div class="paso-name">El puente del diagnostico a la solucion</div>
-        <div class="paso-time">2 min</div>
+  <!-- PASO 8 -->
+  <div class="s">
+    <div class="s-top">
+      <div class="s-num">08</div>
+      <div class="s-meta">
+        <div class="s-tag">Transicion</div>
+        <div class="s-name">Puente del diagnostico a la solucion — usa SUS palabras</div>
+        <div class="s-time">1 min</div>
       </div>
     </div>
-    <div class="why-box"><b>Este es el momento mas critico.</b> No puedes saltar de la excavacion a la presentacion sin un puente. Si lo haces, el prospecto siente el cambio de modo y activa sus defensas de comprador. El puente usa SUS palabras para conectar su dolor con tu solucion.</div>
-    <div class="say"><div class="say-lbl">Di — usa sus palabras exactas, no las tuyas</div><div class="say-txt">[Nombre], con todo lo que me contaste: llevas [X tiempo] con [su problema en sus palabras]. Eso te cuesta aproximadamente $[numero que el calculo] al mes — $[x12] al ano. Y el sueno que tenias cuando creaste el negocio era [lo que dijo]. Lo que describes tiene solucion y tiene nombre. Quieres que te cuente como funciona para tu caso?</div></div>
-    <div class="tip"><b>Espera el si.</b> No presentes sin ese si. El prospecto que dio permiso esta receptivo. El que no lo dio todavia tiene resistencia.</div>
-    <div class="why-box">Cuando usas sus propias palabras, el prospecto siente que lo entendiste mejor que nadie. Esa sensacion de "esta persona me entiende" es lo que genera confianza para comprar.</div>
+    <div class="say"><div class="say-l">Di — con sus palabras, no las tuyas</div><div class="say-t">[Nombre], con todo lo que me contaste: llevas [X tiempo] con [su problema en sus palabras]. Eso te cuesta $[su numero] al mes. Lo que describes tiene solucion. Quieres que te cuente como funciona?</div></div>
+    <div class="warn">No presentes sin ese "si". El que da permiso esta receptivo. El que no, todavia tiene resistencia.</div>
   </div>
 
-  <!-- PASO 9 — PRESENTACION -->
-  <div class="paso">
-    <div class="paso-head">
-      <div class="paso-num">9</div>
-      <div class="paso-meta">
-        <div class="paso-tag">Presentacion del programa</div>
-        <div class="paso-name">Solo los sistemas que conectan con SU dolor</div>
-        <div class="paso-time">8 min</div>
+  <!-- PASO 9 -->
+  <div class="s">
+    <div class="s-top">
+      <div class="s-num">09</div>
+      <div class="s-meta">
+        <div class="s-tag">Presentacion</div>
+        <div class="s-name">Solo 2-3 sistemas que resuelven SU dolor</div>
+        <div class="s-time">7 min</div>
       </div>
     </div>
-    <div class="warn-box"><b>Error mas comun:</b> presentar todo el catalogo. Eso abruma y diluye el impacto. Solo presenta los 2-3 sistemas que resuelven el dolor especifico que excavo.</div>
-    <div class="say"><div class="say-lbl">Di — conecta cada sistema con SU situacion</div><div class="say-txt">Lo que vamos a hacer en Maquina del Dinero tiene [X] partes. [Sistema 1] — eso resuelve exactamente lo que me contaste de [su dolor concreto]. [Sistema 2] — para que [resultado especifico]. [Sistema 3] — para que al final del mes sepas exactamente cuanto te quedo limpio. Se entiende como cada parte resuelve lo que me contaste?</div></div>
-
-    <div class="sec"><div class="sec-tag">Los 7 sistemas</div><div class="sec-title">Conecta segun el dolor del prospecto</div></div>
-
-    <div class="bonus-card">
-      <div class="bonus-head"><div class="bonus-n">S1</div><div class="bonus-title">Sistema de Liderazgo — $1,350</div></div>
-      <div class="bonus-sub">Construir un equipo que decide, ejecuta y resuelve sin que el empresario empuje todo. Contratar bien, delegar con confianza, convertir empleados en lideres.</div>
-      <div class="bonus-val">Usa cuando el dolor es: "todo depende de mi", "no puedo desconectarme", "mi equipo no resuelve solo".</div>
+    <div class="warn">No presentes todo. Solo los sistemas que conectan con lo que te conto. Ver la guia de Sistemas para el contenido exacto de cada uno.</div>
+    <div class="say"><div class="say-l">Di — conecta cada sistema con su situacion</div><div class="say-t">Maquina del Dinero tiene [X] partes. La primera es [sistema] — eso resuelve exactamente lo que me contaste de [su dolor concreto]. La segunda es [sistema] para que [resultado especifico]. Se entiende como cada parte resuelve lo que me contaste?</div></div>
+    <div class="qmain" style="margin-top:12px;"><div class="qmain-txt">Del 1 al 10, como te sientes con lo que escuchaste?</div></div>
+    <div class="qsubs">
+      <div class="qsub">9-10: vas al cierre directo.</div>
+      <div class="qsub">7-8: "Que te faltaria para llegar a un 10?" — eso es la objecion que falta resolver.</div>
     </div>
-    <div class="bonus-card">
-      <div class="bonus-head"><div class="bonus-n">S2</div><div class="bonus-title">Sistema de Marketing — $2,150</div></div>
-      <div class="bonus-sub">Desde construir presencia en redes hasta cerrar ventas con un proceso que funciona aunque el empresario no este. Avatar del cliente ideal, promesa que genera deseo, pauta digital que no quema el presupuesto.</div>
-      <div class="bonus-val">Usa cuando el dolor es: "no tengo clientes estables", "dependo de referidos", "no se como hacer publicidad que funcione".</div>
-    </div>
-    <div class="bonus-card">
-      <div class="bonus-head"><div class="bonus-n">S3</div><div class="bonus-title">Sistema de Finanzas — $1,300</div></div>
-      <div class="bonus-sub">Control total de los numeros. Saber exactamente cuanto gana, donde se escapa el dinero, como tapar los 3 huecos por donde se pierde sin vender un cliente nuevo. Incrementar rentabilidad del 30% al 60%.</div>
-      <div class="bonus-val">Usa cuando el dolor es: "facturo bien pero no se donde va el dinero", "no tengo claridad financiera", "trabajo mucho y no me queda suficiente".</div>
-    </div>
-    <div class="bonus-card">
-      <div class="bonus-head"><div class="bonus-n">S4</div><div class="bonus-title">Sistema de Innovacion — $950</div></div>
-      <div class="bonus-sub">Crear o mejorar lo que vende para que el cliente no compare, no regatee y no se vaya con la competencia. Salir del juego del precio mas barato.</div>
-      <div class="bonus-val">Usa cuando el dolor es: "me comparan con la competencia", "siempre me piden descuento", "no tengo diferenciacion".</div>
-    </div>
-    <div class="bonus-card">
-      <div class="bonus-head"><div class="bonus-n">S5</div><div class="bonus-title">Sistema de Expansion — $1,350</div></div>
-      <div class="bonus-sub">Expandirse con inteligencia, multiplicar el modelo en nuevos mercados, invertir las ganancias. Crecer de 40% a 120% anualmente.</div>
-      <div class="bonus-val">Usa cuando el dolor es: "quiero crecer pero no se como", "quiero abrir otro negocio", "estoy estancado en el mismo nivel".</div>
-    </div>
-    <div class="bonus-card">
-      <div class="bonus-head"><div class="bonus-n">S6</div><div class="bonus-title">Sistema de Mentalidad — $750</div></div>
-      <div class="bonus-sub">El sistema que sostiene todo lo demas. Tomar mejores decisiones con menos energia y mas claridad. Para cuando llega la presion, la duda o el momento dificil.</div>
-      <div class="bonus-val">Usa cuando el dolor es: "me agoto", "no se que decision tomar", "trabajo mucho pero siento que no avanzo".</div>
-    </div>
-
-    <div class="say"><div class="say-lbl">Termometro — siempre antes del precio</div><div class="say-txt">Del 1 al 10, donde 1 es no me interesa y 10 es lo necesito ya, como te sientes con lo que acabas de escuchar?</div></div>
-    <div class="tip"><b>Si dice 9 o 10:</b> vas directo al cierre. <b>Si dice 7 u 8:</b> "Que te faltaria para llegar a un 10?" La respuesta te dice que objecion queda por resolver.</div>
-    <div class="key-box"><b>Anclaje antes del precio:</b> "Calculamos que esto te cuesta $[numero] al mes. El programa cuesta $1,995. En 2 meses ya se pago solo con lo que dejas de perder. Y eso sin contar lo que vas a ganar."</div>
-
-    <div class="hr"></div>
-    <div class="sec"><div class="sec-tag">Planes</div><div class="sec-title">Maquina vs Maestria</div></div>
-    <div class="plans">
-      <div class="plan best">
-        <div class="plan-bdg">El que mas vendes</div>
-        <div class="plan-n">MAQUINA DEL DINERO</div>
-        <div class="plan-p">$1,995</div>
-        <div class="plan-s">Pago unico · Valor real $16,800</div>
-        <div class="plan-desc">7 sistemas + acompanamiento 12 meses</div>
-        <ul class="plan-i">
-          <li>12 sesiones grupales de retroalimentacion</li>
-          <li>Comunidad privada WhatsApp empresarios</li>
-          <li>Biblioteca de casos reales</li>
-          <li>Videos paso a paso + manuales PDF</li>
-          <li>Garantia 7 dias sin preguntas</li>
-          <li>Regalos: Plan 90 dias + Analisis privado + Codigos del Dinero en vivo + Capacitacion equipo</li>
-        </ul>
-      </div>
-      <div class="plan">
-        <div class="plan-n">MAESTRIA DEL DINERO</div>
-        <div class="plan-p">$10,000</div>
-        <div class="plan-s">Full · o $1,000 hoy + 6 pagos de $1,800</div>
-        <div class="plan-desc">Mentoria presencial 1 ano con Alvaro Luque directamente</div>
-        <ul class="plan-i">
-          <li>Sesiones mensuales de mentoria 1:1</li>
-          <li>3 encuentros presenciales empresariales</li>
-          <li>Encuentros de implementacion con tu equipo</li>
-          <li>Analisis privado de negocio por Alvaro</li>
-          <li>Comunidad WhatsApp privada con Alvaro</li>
-          <li>Regalos: Axelerate + Workshops digitales + Boleto LBS 2026</li>
-          <li>Pago full: sesion exclusiva en casa de Alvaro</li>
-        </ul>
-      </div>
-    </div>
+    <div class="key">Anclaje antes del precio: "Calculamos que esto te cuesta $[X] al mes. El programa son $1,995. En 2 meses ya se pago solo."</div>
   </div>
 
   <!-- PASO 10 -->
-  <div class="paso">
-    <div class="paso-head">
-      <div class="paso-num">10</div>
-      <div class="paso-meta">
-        <div class="paso-tag">Compromisos</div>
-        <div class="paso-name">Se compromete antes de saber el precio final</div>
-        <div class="paso-time">2 min</div>
+  <div class="s">
+    <div class="s-top">
+      <div class="s-num">10</div>
+      <div class="s-meta">
+        <div class="s-tag">Compromisos</div>
+        <div class="s-name">Se compromete antes del precio final</div>
+        <div class="s-time">1 min</div>
       </div>
     </div>
-    <div class="say"><div class="say-lbl">Di</div><div class="say-txt">Antes de continuar quiero asegurarme de que eres buen candidato. Para que esto te funcione necesito tres compromisos: primero, tiempo — dedicarle las horas que el proceso requiere. Segundo, ser mentoreable — seguir el paso a paso, no hacer las cosas a tu manera. Tercero, mentalidad — no rendirte si no sale a la primera. Te puedes comprometer en estas tres cosas?</div></div>
-    <div class="why-box">Cuando el prospecto se compromete formalmente antes del precio, ya entro psicologicamente. El precio despues es solo un tramite. Ademas, si dice que no puede comprometerse, te esta diciendo que no es el candidato correcto — mejor saberlo ahora.</div>
-    <div class="warn-box"><b>Si dice que no puede comprometerse:</b> "Entiendo, y te lo agradezco por ser honesto. El programa no es para todo el mundo. Cuando sientas que estas listo, me avisas." Cierra con dignidad.</div>
-    <div class="rule"><div class="rule-l">Antes de dar el precio</div><div class="rule-t">Ya use SUS palabras en el puente? Ya calcule el costo de su problema con el? Si no — vuelve antes de continuar.</div></div>
+    <div class="say"><div class="say-l">Di</div><div class="say-t">Antes de continuar quiero asegurarme de que eres buen candidato. Necesito tres compromisos: tiempo para implementar, ser mentoreable y seguir el proceso, y mentalidad para no rendirte si no sale a la primera. Te puedes comprometer en estas tres cosas?</div></div>
+    <div class="warn">Si no puede comprometerse: "Entiendo, el programa no es para todo el mundo. Cuando estes listo, me avisas." Cierra con dignidad.</div>
+  </div>
+
+  <div class="rule">
+    <div class="rule-l">Antes de dar el precio</div>
+    <div class="rule-t">Ya calcule el costo de su problema con el? Ya use SUS palabras en el puente? Si no — vuelve antes de continuar.</div>
   </div>
 </div>
 
-</div>
-
-<!-- ============ FOLLOW UP ============ -->
-<div class="pg" id="pg-followup">
-
+<!-- ============ EXCAVAR POR AREA ============ -->
+<div class="pg" id="pg-excavar">
   <div class="ph">
-    <div class="ph-tag">Post-llamada · Secuencia de urgencia</div>
-    <div class="ph-title">Follow Up + Escasez</div>
-    <div class="ph-sub">La mayoria de ventas en Luque cierran en el follow up. Pero sin urgencia real, el prospecto pospone indefinidamente. Estos son los bonos que desaparecen y como usarlos.</div>
+    <div class="ph-s">Paso 6 — Nivel 1 identifica el area</div>
+    <div class="ph-t">Excavar por Area</div>
+    <div class="ph-d">Cuando el prospecto menciona un area concreta, usa estas preguntas. Reemplazan el Nivel 2 y 3. No las hagas todas — sigue el hilo de lo que el dice. Terminan con el numero que ancla el precio.</div>
   </div>
 
-  <div class="warn-box"><b>Realidad del proceso:</b> la mayoria quiere "revisar la info" antes de decidir. El link de pago solo no cierra. Necesitas una razon para decidir HOY, no manana. Los bonos con fecha de vencimiento son esa razon.</div>
-
-  <div class="sec"><div class="sec-tag">Maquina del Dinero — Bonos con fecha</div><div class="sec-title">Urgencia real — Regalos que desaparecen</div></div>
-
-  <div class="bonus-card">
-    <div class="bonus-head"><div class="bonus-n">R1</div><div class="bonus-title">Plan de Implementacion 90 dias</div></div>
-    <div class="bonus-sub">Hoja de ruta personalizada para los primeros 3 meses en el programa. Sin esto van al monton de contenido sin saber por donde empezar.</div>
-    <div class="bonus-val">Valor: $550 USD</div>
-    <div class="bonus-when">Desaparece: segun el calendario del lanzamiento</div>
+  <!-- FINANZAS -->
+  <div class="area">
+    <div class="area-head">
+      <div class="area-icon">💰</div>
+      <div class="area-meta">
+        <div class="area-name">Finanzas</div>
+        <div class="area-when">"No se donde va el dinero" · "facturo bien pero no me queda" · "no tengo claridad financiera" · "siempre estoy corto"</div>
+      </div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Cuanto facturas al mes aproximadamente — y cuanto te queda limpio despues de pagar todo?</div>
+      <div class="area-q-sub">La diferencia entre esos dos numeros es el dolor. Dejalo en silencio un momento.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Sabes exactamente cuales productos o servicios te dejan mas dinero y cuales te estan costando?</div>
+      <div class="area-q-sub">Si dice "no" — ahi esta el problema raiz.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Tienes un flujo de caja que te diga cuanto va a entrar y salir el proximo mes?</div>
+      <div class="area-q-sub">Si dice "no" — alguna vez te quedaste sin caja en un momento critico? Cuanto te costo eso?</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Cuando necesitas decidir si puedes invertir o contratar, en que te basas?</div>
+      <div class="area-q-sub">Revela si toma decisiones financieras con datos o a ciegas.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Has subido precios en el ultimo ano? En que te basaste para poner el precio que tienes hoy?</div>
+      <div class="area-q-sub">La mayoria pone precios segun la competencia, no rentabilidad. Eso es dejar dinero sobre la mesa.</div>
+    </div>
+    <div class="area-anchor">Ancla: "Me dijiste que facturas $X y te queda $Y. La diferencia son $Z al mes — $[x12] al ano — que se van sin saber a donde. El Sistema de Finanzas de Maquina resuelve exactamente eso."</div>
   </div>
 
-  <div class="bonus-card">
-    <div class="bonus-head"><div class="bonus-n">R2</div><div class="bonus-title">Analisis privado con consultores</div></div>
-    <div class="bonus-sub">Sesion privada donde consultores revisan el negocio del empresario especificamente y dicen por donde arrancar primero para ver resultados rapido.</div>
-    <div class="bonus-val">Valor: $750 USD</div>
-    <div class="bonus-when">Desaparece primero — el de mayor urgencia</div>
+  <!-- EQUIPO -->
+  <div class="area">
+    <div class="area-head">
+      <div class="area-icon">👥</div>
+      <div class="area-meta">
+        <div class="area-name">Equipo</div>
+        <div class="area-when">"Todo depende de mi" · "si no estoy todo se paraliza" · "no puedo desconectarme" · "no tengo en quien delegar"</div>
+      </div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Que pasa exactamente cuando no estas — un dia, un fin de semana?</div>
+      <div class="area-q-sub">Pide un ejemplo concreto de la semana pasada. Lo concreto duele mas que lo abstracto.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Cuantas decisiones al dia te consulta tu equipo que podrian tomar solos?</div>
+      <div class="area-q-sub">Si dice "muchas" — cuanto tiempo te quita eso al dia? Cuantificalo en horas.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Has intentado delegar antes? Que paso exactamente?</div>
+      <div class="area-q-sub">Revela el historial de intentos fallidos. Escucha sin juzgar.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">La ultima persona que contrataste — cuanto tiempo paso antes de darte cuenta que no era lo que necesitabas?</div>
+      <div class="area-q-sub">El costo de contratar mal va mucho mas alla del salario. Cuantificalo juntos.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Si tuvieras un equipo que funciona sin ti, en que usarias ese tiempo?</div>
+      <div class="area-q-sub">Esta pregunta conecta con el sueno. La respuesta es emocional. Escucha y anota.</div>
+    </div>
+    <div class="area-anchor">Ancla: "Me dijiste que si no estas [lo que pasa]. Llevas [X tiempo] siendo el cuello de botella. El Sistema de Liderazgo te ensena a construir un equipo que decide y resuelve sin que estes empujando todo."</div>
   </div>
 
-  <div class="bonus-card">
-    <div class="bonus-head"><div class="bonus-n">R3</div><div class="bonus-title">Codigos del Dinero en vivo</div></div>
-    <div class="bonus-sub">Sesion en vivo con Alvaro Luque sobre los principios que separan a los empresarios que escalan de los que se quedan estancados.</div>
-    <div class="bonus-val">Valor: $1,800 USD</div>
-    <div class="bonus-when">Desaparece segundo</div>
+  <!-- VENTAS -->
+  <div class="area">
+    <div class="area-head">
+      <div class="area-icon">📈</div>
+      <div class="area-meta">
+        <div class="area-name">Ventas y Clientes</div>
+        <div class="area-when">"No tengo clientes estables" · "dependo de referidos" · "publico pero no vendo" · "las ventas son inconsistentes"</div>
+      </div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">De donde viene la mayoria de tus clientes — referidos, redes, pauta, otro?</div>
+      <div class="area-q-sub">Si dice "referidos" — cuanto controlas ese flujo? Que pasa cuando los referidos bajan?</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Tienes un proceso de ventas definido — pasos claros desde que alguien te contacta hasta que te paga?</div>
+      <div class="area-q-sub">Si dice "no" — cuanto crees que pierdes por no tener ese proceso estandarizado?</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">De cada 10 personas interesadas, cuantas terminan comprando?</div>
+      <div class="area-q-sub">Si la tasa es baja, el problema es el proceso o el mensaje, no el producto.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Inviertes en publicidad paga? Cuanto te cuesta conseguir un cliente nuevo?</div>
+      <div class="area-q-sub">Si no sabe el costo de adquisicion, esta invirtiendo a ciegas.</div>
+    </div>
+    <div class="area-anchor">Ancla: "Me dijiste que las ventas son inconsistentes y que dependes de [su fuente]. El Sistema de Marketing va desde como construir presencia hasta como tener un proceso de ventas que funciona aunque tu no estes."</div>
   </div>
 
-  <div class="bonus-card">
-    <div class="bonus-head"><div class="bonus-n">R4</div><div class="bonus-title">Capacitacion en vivo para tu equipo</div></div>
-    <div class="bonus-sub">Sesion de capacitacion para los lideres del equipo del empresario. No solo el dueno aprende — el equipo entero arranca con el sistema.</div>
-    <div class="bonus-val">Valor: $3,000 USD</div>
-    <div class="bonus-when">Desaparece con los primeros</div>
+  <!-- DIFERENCIACION -->
+  <div class="area">
+    <div class="area-head">
+      <div class="area-icon">🎯</div>
+      <div class="area-meta">
+        <div class="area-name">Diferenciacion</div>
+        <div class="area-when">"Siempre me piden descuento" · "me comparan con la competencia" · "compito por precio" · "no se que me hace diferente"</div>
+      </div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Cuando un cliente te compara con otro, en que terminan comparando — precio, calidad, que?</div>
+      <div class="area-q-sub">Si dice "precio" — el problema es que no perciben diferencia. Tiene que ver con como lo comunica, no con el producto.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Que hace tu empresa que ninguna otra hace exactamente igual?</div>
+      <div class="area-q-sub">Si no sabe responder en 30 segundos, ese es el problema raiz.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Cuanto tiempo llevas con los precios actuales? Intentaste subirlos alguna vez?</div>
+      <div class="area-q-sub">El precio que cobras hoy es una senal de como te percibe el mercado.</div>
+    </div>
+    <div class="area-anchor">Ancla: "El Sistema de Innovacion te ensena a crear o mejorar lo que vendes para que tu cliente no compare, no regatee — y puedas cobrar hasta un 50% mas caro."</div>
   </div>
 
-  <div class="key-box"><b>Total en regalos que desaparecen: $6,100 USD.</b> El programa ya vale $1,995. Los regalos valen 3 veces mas que el precio. Si espera, no solo pierde los regalos — pierde cada mes que sigue con el problema.</div>
+  <!-- CRECIMIENTO -->
+  <div class="area">
+    <div class="area-head">
+      <div class="area-icon">🚀</div>
+      <div class="area-meta">
+        <div class="area-name">Crecimiento</div>
+        <div class="area-when">"Quiero escalar pero no se como" · "trabajo mas pero gano igual" · "quiero abrir otro negocio" · "estoy estancado"</div>
+      </div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">En que porcentaje creciste el ultimo ano — en ingresos y en utilidad?</div>
+      <div class="area-q-sub">Si el ingreso crecio pero la utilidad no, el crecimiento le esta costando dinero.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Si abrieras una segunda sucursal manana, que pasaria con lo que ya tienes?</div>
+      <div class="area-q-sub">La respuesta revela si el negocio esta listo para escalar o primero necesita consolidarse.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Que haces hoy con las ganancias del negocio — las reinviertes, las guardas, las gastas?</div>
+      <div class="area-q-sub">Revela si tiene estrategia de inversion o si el dinero simplemente se gasta.</div>
+    </div>
+    <div class="area-anchor">Ancla: "El Sistema de Expansion te dice exactamente si tu empresa esta lista para crecer, que ruta tomar y como multiplicar el modelo sin arriesgar lo que ya tienes."</div>
+  </div>
+
+  <!-- MENTALIDAD -->
+  <div class="area">
+    <div class="area-head">
+      <div class="area-icon">🧠</div>
+      <div class="area-meta">
+        <div class="area-name">Mentalidad</div>
+        <div class="area-when">"Trabajo mucho pero no avanzo" · "la presion me agota" · "no se que decision tomar" · "empece a dudar de mi mismo"</div>
+      </div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Cuando tienes que tomar una decision importante, en que te basas — datos, intuicion, o resuelves en el momento?</div>
+      <div class="area-q-sub">Si es pura intuicion, las decisiones son inconsistentes y generan desgaste.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Hay alguna decision que llevas meses postergando porque no sabes como tomarla?</div>
+      <div class="area-q-sub">El costo de las decisiones postergadas es enorme. Cuantificalo si puede.</div>
+    </div>
+    <div class="area-q">
+      <div class="area-q-txt">Cuando el negocio va mal, como reaccionas — atacas el problema o te paralizas?</div>
+      <div class="area-q-sub">Baja la voz para hacer esta pregunta. Es intima. El nivel de honestidad te dice cuanto confian en ti.</div>
+    </div>
+    <div class="area-anchor">Ancla: "Los sistemas sin mentalidad no funcionan. El Sistema de Mentalidad te da exactamente como pensar, que decidir y hacia donde ir cuando llegue la presion o la duda."</div>
+  </div>
+</div>
+
+<!-- ============ CIERRE ============ -->
+<div class="pg" id="pg-cierre">
+  <div class="ph">
+    <div class="ph-s">Tu mayor debilidad — trabaja esto</div>
+    <div class="ph-t">Tipos de Cierre</div>
+    <div class="ph-d">Identifica la situacion y ejecuta el correcto. Nunca termines con "te mando info".</div>
+  </div>
+
+  <div class="warn">Error mas caro: "te mando info" o "agendamos otra llamada". El prospecto que se va sin decidir hoy tiene 70% menos probabilidad de cerrar despues.</div>
+
+  <div class="cc" style="margin-top:20px;">
+    <div class="cc-t">Cierre 1 — Doble opcion</div>
+    <div class="cc-w">Termometro en 8, 9 o 10. El prospecto esta listo.</div>
+    <div class="cc-say">Excelente. Oficialmente te doy la bienvenida. La inversion normal son $2,500, pero por el bono de accion rapida de hoy queda en $1,995 en un pago, o dos pagos de $1,100. Cual te funciona mejor?</div>
+    <div class="quiet">Silencio. El que habla primero pierde.</div>
+    <div class="cc-tip">Cuando elija: "Como prefieres pagar: tarjeta, transferencia o Paypal?" No cuelgas hasta confirmar el pago.</div>
+  </div>
+
+  <div class="cc">
+    <div class="cc-t">Cierre 2 — Asuntivo</div>
+    <div class="cc-w">El prospecto esta convencido y espera que tomes la iniciativa.</div>
+    <div class="cc-say">[Nombre], con lo que me contaste de [su dolor] y con que esto te cuesta $[numero] al mes — lo que tiene mas sentido es arrancar con Maquina del Dinero hoy. Como prefieres hacer el pago?</div>
+    <div class="cc-tip">No preguntas si quiere. Asumes el si y preguntas solo el metodo de pago.</div>
+  </div>
+
+  <div class="cc">
+    <div class="cc-t">Cierre 3 — Costo de inaccion</div>
+    <div class="cc-w">Hay hesitacion. Vuelves al numero que calcularon juntos.</div>
+    <div class="cc-say">Calculamos juntos que esto te cuesta $[X] al mes — $[x12] al ano. El programa son $1,995. En 2 meses ya se pago solo con lo que dejas de perder. Y tienes 7 dias de garantia: si entras y no es para ti, el 100% de vuelta. Cual es el riesgo real de entrar hoy?</div>
+  </div>
+
+  <div class="cc">
+    <div class="cc-t">Cierre 4 — Por identidad</div>
+    <div class="cc-w">Llegaste al nivel 3 del dolor. El cierre emocional.</div>
+    <div class="cc-say">[Nombre], me dijiste que el sueno original era [sus palabras]. Y hoy sientes que [su realidad]. Maquina existe exactamente para empresarios como tu. Quieres dar ese paso hoy?</div>
+    <div class="cc-tip">Usa sus palabras textuales. El impacto es mayor que cualquier argumento logico.</div>
+  </div>
 
   <div class="hr"></div>
-  <div class="sec"><div class="sec-tag">Maestria del Dinero — Bonos exclusivos</div><div class="sec-title">Herramientas adicionales que puedes mencionar</div></div>
 
-  <div class="bonus-card">
-    <div class="bonus-head"><div class="bonus-n">🎯</div><div class="bonus-title">Axelerate — Evento Virtual</div></div>
-    <div class="bonus-sub">Evento de capacitacion virtual incluido. Ideal si el dolor es "mi equipo no avanza". Se convierte en argumento: no solo el dueno entra al programa — el equipo tambien tiene formacion.</div>
-    <div class="bonus-val">Uso: cuando el prospecto menciona problemas de equipo o de capacitacion interna.</div>
+  <div class="cc">
+    <div class="cc-t">Cuando dice "dejame pensarlo"</div>
+    <div class="cc-say">Ayudame a entender: que parte necesitas pensar — si funciona para tu caso, si es el momento, o es lo economico?</div>
+    <div class="cc-tip">Segun lo que responda: caso similar / sus palabras del paso 7 / costo de inaccion + garantia.</div>
   </div>
 
-  <div class="bonus-card">
-    <div class="bonus-head"><div class="bonus-n">📋</div><div class="bonus-title">Diagnostico ADN del Negocio</div></div>
-    <div class="bonus-sub">Analisis personalizado de las fortalezas y brechas del negocio. Ideal para el prospecto que dice "no se por donde empezar" o "no se cual es mi problema raiz".</div>
-    <div class="bonus-val">Uso: cuando el prospecto esta disperso o no tiene claridad de su problema principal.</div>
+  <div class="cc">
+    <div class="cc-t">Cuando dice "es muy caro"</div>
+    <div class="cc-say">Caro comparado con que? Calculamos que el problema te cuesta $[X] al mes. El programa son $1,995 con 7 dias de garantia total. Que parte del valor no te quedo clara?</div>
   </div>
 
-  <div class="bonus-card">
-    <div class="bonus-head"><div class="bonus-n">📱</div><div class="bonus-title">Virality — Redes Sociales</div></div>
-    <div class="bonus-sub">Herramienta para empresas que necesitan crecer en redes. Usar cuando el dolor esta en marketing o en falta de visibilidad digital.</div>
-    <div class="bonus-val">Uso: cuando el dolor es "no tengo presencia online" o "no se como atraer clientes por redes".</div>
+  <div class="cc">
+    <div class="cc-t">Cuando dice "lo hablo con mi pareja"</div>
+    <div class="cc-say">Tiene sentido. Agendamos 20 minutos esta semana con los dos juntos para resolver todas las dudas. Que dia les queda?</div>
+    <div class="cc-tip">REAGENDA. Una venta sin el decisor presente casi nunca cierra.</div>
   </div>
 
-  <div class="bonus-card">
-    <div class="bonus-head"><div class="bonus-n">💰</div><div class="bonus-title">Liberador de Deudas</div></div>
-    <div class="bonus-sub">Metodologia para empresas con deuda o flujo de caja comprometido. Usar cuando el dolor financiero es critico.</div>
-    <div class="bonus-val">Uso: cuando el dolor es "debo dinero", "no tengo liquidez" o "trabajo para pagar deudas".</div>
+  <div class="rule">
+    <div class="rule-l">Regla de Oro</div>
+    <div class="rule-t">Antes de terminar la llamada: ya pedi la decision explicitamente? Si no — hazlo antes de decir adios.</div>
   </div>
-
-  <div class="hr"></div>
-  <div class="sec"><div class="sec-tag">Secuencia de follow up</div><div class="sec-title">Que hacer despues de la llamada</div></div>
-
-  <div class="fu-card">
-    <div class="fu-when">Inmediato — mismo dia</div>
-    <div class="fu-title">Envia el link + primer bono</div>
-    <div class="fu-body">Envia el link de pago <b>con contexto</b>, no solo el link. Menciona el bono que desaparece primero y cuando exactamente. Sin fecha concreta, no hay urgencia.</div>
-  </div>
-
-  <div class="fu-card">
-    <div class="fu-when">Dia 1 — al dia siguiente</div>
-    <div class="fu-title">Mensaje de seguimiento personalizado</div>
-    <div class="fu-body">No "como vas con lo del programa". Menciona algo especifico de su situacion: <b>"[Nombre], estuve pensando en lo que me contaste de [su dolor especifico]. Exactamente por eso el [sistema relevante] te va a cambiar [resultado concreto]."</b> Cierra con la pregunta: "Que preguntas te quedaron?"</div>
-  </div>
-
-  <div class="fu-card">
-    <div class="fu-when">Dia 2-3 — urgencia de bonos</div>
-    <div class="fu-title">Alerta de bono que desaparece</div>
-    <div class="fu-body">Menciona el bono especifico que desaparece y a que hora. <b>Ser especifico con la hora genera mas urgencia que "pronto".</b> Ejemplo: "Hoy a las 11:59pm se cierra el acceso al Analisis Privado con consultores ($750). Una vez que cierre, ya no entra con el programa."</div>
-  </div>
-
-  <div class="fu-card">
-    <div class="fu-when">Dia 4-5 — ultima oportunidad</div>
-    <div class="fu-title">Escasez de cupos</div>
-    <div class="fu-body">Maquina tiene maximo 600 empresarios por edicion. Si ya hay muchos inscritos, usalo: <b>"Quedamos con [X] cupos disponibles. Una vez que se llenen cierran y la proxima edicion es [fecha]."</b> Solo usalo si es real — la escasez falsa destruye la confianza.</div>
-  </div>
-
-  <div class="fu-card">
-    <div class="fu-when">Dia 7 — cierre final</div>
-    <div class="fu-title">Ultima decision</div>
-    <div class="fu-body">Mensaje corto y directo. <b>"[Nombre], hoy es el ultimo dia para entrar a esta edicion. Despues de hoy el acceso cierra. Si entras hoy tienes [bonos que quedan]. Si no es el momento, sin problema — pero necesito tu respuesta definitiva para liberar el cupo."</b> Pide la decision, no el si.</div>
-  </div>
-
-  <div class="rule"><div class="rule-l">Regla del Follow Up</div><div class="rule-t">Cada mensaje de follow up menciona algo especifico de SU situacion. El mensaje generico de "como vas" no cierra. La personalizacion cierra.</div></div>
 </div>
 
-</div>
-
-<!-- ============ SISTEMAS ============ -->
-<div class="pg" id="pg-sistemas">
+<!-- ============ MENSAJES ============ -->
+<div class="pg" id="pg-msg">
   <div class="ph">
-    <div class="ph-tag">Segun el dolor que encontraste</div>
-    <div class="ph-title">Sistemas y Resultados</div>
-    <div class="ph-sub">Usa los sistemas que conectan con SU dolor especifico. No presentes todos — presenta los que resuelven lo que te conto.</div>
+    <div class="ph-s">Copiar y pegar</div>
+    <div class="ph-t">Mensajes</div>
+    <div class="ph-d">Toca Copiar. Reemplaza los [corchetes] antes de enviar.</div>
   </div>
 
-  <div class="ptabs">
-    <button class="ptab on" onclick="pt('maq',this)">Maquina del Dinero</button>
-    <button class="ptab" onclick="pt('mae',this)">Maestria del Dinero</button>
+  <div class="mc">
+    <div class="mc-head"><div><div class="mc-t">Calificacion de cita</div><div class="mc-w">Primera hora del dia que agendan</div></div><button class="cp-btn" onclick="cp(this,'x1')">Copiar</button></div>
+    <div class="mc-body" id="x1">Hola [nombre], soy David de Luque Academy 👋 Confirmado nuestro espacio para el [dia] a las [hora]. Para prepararla con tu caso, respondeme rapido:
+
+1️⃣ A que se dedica tu negocio, cuanto tiempo llevas y que reto principal quieres resolver?
+
+2️⃣ Pasame tu Instagram, Facebook o web.
+
+3️⃣ Si hay un socio o pareja que deba estar en la decision, invitalo a la llamada.
+
+Link: [link] — te espero puntual.</div>
   </div>
 
-  <!-- MAQUINA -->
-  <div class="psec on" id="psec-maq">
-
-    <!-- ACOMPANAMIENTO -->
-    <div class="sys">
-      <div class="sys-head">
-        <div class="sys-badge">AC</div>
-        <div class="sys-meta">
-          <div class="sys-n">Acompanamiento Empresarial 12 Meses</div>
-          <div class="sys-title">Los empresarios que mas lejos llegan no son los mas inteligentes, son los que tuvieron al lado a alguien que ya recorrio el camino.</div>
-          <div class="sys-val">Valor real: $2,850 USD</div>
-        </div>
-      </div>
-      <div class="sys-body">
-        <div class="sys-trigger">
-          <div class="sys-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="sys-trigger-txt">"Ya hice programas y no me funcionaron" · "Me pierdo implementando solo" · "Necesito que alguien revise MI caso" · "Tengo miedo de no aplicarlo bien"</div>
-        </div>
-        <div class="sys-results">
-          <div class="sys-results-l">Lo que incluye exactamente</div>
-          <div class="sys-result">12 sesiones grupales de retroalimentacion personalizada sobre tu negocio</div>
-          <div class="sys-result">Acceso a la comunidad privada de empresarios en WhatsApp</div>
-          <div class="sys-result">Interaccion directa con empresarios de toda Latinoamerica y Estados Unidos</div>
-          <div class="sys-result">Biblioteca de casos reales de empresas que ya implementaron los sistemas</div>
-          <div class="sys-result">Todo organizado para que implementes con confianza y no pierdas ritmo</div>
-        </div>
-        <div class="sys-pitch">[Nombre], la diferencia entre Maquina y los programas que no te funcionaron es que aqui no estudias solo. Tienes 12 sesiones donde alguien revisa TU negocio especificamente y te dice exactamente que hacer en tu caso. No teoria — tu caso especifico.</div>
-      </div>
-    </div>
-
-    <!-- S1 LIDERAZGO -->
-    <div class="sys">
-      <div class="sys-head">
-        <div class="sys-badge">S1</div>
-        <div class="sys-meta">
-          <div class="sys-n">Sistema de Liderazgo</div>
-          <div class="sys-title">Como construir un equipo que funcione sin depender de ti.</div>
-          <div class="sys-promise">La mayoria de empresarios tiene gente pero no tiene equipo.</div>
-          <div class="sys-val">Valor real: $1,350 USD</div>
-        </div>
-      </div>
-      <div class="sys-body">
-        <div class="sys-trigger">
-          <div class="sys-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="sys-trigger-txt">"Todo depende de mi" · "No puedo desconectarme" · "Si no estoy todo se paraliza" · "No tengo en quien delegar" · "Mi equipo no resuelve solo"</div>
-        </div>
-        <div class="sys-results">
-          <div class="sys-results-l">Que aprende exactamente (del PDF)</div>
-          <div class="sys-result">Como contratar a las personas correctas desde el principio y dejar de pagar el costo invisible de contratar mal</div>
-          <div class="sys-result">Como hacer que tu equipo decida y resuelva sin consultarte todo</div>
-          <div class="sys-result">Como construir sentido de pertenencia para que tu gente elija quedarse contigo y no con la competencia</div>
-          <div class="sys-result">Como convertir empleados en lideres que dirijan equipos sin reducir la productividad</div>
-          <div class="sys-result">Como delegar con confianza, sin perder el control ni tener que revisar todo</div>
-        </div>
-        <div class="sys-tools">
-          <div class="sys-tools-l">Herramientas incluidas</div>
-          <div class="sys-tool">Plantilla de Perfil de Cargo — el filtro que elimina los candidatos equivocados antes de la primera entrevista</div>
-          <div class="sys-tool">Plantilla de Propuesta de Valor al Empleado — haz que el talento elija tu empresa y no la competencia</div>
-          <div class="sys-tool">Guia de Reuniones VEA — resuelve en 45 minutos lo que lleva meses sin cerrarse</div>
-          <div class="sys-tool">Formato de Evaluacion de Desempeno — toma decisiones de talento con criterio, no con intuicion</div>
-          <div class="sys-tool">Paquete Visual Liderazgo Maquina — los marcos mentales del sistema para que tu equipo los entienda y aplique</div>
-        </div>
-        <div class="sys-pitch">[Nombre], me contaste que todo depende de ti y que si no estas todo se paraliza. El Sistema de Liderazgo existe exactamente para eso: construir un equipo que decide y resuelve sin que estes empujando todo, para que puedas salir de la operacion de una vez.</div>
-      </div>
-    </div>
-
-    <!-- S2 MARKETING -->
-    <div class="sys">
-      <div class="sys-head">
-        <div class="sys-badge">S2</div>
-        <div class="sys-meta">
-          <div class="sys-n">Sistema de Marketing</div>
-          <div class="sys-title">Como tener ventas masivas todos los meses.</div>
-          <div class="sys-promise">La mayoria de empresarios publica, espera y reza. Los que crecen tienen un sistema.</div>
-          <div class="sys-val">Valor real: $2,150 USD</div>
-        </div>
-      </div>
-      <div class="sys-body">
-        <div class="sys-trigger">
-          <div class="sys-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="sys-trigger-txt">"No tengo clientes estables" · "Dependo de referidos" · "Publico pero no vendo" · "No se como hacer publicidad que funcione" · "Las ventas son inconsistentes"</div>
-        </div>
-        <div class="sys-results">
-          <div class="sys-results-l">Que aprende exactamente (del PDF)</div>
-          <div class="sys-result">Como construir tu equipo de marketing y ventas desde cero sin contratar de mas ni depender de agencias que no conocen tu negocio</div>
-          <div class="sys-result">Como identificar a tu cliente ideal y escribir una promesa que genere deseo de compra inmediato</div>
-          <div class="sys-result">Como fijar precios basados en valor y posicionarte para no competir por el mas barato</div>
-          <div class="sys-result">Como crecer en redes sociales de forma organica y pagada con contenido que atrae, engancha y convierte sin estar pegado al celular todo el dia</div>
-          <div class="sys-result">Como crear un proceso de ventas paso a paso que cierre clientes de forma consistente sin depender de la habilidad natural de un vendedor estrella</div>
-          <div class="sys-result">Como invertir en pauta digital de forma efectiva para multiplicar tus ventas sin quemar el presupuesto</div>
-        </div>
-        <div class="sys-tools">
-          <div class="sys-tools-l">Herramientas incluidas</div>
-          <div class="sys-tool">Avatar del Cliente Ideal — descubre exactamente quien te compra y deja de perder tiempo hablándole a todo el mundo</div>
-          <div class="sys-tool">Guia del Problema Real — encuentra el dolor que mueve a tu cliente a comprar antes de escribir una sola pieza de contenido</div>
-          <div class="sys-tool">Guia de Plataformas — elige la red social correcta para tu negocio y deja de estar en todas sin resultado en ninguna</div>
-          <div class="sys-tool">Mapa de las 5 Peceras — el camino exacto para convertir a un desconocido en un cliente</div>
-          <div class="sys-tool">Paquete Visual Marketing Maquina — los marcos mentales del sistema para que tu equipo los entienda y aplique</div>
-        </div>
-        <div class="sys-pitch">[Nombre], me contaste que las ventas son inconsistentes y no tienes un sistema. Este va desde como construir tu presencia en redes hasta como cerrar ventas con un proceso que funciona aunque tu no estes. Dejas de publicar, esperar y rezar.</div>
-      </div>
-    </div>
-
-    <!-- S3 FINANZAS -->
-    <div class="sys">
-      <div class="sys-head">
-        <div class="sys-badge">S3</div>
-        <div class="sys-meta">
-          <div class="sys-n">Sistema de Finanzas</div>
-          <div class="sys-title">Como duplicar tu rentabilidad en menos de 90 dias.</div>
-          <div class="sys-promise">La mayoria de empresarios factura bien y no sabe por que no le queda dinero.</div>
-          <div class="sys-val">Valor real: $1,300 USD</div>
-        </div>
-      </div>
-      <div class="sys-body">
-        <div class="sys-trigger">
-          <div class="sys-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="sys-trigger-txt">"Facturo bien pero no se donde va el dinero" · "Trabajo mucho y no me queda suficiente" · "No tengo claridad financiera" · "No se cual producto me deja mas" · "Siempre estoy corto de liquidez"</div>
-        </div>
-        <div class="sys-results">
-          <div class="sys-results-l">Que aprende exactamente (del PDF)</div>
-          <div class="sys-result">Como leer tus finanzas en 15 minutos semanales sin depender del contador para entender tu propio negocio</div>
-          <div class="sys-result">Como calcular el margen real de cada producto o servicio y descubrir cuales te estan costando dinero sin que lo sepas</div>
-          <div class="sys-result">Como construir y controlar tu flujo de caja para nunca quedarte sin liquidez en los momentos que mas lo necesitas</div>
-          <div class="sys-result">Como identificar y tapar los 3 huecos por donde se escapa el dinero en cualquier empresa sin vender a un solo cliente nuevo</div>
-          <div class="sys-result">Como fijar precios basados en rentabilidad y no en lo que cobra la competencia</div>
-          <div class="sys-result">Como incrementar tu rentabilidad neta entre un 30% y un 60% con lo que ya tienes</div>
-        </div>
-        <div class="sys-tools">
-          <div class="sys-tools-l">Herramientas incluidas</div>
-          <div class="sys-tool">Dashboard Financiero Maquina — ve el estado real de tu negocio en un solo lugar sin necesitar al contador para entenderlo</div>
-          <div class="sys-tool">Calculadora de Margen Real — descubre al instante que productos te dejan dinero y cuales te lo estan quitando</div>
-          <div class="sys-tool">Plantilla de Flujo de Caja — controla tu liquidez mes a mes y nunca mas te tome por sorpresa quedarte sin caja</div>
-          <div class="sys-tool">Paquete Visual Finanzas Maquina — los marcos mentales del sistema para que tu equipo los entienda y aplique</div>
-        </div>
-        <div class="sys-pitch">[Nombre], me dijiste que facturas bien pero no sabes donde va el dinero. Este sistema te da control total de tus numeros: sabes exactamente cuanto ganas, donde se escapa el dinero y que decisiones tomar para crecer con solidez financiera.</div>
-      </div>
-    </div>
-
-    <!-- S4 INNOVACION -->
-    <div class="sys">
-      <div class="sys-head">
-        <div class="sys-badge">S4</div>
-        <div class="sys-meta">
-          <div class="sys-n">Sistema de Innovacion</div>
-          <div class="sys-title">Como diferenciarte del mercado y cobrar lo que realmente vales.</div>
-          <div class="sys-promise">La mayoria de empresarios compite por precio porque tiene el mismo producto que todos.</div>
-          <div class="sys-val">Valor real: $950 USD</div>
-        </div>
-      </div>
-      <div class="sys-body">
-        <div class="sys-trigger">
-          <div class="sys-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="sys-trigger-txt">"Me comparan con la competencia" · "Siempre me piden descuento" · "No tengo diferenciacion" · "Compito por precio" · "Mi producto es igual al de todos"</div>
-        </div>
-        <div class="sys-results">
-          <div class="sys-results-l">Que aprende exactamente (del PDF)</div>
-          <div class="sys-result">Como identificar una oportunidad de negocio real — una que resuelve un problema urgente y genera suficiente dinero para crecer</div>
-          <div class="sys-result">Como validar una idea antes de invertir tiempo y dinero en ella y saber si el mercado paga por tu producto antes de construirlo</div>
-          <div class="sys-result">Como mejorar tu producto en 5 niveles para que la experiencia sea imposible de ignorar e imposible de copiar</div>
-          <div class="sys-result">Como disenar la entrega de tu producto para que funcione sin depender de ti y escale sin perder calidad</div>
-          <div class="sys-result">Como posicionarte y diferenciarte en el mercado de manera que no compitas por precio y seas la opcion #1 de tu cliente</div>
-          <div class="sys-result">Cobrar hasta un 50% mas caro</div>
-        </div>
-        <div class="sys-tools">
-          <div class="sys-tools-l">Herramientas incluidas</div>
-          <div class="sys-tool">Triangulo de la Oportunidad — evalua cualquier idea de negocio en minutos antes de invertir un solo peso en ella</div>
-          <div class="sys-tool">Guia de Prueba Real — valida si el mercado paga por tu producto antes de construirlo completo</div>
-          <div class="sys-tool">Marco de Decisiones de Lanzamiento — a quien, que promete, a que precio y donde: las 4 decisiones que definen el exito de cualquier producto</div>
-          <div class="sys-tool">Formato de los 5 Niveles de Experiencia — mejora tu producto paso a paso hasta que sea imposible de ignorar</div>
-          <div class="sys-tool">Paquete Visual Producto Maquina — los marcos mentales del sistema para que tu equipo los entienda y aplique</div>
-        </div>
-        <div class="sys-pitch">[Nombre], me contaste que siempre te piden descuento y te comparan con otros. Este sistema te ensenia a crear o mejorar lo que vendes para que tu cliente no compare, no regatee y no se vaya con la competencia — y puedas cobrar hasta un 50% mas caro.</div>
-      </div>
-    </div>
-
-    <!-- S5 EXPANSION -->
-    <div class="sys">
-      <div class="sys-head">
-        <div class="sys-badge">S5</div>
-        <div class="sys-meta">
-          <div class="sys-n">Sistema de Expansion</div>
-          <div class="sys-title">Como crecer en nuevas geografias y convertir tus ganancias en inversiones que trabajan solas.</div>
-          <div class="sys-promise">La mayoria de empresarios crece en volumen pero no en valor. Mas trabajo, mismo resultado.</div>
-          <div class="sys-val">Valor real: $1,350 USD</div>
-        </div>
-      </div>
-      <div class="sys-body">
-        <div class="sys-trigger">
-          <div class="sys-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="sys-trigger-txt">"Quiero abrir otra sucursal o negocio" · "Quiero entrar a otro mercado" · "Quiero que mis ganancias trabajen solas" · "Quiero crecer pero no se como sin arriesgar todo"</div>
-        </div>
-        <div class="sys-results">
-          <div class="sys-results-l">Que aprende exactamente (del PDF)</div>
-          <div class="sys-result">Como saber si tu empresa esta lista para expandirse o primero debe consolidarse — y evitar el error que destruye empresas en etapa de crecimiento</div>
-          <div class="sys-result">Como evaluar las 5 rutas de expansion y elegir la que aplica a tu negocio hoy sin comprometer lo que ya funciona</div>
-          <div class="sys-result">Como calcular el retorno real de una inversion antes de comprometer capital y donde invertir tus ganancias para que sigan creciendo</div>
-          <div class="sys-result">Como multiplicar tu modelo de negocio en nuevas ciudades o paises sin que la expansion dependa de ti</div>
-          <div class="sys-result">Como negociar con socios, inversionistas y bancos desde una posicion de fuerza, no de necesidad</div>
-        </div>
-        <div class="sys-tools">
-          <div class="sys-tools-l">Herramientas incluidas</div>
-          <div class="sys-tool">Calculadora de ROI Empresarial — sabe exactamente cuanto te va a retornar una inversion antes de comprometer un solo peso</div>
-          <div class="sys-tool">Checklist de Expansion — las senales que indican si tu empresa esta lista para escalar o si primero debe consolidarse</div>
-          <div class="sys-tool">Guia de Negociacion — como sentarte con socios, inversionistas y bancos y salir con el mejor acuerdo posible</div>
-          <div class="sys-tool">Paquete Visual Expansion Maquina — los marcos mentales del sistema para que tu equipo los entienda y aplique</div>
-        </div>
-        <div class="sys-pitch">[Nombre], me contaste que quieres crecer pero no sabes como hacerlo sin arriesgar lo que ya tienes. Este sistema te ensenia a expandirte con inteligencia, multiplicar el modelo en nuevos mercados e invertir tus ganancias para que trabajen solas.</div>
-      </div>
-    </div>
-
-    <!-- S6 MENTALIDAD -->
-    <div class="sys">
-      <div class="sys-head">
-        <div class="sys-badge">S6</div>
-        <div class="sys-meta">
-          <div class="sys-n">Sistema de Mentalidad</div>
-          <div class="sys-title">Como pensar, decidir y liderar como los empresarios que construyen imperios.</div>
-          <div class="sys-promise">Los sistemas sin mentalidad no funcionan. Este es el sistema que sostiene todo lo demas.</div>
-          <div class="sys-val">Valor real: $750 USD</div>
-        </div>
-      </div>
-      <div class="sys-body">
-        <div class="sys-trigger">
-          <div class="sys-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="sys-trigger-txt">"Me agoto" · "No se que decision tomar" · "Trabajo mucho pero no avanzo" · "La presion me abruma" · "Empece a dudar de mi mismo" · "Tengo miedo del siguiente paso"</div>
-        </div>
-        <div class="sys-results">
-          <div class="sys-results-l">Que aprende exactamente (del PDF)</div>
-          <div class="sys-result">Como redefinir tus objetivos para que muevan toda tu energia en una sola direccion y dejes de dispersarte en lo que no construye</div>
-          <div class="sys-result">Como identificar y eliminar las creencias limitantes que estan frenando el crecimiento de tu negocio sin que lo sepas</div>
-          <div class="sys-result">Como construir una identidad empresarial solida que sostenga cualquier decision dificil incluso cuando nadie mas entiende lo que estas construyendo</div>
-          <div class="sys-result">Como gestionar la presion, la soledad y el peso de ser el dueno sin quemarte en el intento</div>
-          <div class="sys-result">Como desbloquear el crecimiento cuando sientes que ya hiciste todo y nada funciona</div>
-        </div>
-        <div class="sys-tools">
-          <div class="sys-tools-l">Herramientas incluidas</div>
-          <div class="sys-tool">Diagnostico de Mentalidad Empresarial — descubre exactamente que creencias estan frenando tu crecimiento hoy</div>
-          <div class="sys-tool">Mapa de Creencias Limitantes — las mas comunes en empresarios latinoamericanos y como revertirlas una por una</div>
-          <div class="sys-tool">Guia de Rutina de Alto Rendimiento — el sistema diario para tomar mejores decisiones con menos energia y mas claridad</div>
-          <div class="sys-tool">Paquete Visual Mentalidad Maquina — los marcos mentales del sistema para que los apliques desde el primer dia</div>
-        </div>
-        <div class="sys-pitch">[Nombre], los sistemas sin mentalidad no funcionan. Cuando llegue la presion, la duda o el momento dificil, este sistema te dice exactamente como pensar, que decidir y hacia donde ir. Es lo que sostiene todo lo demas.</div>
-      </div>
-    </div>
-
-  </div><!-- /psec-maq -->
-
-  <!-- MAESTRIA -->
-  <div class="psec" id="psec-mae">
-
-    <div class="key-box"><b>Maestria del Dinero:</b> mentoria de un ano completo. Alvaro Luque trabaja contigo directamente. Para empresarios que quieren crecer de 40% a 120% anualmente.</div>
-
-    <div class="mres">
-      <div class="mres-head">
-        <div class="mres-num">1</div>
-        <div class="mres-meta">
-          <div class="mres-n">Resultado 1</div>
-          <div class="mres-title">Descubriremos la ventaja competitiva de tu empresa</div>
-          <div class="mres-sub">(que hoy no ves), para que salgas del juego de los precios bajos y te posiciones como unico en tu mercado.</div>
-        </div>
-      </div>
-      <div class="mres-body">
-        <div class="mres-trigger">
-          <div class="mres-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="mres-trigger-txt">"Compito por precio" · "No se cual es mi diferencial real" · "Mis clientes me comparan con cualquiera" · "No se que me hace unico"</div>
-        </div>
-        <div class="mres-pitch">[Nombre], Alvaro dice que hay una ventaja competitiva en tu empresa que hoy no ves porque estas muy adentro de tu propio negocio. Lo primero que hacen en Maestria es encontrarla — para que salgas del juego de los precios bajos y te posiciones como unico en tu mercado.</div>
-      </div>
-    </div>
-
-    <div class="mres">
-      <div class="mres-head">
-        <div class="mres-num">2</div>
-        <div class="mres-meta">
-          <div class="mres-n">Resultado 2</div>
-          <div class="mres-title">Formaremos el equipo de lideres que necesitas</div>
-          <div class="mres-sub">Para que puedas salir de la operacion sin miedo y abrir nuevas empresas con las personas correctas a tu lado.</div>
-        </div>
-      </div>
-      <div class="mres-body">
-        <div class="mres-trigger">
-          <div class="mres-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="mres-trigger-txt">"Quiero salir de la operacion pero no confio en nadie" · "No tengo un segundo a cargo que funcione" · "Quiero abrir otro negocio pero necesito el equipo correcto"</div>
-        </div>
-        <div class="mres-pitch">[Nombre], me dijiste que quieres salir de la operacion pero no tienes en quien confiar. En Maestria, Alvaro trabaja contigo para formar el equipo de lideres que hace posible salir sin miedo — y abrir nuevas empresas con las personas correctas a tu lado.</div>
-      </div>
-    </div>
-
-    <div class="mres">
-      <div class="mres-head">
-        <div class="mres-num">3</div>
-        <div class="mres-meta">
-          <div class="mres-n">Resultado 3</div>
-          <div class="mres-title">Mejoramos la rentabilidad de tu empresa (aunque hoy creas que esta bien)</div>
-          <div class="mres-sub">Para que dejes de perder dinero sin darte cuenta y empieces a ver miles de dolares extra cada mes.</div>
-        </div>
-      </div>
-      <div class="mres-body">
-        <div class="mres-trigger">
-          <div class="mres-trigger-l">Usa especialmente cuando el prospecto diga:</div>
-          <div class="mres-trigger-txt">"Las finanzas estan bien" · "No es un problema de dinero" — OJO: aplica mas cuando CREEN que no hay problema financiero.</div>
-        </div>
-        <div class="mres-pitch">[Nombre], Alvaro ha encontrado en casi todos los negocios que entraron a Maestria dinero que se estaba yendo sin que nadie lo viera. El que cree que esta bien es el que mas tiene que ganar aqui. Dejas de perder dinero sin darte cuenta y empiezas a ver miles de dolares extra al mes.</div>
-      </div>
-    </div>
-
-    <div class="mres">
-      <div class="mres-head">
-        <div class="mres-num">4</div>
-        <div class="mres-meta">
-          <div class="mres-n">Resultado 4</div>
-          <div class="mres-title">Multiplicaremos los canales de venta de tu empresa</div>
-          <div class="mres-sub">Para que no dependas de una sola fuente de ingresos y empieces a vender mas, mas rapido y mas caro.</div>
-        </div>
-      </div>
-      <div class="mres-body">
-        <div class="mres-trigger">
-          <div class="mres-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="mres-trigger-txt">"Dependo de un solo canal" · "Si ese canal falla, cae todo" · "Quiero vender en otros mercados" · "Quiero mas fuentes de ingreso"</div>
-        </div>
-        <div class="mres-pitch">[Nombre], tienes todo en un solo canal y si ese falla, cae todo. En Maestria multiplicamos los canales de venta para que no dependas de una sola fuente — y puedas vender mas, mas rapido y mas caro.</div>
-      </div>
-    </div>
-
-    <div class="mres">
-      <div class="mres-head">
-        <div class="mres-num">5</div>
-        <div class="mres-meta">
-          <div class="mres-n">Resultado 5 — El mas importante</div>
-          <div class="mres-title">Lo mas importante: trabajaremos en ti</div>
-          <div class="mres-sub">Y en tu habilidad para liderar varias empresas al mismo tiempo, sin sacrificar lo mas importante: tu familia y tu salud.</div>
-        </div>
-      </div>
-      <div class="mres-body">
-        <div class="mres-trigger">
-          <div class="mres-trigger-l">Usa cuando el prospecto llegue al dolor de identidad:</div>
-          <div class="mres-trigger-txt">"Construi el negocio para tener libertad y termine siendo su esclavo" · "Mi familia paga el precio" · "Quiero mas sin sacrificar lo que mas importa" · "No se como crecer sin quemarme"</div>
-        </div>
-        <div class="mres-pitch">[Nombre], Alvaro dice que este es el resultado mas importante — no solo hacer crecer el negocio, sino hacerlo sin sacrificar tu familia ni tu salud. En Maestria trabajan en ti y en tu capacidad para liderar varias empresas al mismo tiempo. Eso es lo que lo hace diferente a todo lo demas.</div>
-      </div>
-    </div>
-
-    <div class="mres">
-      <div class="mres-head">
-        <div class="mres-num">6</div>
-        <div class="mres-meta">
-          <div class="mres-n">Resultado 6 — La clave del crecimiento</div>
-          <div class="mres-title">Te sentaras en la mesa con empresarios brillantes que te acompanaran en el camino</div>
-          <div class="mres-sub">La red y la comunidad que te acompana es tan valiosa como el programa mismo.</div>
-        </div>
-      </div>
-      <div class="mres-body">
-        <div class="mres-trigger">
-          <div class="mres-trigger-l">Usa cuando el prospecto diga:</div>
-          <div class="mres-trigger-txt">"Tomo todas las decisiones solo" · "No tengo a quien preguntarle" · "Quiero rodearme de empresarios al mismo nivel"</div>
-        </div>
-        <div class="mres-pitch">[Nombre], te voy a decir algo que Alvaro repite siempre: te vuelves el promedio de las personas con las que te rodeas. En Maestria te sientas en la mesa con empresarios brillantes que ya recorrieron el camino y te acompanan en el tuyo.</div>
-      </div>
-    </div>
-
-    <div class="hr"></div>
-    <div class="sec-tag">Como funciona Maestria — los 5 pasos</div>
-
-    <div class="mres" style="margin-bottom:10px;">
-      <div class="mres-head"><div class="mres-num" style="font-size:14px;">P1</div><div class="mres-meta"><div class="mres-title">Sesiones de mentoria mensuales</div><div class="mres-sub">Una vez al mes (casi todo el ano) tendran sesiones de mentoria. Directo con Alvaro.</div></div></div>
-    </div>
-    <div class="mres" style="margin-bottom:10px;">
-      <div class="mres-head"><div class="mres-num" style="font-size:14px;">P2</div><div class="mres-meta"><div class="mres-title">Encuentros empresariales presenciales</div><div class="mres-sub">Aqui ocurre el 90% del crecimiento. Presencial. Con empresarios al mismo nivel.</div></div></div>
-    </div>
-    <div class="mres" style="margin-bottom:10px;">
-      <div class="mres-head"><div class="mres-num" style="font-size:14px;">P3</div><div class="mres-meta"><div class="mres-title">Comunidad privada de WhatsApp</div><div class="mres-sub">Durante un ano completo Alvaro te da seguimiento en la comunidad privada de WhatsApp. Si, Alvaro tambien esta ahi.</div></div></div>
-    </div>
-    <div class="mres" style="margin-bottom:10px;">
-      <div class="mres-head"><div class="mres-num" style="font-size:14px;">P4</div><div class="mres-meta"><div class="mres-title">Analisis de Negocio Privado por Alvaro</div><div class="mres-sub">A lo largo del ano tendras un Analisis de Negocio Privado que lo hara Alvaro mismo.</div></div></div>
-    </div>
-    <div class="mres" style="margin-bottom:10px;">
-      <div class="mres-head"><div class="mres-num" style="font-size:14px;">P5</div><div class="mres-meta"><div class="mres-title">Encuentros de implementacion de un dia entero con tu equipo</div><div class="mres-sub">Vienes con lideres de tu equipo. Revisan los sistemas empresariales. Descubren brechas. Implementan cambios rapidos y profundos. En pocas semanas ves resultados.</div></div></div>
-    </div>
-
-    <div class="hr"></div>
-    <div class="sec-tag">Inversion Maestria del Dinero</div>
-    <div class="mres">
-      <div class="mres-head"><div class="mres-num" style="font-size:14px;">$</div><div class="mres-meta"><div class="mres-title">Dos formas de pago</div></div></div>
-      <div class="mres-body">
-        <div class="sys-results">
-          <div class="sys-result">Pago a plazos: $1,000 USD hoy + 6 pagos de $1,800 USD (20 de cada mes)</div>
-          <div class="sys-result">Pago full: $1,000 USD hoy + saldo de $9,000 antes del 20 de marzo. Total: $10,000 USD — te ahorras casi $2,000 USD</div>
-          <div class="sys-result">Pago full incluye: sesion exclusiva y privada en la casa de Alvaro Luque — algo que no puedes comprar ni con todo el dinero del mundo</div>
-        </div>
-        <div class="sys-pitch">[Nombre], en cualquiera de las dos opciones la entrada es $1,000 USD hoy. Si lo haces full ademas de ahorrarte casi $2,000, tienes acceso a una sesion privada en la casa de Alvaro — un acceso que no existe en ningun otro programa.</div>
-      </div>
-    </div>
-
-  </div><!-- /psec-mae -->
-</div>
-
-<!-- ============ BONOS ============ -->
-<div class="pg" id="pg-bonos">
-  <div class="ph">
-    <div class="ph-tag">Escasez y urgencia real</div>
-    <div class="ph-title">Bonos + Cierre</div>
-    <div class="ph-sub">Los bonos son la razon para decidir HOY. Sin urgencia real el prospecto pospone. Usa cada bono segun el dolor especifico que encontraste.</div>
+  <div class="mc">
+    <div class="mc-head"><div><div class="mc-t">Recordatorio dia de la cita</div><div class="mc-w">2 horas antes</div></div><button class="cp-btn" onclick="cp(this,'x2')">Copiar</button></div>
+    <div class="mc-body" id="x2">Hola [nombre] 👊 Hoy nos vemos a las [hora]. Ya lei lo que me contaste sobre [algo especifico de su respuesta] y prepare la sesion enfocada en eso. Te espero puntual. [Link]</div>
   </div>
 
-  <div class="ptabs">
-    <button class="ptab on" onclick="pt('bmaq',this)">Maquina del Dinero</button>
-    <button class="ptab" onclick="pt('bmae',this)">Maestria del Dinero</button>
+  <div class="mc">
+    <div class="mc-head"><div><div class="mc-t">Follow up mismo dia</div><div class="mc-w">Horas despues de la llamada</div></div><button class="cp-btn" onclick="cp(this,'x3')">Copiar</button></div>
+    <div class="mc-body" id="x3">Hola [nombre] 👋 Fue una sesion muy valiosa. Lo que describes tiene solucion y el camino esta claro.
+
+Te dejo el link: [link]
+
+Recuerda que el [nombre del bono] — $[valor] — esta disponible solo hasta [dia] a las [hora]. Despues ya no entra con el programa.
+
+Cualquier pregunta, aqui estoy.</div>
   </div>
 
-  <div class="psec on" id="psec-bmaq">
+  <div class="mc">
+    <div class="mc-head"><div><div class="mc-t">Follow up dia 1</div><div class="mc-w">Al dia siguiente</div></div><button class="cp-btn" onclick="cp(this,'x4')">Copiar</button></div>
+    <div class="mc-body" id="x4">Hola [nombre], estuve pensando en lo que me contaste sobre [su dolor especifico].
 
-    <div class="key-box"><b>Los regalos van desapareciendo todos los dias.</b> No son para todo el mundo — son para los mas comprometidos. Total en regalos: $6,100 USD. El programa vale $1,995. Los regalos valen 3 veces mas que el precio.</div>
+Exactamente por eso el [sistema relevante] te va a cambiar [resultado concreto].
 
-    <div class="bono urgente">
-      <div class="bono-head"><div class="bono-icon">📋</div><div class="bono-meta"><div class="bono-n red">Regalo 2 — Desaparece Primero</div><div class="bono-title">Analisis de Negocio Personalizado con Consultores</div><div class="bono-val">Valor real: $750 USD</div></div></div>
-      <div class="bono-body">
-        <div class="bono-desc">Sesion privada donde consultores de Luque revisan el negocio especifico del empresario y le dicen exactamente por donde arrancar primero para ver resultados rapido. No es un diagnostico generico — es de su caso.</div>
-        <div class="bono-when">Desaparece primero — primera fecha limite</div>
-        <div class="bono-uso">Usar con prospectos que dicen "no se por donde empezar" o "tengo miedo de no aplicarlo bien".</div>
-        <div class="bono-cierre">Si no entras hoy, este bono desaparece. Significa que entras al programa sin ese diagnostico inicial que te dice exactamente por donde arrancar en TU caso. Sin eso, empiezas a ciegas.</div>
-      </div>
-    </div>
-
-    <div class="bono urgente">
-      <div class="bono-head"><div class="bono-icon">🎓</div><div class="bono-meta"><div class="bono-n red">Regalo 4 — Desaparece Rapido</div><div class="bono-title">Capacitacion en Vivo para Todo Tu Equipo con Alvaro Luque</div><div class="bono-val">Valor real: $3,000 USD</div></div></div>
-      <div class="bono-body">
-        <div class="bono-desc">Sesion de capacitacion en vivo para los lideres del equipo del empresario. No solo el dueno aprende — todo el equipo arranca con el sistema. Alvaro Luque directamente.</div>
-        <div class="bono-when">Desaparece pronto</div>
-        <div class="bono-uso">Usar con prospectos que tienen equipo y cuyo dolor es "mi equipo no implementa" o "necesito que mis lideres entiendan el sistema".</div>
-        <div class="bono-cierre">Esto solo vale $3,000 fuera del programa. Tu equipo entra contigo desde el primer dia — eso acelera los resultados porque no eres el unico implementando.</div>
-      </div>
-    </div>
-
-    <div class="bono">
-      <div class="bono-head"><div class="bono-icon">🔥</div><div class="bono-meta"><div class="bono-n gold">Regalo 3</div><div class="bono-title">Codigos del Dinero en Vivo con Alvaro Luque</div><div class="bono-val">Valor real: $1,800 USD</div></div></div>
-      <div class="bono-body">
-        <div class="bono-desc">Sesion en vivo con Alvaro sobre los principios que separan a los empresarios que escalan de los que se quedan estancados. Las tacticas de negocio que multiplican resultados y que no estan en ningun curso.</div>
-        <div class="bono-when">Desaparece segundo</div>
-        <div class="bono-uso">Usar con prospectos motivados por aprender directamente de Alvaro o que vienen del nivel de Mentalidad / Identidad del dolor.</div>
-        <div class="bono-cierre">Codigos del Dinero no se repite. Es en vivo, una vez, con Alvaro. Si no entras antes de que desaparezca, ese acceso se cierra.</div>
-      </div>
-    </div>
-
-    <div class="bono">
-      <div class="bono-head"><div class="bono-icon">🗺</div><div class="bono-meta"><div class="bono-n gold">Regalo 1</div><div class="bono-title">Plan de Implementacion 90 Dias</div><div class="bono-val">Valor real: $550 USD</div></div></div>
-      <div class="bono-body">
-        <div class="bono-desc">Hoja de ruta exacta para los primeros 3 meses. Que hacer, cuando hacerlo, como garantizar que se ejecute aunque no tengas ganas. Disenado para el negocio especifico del empresario, no un plan generico.</div>
-        <div class="bono-when">Desaparece ultimo</div>
-        <div class="bono-uso">Usar con prospectos que dicen "si compro me pierdo en el contenido" o que tienen miedo de comprar y no implementar.</div>
-        <div class="bono-cierre">Sin este plan, entras al programa y tienes 7 sistemas frente a ti sin saber por donde arrancar. Con el plan, el primer dia ya sabes exactamente que hacer.</div>
-      </div>
-    </div>
-
-    <div class="hr"></div>
-    <div class="sec-tag">Garantia — elimina el riesgo</div>
-    <div class="sec-title">Garantia todo riesgo 7 dias</div>
-    <div class="bono">
-      <div class="bono-head"><div class="bono-icon">🛡</div><div class="bono-meta"><div class="bono-n gold">Garantia Total</div><div class="bono-title">7 dias — devolucion 100% sin preguntas</div></div></div>
-      <div class="bono-body">
-        <div class="bono-desc">Ingresa a Maquina, conoce y disfruta todo el programa por 7 dias completos. Si no es para ti, devolucion del 100% del dinero sin una sola pregunta, a un clic.</div>
-        <div class="bono-cierre">No te pido que confies a ciegas. Entras, conoces el programa completo por 7 dias, y si sientes que no es para ti te devuelvo el 100% sin preguntas. El riesgo es mio, no tuyo. Cual es la razon para no entrar hoy?</div>
-      </div>
-    </div>
-
-    <div class="hr"></div>
-    <div class="sec-tag">Escasez de cupos</div>
-    <div class="sec-title">Maximo 600 empresarios por edicion</div>
-    <div class="warn-box">Maquina tiene maximo 600 empresarios por edicion. Para garantizar el nivel de entrega, acompanamiento y la calidad dentro de la comunidad, no pueden recibir mas. Menos del 3% de los que llegan hasta aqui pueden entrar. Solo usalo si es real — la escasez falsa destruye la confianza.</div>
-    <div class="bono-cierre" style="background:var(--redBg);border-radius:10px;padding:13px 15px;color:#f5c4c4;font-size:15px;line-height:1.65;font-weight:600;">Si no entras antes de que se llenen los 600 cupos, el acceso cierra y la proxima edicion es [fecha]. Cada dia que esperas es un dia mas con el mismo problema — que calculamos que te cuesta $[numero] al mes.</div>
-
-  </div><!-- /psec-bmaq -->
-
-  <div class="psec" id="psec-bmae">
-
-    <div class="key-box"><b>Maestria: precio de entrada $1,000 USD hoy.</b> El resto se paga en cuotas. Pago full $10,000 (ahorra casi $2,000). Cuotas: $1,000 hoy + 6 pagos de $1,800.</div>
-
-    <div class="bono">
-      <div class="bono-head"><div class="bono-icon">⚡</div><div class="bono-meta"><div class="bono-n gold">Regalo 1 — Maestria</div><div class="bono-title">Axelerate — Evento Virtual</div></div></div>
-      <div class="bono-body">
-        <div class="bono-desc">Evento de capacitacion virtual incluido en Maestria. Formacion adicional para el empresario y su equipo.</div>
-        <div class="bono-uso">Usar con prospectos que mencionan que su equipo necesita formacion o que quieren que sus lideres tengan acceso a mas recursos.</div>
-        <div class="bono-cierre">Ademas de todo lo que vimos, en Maestria tu equipo tiene acceso a Axelerate — para que no seas el unico creciendo. Tu empresa entera entra en modo de crecimiento.</div>
-      </div>
-    </div>
-
-    <div class="bono">
-      <div class="bono-head"><div class="bono-icon">🏢</div><div class="bono-meta"><div class="bono-n gold">Regalo 2 — Maestria</div><div class="bono-title">Workshops Especializados para Empresas Digitales</div></div></div>
-      <div class="bono-body">
-        <div class="bono-desc">Workshops especificos para empresas digitales o con componente digital fuerte. Formacion especializada que complementa el programa principal.</div>
-        <div class="bono-uso">Usar con prospectos que tienen negocio digital o que quieren digitalizar parte de su operacion.</div>
-        <div class="bono-cierre">Si tu negocio tiene o quiere tener componente digital, este workshop te da la formacion especializada que no encuentras en el mercado.</div>
-      </div>
-    </div>
-
-    <div class="bono">
-      <div class="bono-head"><div class="bono-icon">🎟</div><div class="bono-meta"><div class="bono-n gold">Regalo 3 — Maestria</div><div class="bono-title">Boleto Preferencial Luque Business Summit 2026</div></div></div>
-      <div class="bono-body">
-        <div class="bono-desc">Boleto preferencial al evento presencial de Luque Academy 2026. Lugar preferencial, acceso especial, red de empresarios en persona.</div>
-        <div class="bono-uso">Usar con prospectos que valoran el networking o que quieren conocer personalmente a Alvaro y a otros empresarios de alto nivel.</div>
-        <div class="bono-cierre">En el Summit vas a estar en una sala con los mejores empresarios de LATAM. El valor de las conexiones que hagas en ese evento puede superar el precio de Maestria.</div>
-      </div>
-    </div>
-
-    <div class="bono">
-      <div class="bono-head"><div class="bono-icon">🏠</div><div class="bono-meta"><div class="bono-n gold">Exclusivo Pago Full</div><div class="bono-title">Sesion Exclusiva y Privada en la Casa de Alvaro Luque</div></div></div>
-      <div class="bono-body">
-        <div class="bono-desc">Solo para quienes eligen el pago full de $10,000. Una sesion exclusiva y privada en la casa de Alvaro — un acceso que no se puede comprar con ninguna cantidad de dinero fuera de Maestria.</div>
-        <div class="bono-uso">El cierre mas poderoso para la objecion de "prefiero cuotas". Cuando se lo dices, el prospecto entiende que el pago full no es solo ahorrar $1,800 — es acceso a algo unico.</div>
-        <div class="bono-cierre">Si decides el pago full de $10,000 — ademas de ahorrarte casi $2,000 — tienes acceso a algo que no puedes comprar por ningun otro medio: una sesion privada en la casa de Alvaro. Eso no tiene precio.</div>
-      </div>
-    </div>
-
-  </div><!-- /psec-bmae -->
-</div>
-
-<!-- ============ OBJECIONES ============ -->
-<div class="pg" id="pg-objeciones">
-  <div class="ph">
-    <div class="ph-tag">Arbol de decision</div>
-    <div class="ph-title">Objeciones</div>
-    <div class="ph-sub">Paso 1: pregunta para encontrar la raiz. Paso 2: segun la respuesta, ejecuta el camino correcto. La objecion que dicen no es la real.</div>
+Que preguntas te quedaron?</div>
   </div>
 
-  <!-- OBJ 1 -->
-  <div class="obj-card">
-    <div class="obj-top">
-      <div class="obj-q">Dejame pensarlo / Necesito tiempo</div>
-      <div class="obj-raiz">Raiz: casi nunca es tiempo real. Es que algo no quedo claro o hay miedo de equivocarse.</div>
-    </div>
-    <div class="obj-body">
-      <div class="obj-pregunta">
-        <div class="obj-pregunta-l">Paso 1 — Encuentra la raiz</div>
-        <div class="obj-pregunta-txt">Ayudame a entender: que parte especificamente necesitas pensar? Es si el programa funciona para tu caso, si es el momento correcto, o es el tema economico?</div>
-      </div>
-      <div class="obj-ramas">
-        <div class="obj-rama v1">
-          <div class="obj-rama-cond">Si responde → "No se si funciona para mi caso"</div>
-          <div class="obj-rama-resp">Cuéntame que es lo que ves diferente en tu negocio que te hace pensar que no funcionaria. [Escucha] Tenemos empresarios de [industria similar] que tenian exactamente esa misma duda y hoy [resultado concreto]. El problema que me describiste — [su dolor] — es el mismo independientemente del tipo de negocio. Lo que cambia es como aplicamos el sistema a tu caso.</div>
-          <div class="obj-rama-tip">Usa un caso real si lo tienes. La prueba social de alguien con el mismo perfil es lo mas poderoso.</div>
-        </div>
-        <div class="obj-rama v2">
-          <div class="obj-rama-cond">Si responde → "No es el momento correcto"</div>
-          <div class="obj-rama-resp">Me dijiste antes que [lo que dijo en el paso 7 — por que ahora]. Si ese era el argumento para actuar ahora, que cambio en los ultimos 20 minutos? Y si lo dejamos para 6 meses, cuanto mas te costara el problema en ese tiempo?</div>
-          <div class="obj-rama-tip">Devuelve sus propias palabras del paso 7. Es el argumento mas poderoso — lo construyo el.</div>
-        </div>
-        <div class="obj-rama v3">
-          <div class="obj-rama-cond">Si responde → "Es el tema economico"</div>
-          <div class="obj-rama-resp">Entiendo. Calculamos juntos que esto te cuesta $[numero] al mes. El programa son $1,995. Matematicamente, en 2 meses el programa ya se pago con lo que dejas de perder. Y si el dinero es la barrera, tenemos dos pagos de $1,100. Ademas tienes 7 dias de garantia total — si entras y no es para ti, te devolvemos el 100% sin preguntas. Cual es el riesgo real de entrar hoy?</div>
-          <div class="obj-rama-tip">Costo de inaccion + opcion de 2 pagos + garantia. Los tres juntos eliminan la barrera economica.</div>
-        </div>
-      </div>
-    </div>
+  <div class="mc">
+    <div class="mc-head"><div><div class="mc-t">Alerta bono que desaparece</div><div class="mc-w">Dia 2-3</div></div><button class="cp-btn" onclick="cp(this,'x5')">Copiar</button></div>
+    <div class="mc-body" id="x5">Hola [nombre] 👋 Hoy a las 11:59pm se cierra el acceso al [nombre del bono] — $[valor] incluido.
+
+Una vez que cierre ya no entra con el programa.
+
+Si tienes alguna duda antes de decidir, este es el momento.</div>
   </div>
 
-  <!-- OBJ 2 -->
-  <div class="obj-card">
-    <div class="obj-top">
-      <div class="obj-q">Es muy caro / No tengo ese dinero</div>
-      <div class="obj-raiz">Raiz: casi siempre es una objecion de valor, no de dinero real. Hay que separar las dos.</div>
-    </div>
-    <div class="obj-body">
-      <div class="obj-pregunta">
-        <div class="obj-pregunta-l">Paso 1 — Separa la raiz</div>
-        <div class="obj-pregunta-txt">Cuando dices que es caro o que no tienes el dinero, es que literalmente no tienes los recursos disponibles ahora mismo, o es que no estas seguro de que valga la inversion para tu caso?</div>
-      </div>
-      <div class="obj-ramas">
-        <div class="obj-rama v1">
-          <div class="obj-rama-cond">Si responde → "Literalmente no tengo el dinero"</div>
-          <div class="obj-rama-resp">Entiendo. Tenemos dos pagos de $1,100 — uno hoy y otro en 30 dias. Y recuerda que en 2 meses el programa ya se pago con lo que dejas de perder. Cuanto puedes comprometer hoy como primer pago?</div>
-          <div class="obj-rama-tip">Si realmente no puede, es mejor decirlo con dignidad y dejar la puerta abierta: "Cuando estes en ese momento, avisame. El cupo puede no estar disponible pero al menos intentamos."</div>
-        </div>
-        <div class="obj-rama v2">
-          <div class="obj-rama-cond">Si responde → "No estoy seguro del valor"</div>
-          <div class="obj-rama-resp">Caro comparado con que? Calculamos que el problema te cuesta $[numero] al mes. Eso son $[x12] al ano. El programa son $1,995 con garantia de 7 dias. Matematicamente no entrar es mas caro que entrar. Que parte del valor sientes que no te quedo clara?</div>
-          <div class="obj-rama-tip">La respuesta te dice exactamente que necesita ver o escuchar para que el precio parezca justo. Eso es lo que resolves despues.</div>
-        </div>
-      </div>
-    </div>
+  <div class="mc">
+    <div class="mc-head"><div><div class="mc-t">Cierre definitivo</div><div class="mc-w">Dia 7</div></div><button class="cp-btn" onclick="cp(this,'x6')">Copiar</button></div>
+    <div class="mc-body" id="x6">Hola [nombre], hoy es el ultimo dia para entrar a esta edicion.
+
+Si entras hoy todavia tienes [bonos que quedan].
+
+Necesito tu respuesta: si o no?</div>
   </div>
 
-  <!-- OBJ 3 -->
-  <div class="obj-card">
-    <div class="obj-top">
-      <div class="obj-q">Mandame la informacion / Quiero revisar antes</div>
-      <div class="obj-raiz">Raiz: el prospecto quiere tiempo para pensar sin sentir presion. Hay algo que no quedo claro o no confio suficiente todavia.</div>
-    </div>
-    <div class="obj-body">
-      <div class="obj-pregunta">
-        <div class="obj-pregunta-l">Paso 1 — Revela que necesita</div>
-        <div class="obj-pregunta-txt">Con gusto. Antes de enviartela, cuentame: que necesitarias ver ahi que te ayude a tomar la decision? Lo pregunto para saber en que enfocarte cuando lo revises.</div>
-      </div>
-      <div class="obj-ramas">
-        <div class="obj-rama v1">
-          <div class="obj-rama-cond">Si responde → "Quiero ver testimonios o casos de exito"</div>
-          <div class="obj-rama-resp">Perfecto. Los casos que mas te van a hablar son los de empresarios con [su perfil — industria o problema similar]. Te los comparto con el link. Y te cuento que hay uno de [caso relevante] que tenia exactamente tu misma situacion de [su dolor especifico]. Si cuando lo revises tienes alguna duda, me escribes y lo resolvemos.</div>
-          <div class="obj-rama-tip">Personaliza los casos que envias. Un testimonio generico no convence. El caso con su mismo perfil si.</div>
-        </div>
-        <div class="obj-rama v2">
-          <div class="obj-rama-cond">Si responde → "Quiero ver los detalles del programa"</div>
-          <div class="obj-rama-resp">Te envio el detalle completo. Mientras lo revisas, los bonos que conversamos siguen corriendo — el [bono mas urgente] desaparece el [fecha/hora]. Asi que cuando termines de revisar, ese puede no estar disponible. Que preguntas te quedan antes de que yo te lo envie?</div>
-          <div class="obj-rama-tip">Usa la urgencia del bono para crear presion genuina sin parecer desesperado.</div>
-        </div>
-        <div class="obj-rama v3">
-          <div class="obj-rama-cond">Si responde vagamente sin mencionar nada concreto</div>
-          <div class="obj-rama-resp">Entiendo. Cuentame: que te faltaria para sentirte listo para decir si hoy? Porque lo que me preocupa es que si lo dejamos para "despues de revisar", los bonos ya no van a estar. Y el costo de ese problema que calculamos en $[numero]/mes va a seguir corriendo mientras tanto.</div>
-          <div class="obj-rama-tip">La respuesta vaga generalmente esconde la objecion real. Esta pregunta la fuerza a salir.</div>
-        </div>
-      </div>
-    </div>
+  <div class="mc">
+    <div class="mc-head"><div><div class="mc-t">Confirmacion + WhatsApp personal</div><div class="mc-w">Bloqueos de Meta</div></div><button class="cp-btn" onclick="cp(this,'x7')">Copiar</button></div>
+    <div class="mc-body" id="x7">Hola, por aqui David 👋 Ultimamente Meta nos ha generado bloqueos. Si no logro comunicarme por aqui, te dejo mi WhatsApp personal: +1 727-264-9837. Guardalo para no perder el contacto.</div>
   </div>
 
-  <!-- OBJ 4 -->
-  <div class="obj-card">
-    <div class="obj-top">
-      <div class="obj-q">Lo hablo con mi pareja / socio</div>
-      <div class="obj-raiz">Raiz: hay un decisor fuera de la llamada. Si no lo atajaste al inicio, hay que manejarlo ahora sin perder la venta.</div>
-    </div>
-    <div class="obj-body">
-      <div class="obj-pregunta">
-        <div class="obj-pregunta-l">Paso 1 — Entiende el rol del otro decisor</div>
-        <div class="obj-pregunta-txt">Claro, tiene todo el sentido. Cuentame: tu pareja o socio, normalmente apoya este tipo de inversiones en el negocio o es alguien que prefiere ser mas conservador con el gasto?</div>
-      </div>
-      <div class="obj-ramas">
-        <div class="obj-rama v1">
-          <div class="obj-rama-cond">Si responde → "Generalmente apoya"</div>
-          <div class="obj-rama-resp">Perfecto. Lo que suele funcionar mejor es que esa conversacion la tengan con la informacion clara. Te comparto el resumen del programa para que lo muestre. Y si el o ella tiene alguna duda, podemos hacer una sesion rapida de 20 minutos con los dos. Cuando pueden esta semana?</div>
-          <div class="obj-rama-tip">Agenda una sesion de 20 min con ambos. No dejes que la decision quede en un tercero sin contexto.</div>
-        </div>
-        <div class="obj-rama v2">
-          <div class="obj-rama-cond">Si responde → "Es mas conservador / prefiere no gastar"</div>
-          <div class="obj-rama-resp">Entiendo. Entonces la conversacion que van a tener necesita los numeros claros. El problema que calculamos que cuesta $[numero]/mes — $[x12] al ano — eso es lo que no cambia si no actuan. El programa son $1,995 con 7 dias de garantia total. Si no funciona, el 100% de vuelta. Que necesitaria ver tu pareja para que esa conversacion sea mas facil?</div>
-          <div class="obj-rama-tip">Dale el argumento para que el prospecto le venda a su pareja. La persona con miedo necesita tener el argumento del costo de inaccion.</div>
-        </div>
-        <div class="obj-rama v3">
-          <div class="obj-rama-cond">Si el decisor necesita estar presente</div>
-          <div class="obj-rama-resp">Para que esa decision sea buena para los dos, lo mejor es que esten juntos cuando la tomen. Que dia esta semana pueden los dos para una sesion de 20 minutos? Asi resolvemos todas las dudas juntos y no dependen de que uno le explique al otro.</div>
-          <div class="obj-rama-tip">REAGENDA. Una venta que queda en manos de que el prospecto le explique a su pareja sin tu apoyo tiene muy poca probabilidad de cerrarse.</div>
-        </div>
-      </div>
-    </div>
+  <div class="mc">
+    <div class="mc-head"><div><div class="mc-t">Luque Business Summit</div><div class="mc-w">Leads que no completaron el 10 de junio</div></div><button class="cp-btn" onclick="cp(this,'x8')">Copiar</button></div>
+    <div class="mc-body" id="x8">Hola [nombre] 👋 Soy David de Luque Academy. Vi que intentaste adquirir tu entrada para el Luque Business Summit y queria escribirte antes de que sea tarde. Las entradas se estan agotando y quedan muy pocas. Pudiste completar tu compra o necesitas ayuda?</div>
   </div>
 
-  <!-- OBJ 5 -->
-  <div class="obj-card">
-    <div class="obj-top">
-      <div class="obj-q">Ya hice otros programas y no me funcionaron</div>
-      <div class="obj-raiz">Raiz: desconfianza por experiencias anteriores. Necesita entender que hace diferente a Luque de lo que ya intento.</div>
-    </div>
-    <div class="obj-body">
-      <div class="obj-pregunta">
-        <div class="obj-pregunta-l">Paso 1 — Entiende que fallo antes</div>
-        <div class="obj-pregunta-txt">Entiendo esa duda. Cuentame: esos programas que intentaste, que fue exactamente lo que fallo — era el contenido, la forma de aplicarlo, o no tuviste el acompanamiento que necesitabas?</div>
-      </div>
-      <div class="obj-ramas">
-        <div class="obj-rama v1">
-          <div class="obj-rama-cond">Si responde → "No tuve acompanamiento / me perdi implementando"</div>
-          <div class="obj-rama-resp">Exactamente. Esa es la diferencia fundamental con Maquina. No es solo contenido que estudias solo. Son 12 sesiones donde un consultor revisa TU negocio especificamente y te dice que hacer en tu caso. Si te trabas en algo, en la siguiente sesion lo resuelves con alguien que conoce tu situacion. No te quedas solo.</div>
-          <div class="obj-rama-tip">El acompanamiento de 12 meses es el diferenciador. Hazlo concreto y especifico.</div>
-        </div>
-        <div class="obj-rama v2">
-          <div class="obj-rama-cond">Si responde → "El contenido no aplicaba a mi negocio"</div>
-          <div class="obj-rama-resp">Eso pasa cuando el programa es generico. En Maquina los 7 sistemas son principios que se aplican a tu caso especifico — no a un negocio ideal. Y el Analisis de Negocio Personalizado que tienes con los consultores es exactamente para eso: adaptar los sistemas a tu realidad. Que era diferente en tu negocio que sentia que no aplicaba?</div>
-          <div class="obj-rama-tip">Deja que explique y usa eso para mostrar como el Sistema especifico resuelve exactamente eso.</div>
-        </div>
-        <div class="obj-rama v3">
-          <div class="obj-rama-cond">Si responde → "No tuve tiempo / no lo aplique"</div>
-          <div class="obj-rama-resp">Seamos honestos: si no lo aplicaste, el programa no fallo — simplemente no lo implementaste. Y eso es exactamente para lo que existe el Plan de Implementacion de 90 dias que tienes incluido: no es mas contenido, es exactamente que hacer cada semana para no perderse. Si lo que fallo antes fue la implementacion, eso ya esta resuelto.</div>
-          <div class="obj-rama-tip">Di esto con calma y sin juzgar. El prospecto sabe que es verdad y lo respetara.</div>
-        </div>
-      </div>
-    </div>
+  <div class="mc">
+    <div class="mc-head"><div><div class="mc-t">Email confirmacion de cita</div><div class="mc-w">Rellena los corchetes</div></div><button class="cp-btn" onclick="cp(this,'x9')">Copiar</button></div>
+    <div class="mc-body" id="x9">Asunto: Confirmacion de tu sesion — Luque Academy · [dia] a las [hora]
+
+Hola [nombre],
+
+Confirmada tu sesion para el [dia] a las [hora] ([zona horaria]).
+
+Conectate puntual desde un lugar tranquilo, idealmente desde computadora. Si hay un socio o pareja que participe en decisiones, invitalo a estar presente.
+
+Link: [link]
+
+David [apellido]
+Consultor · Luque Academy
+WhatsApp: [tu numero]</div>
   </div>
 
-  <!-- OBJ 6 -->
-  <div class="obj-card">
-    <div class="obj-top">
-      <div class="obj-q">No tengo tiempo para un programa ahora</div>
-      <div class="obj-raiz">Raiz: el problema que buscan resolver ES la falta de tiempo. Eso hace que esta objecion se responda sola.</div>
-    </div>
-    <div class="obj-body">
-      <div class="obj-pregunta">
-        <div class="obj-pregunta-l">Paso 1 — Dale vuelta</div>
-        <div class="obj-pregunta-txt">Entiendo eso. Pero la razon por la que no tienes tiempo, no es exactamente lo que buscamos resolver? Cuanto tiempo tienes hoy — horas a la semana — para dedicarle a algo que resuelva eso?</div>
-      </div>
-      <div class="obj-ramas">
-        <div class="obj-rama v1">
-          <div class="obj-rama-cond">Si responde → "Tengo algunas horas pero pocas"</div>
-          <div class="obj-rama-resp">Con 2 a 3 horas semanales es suficiente para arrancar. Los videos son cortos, paso a paso, y las sesiones de retroalimentacion son grupales. No tienes que estar disponible todo el dia. Y la clave es que mientras mas rapido entras, mas rapido liberas tiempo. Cada mes que esperas es un mes mas atrapado en la operacion.</div>
-          <div class="obj-rama-tip">Hazlo concreto: cuantas horas. El prospecto necesita saber que es manejable.</div>
-        </div>
-        <div class="obj-rama v2">
-          <div class="obj-rama-cond">Si responde → "Realmente no tengo ni una hora libre"</div>
-          <div class="obj-rama-resp">Si no tienes ni una hora libre, eso no es una cuestion de agenda — es el sintoma mas claro de que necesitas esto ya. El empresario que no puede sacar una hora para invertir en su negocio es exactamente el que mas lo necesita. La pregunta es: cuanto tiempo mas vas a seguir sin esa hora?</div>
-          <div class="obj-rama-tip">Este es el argumento mas fuerte. Dicho con calma y sin juzgar tiene mucho impacto.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- OBJ 7 -->
-  <div class="obj-card">
-    <div class="obj-top">
-      <div class="obj-q">Ya vi contenido de Luque gratis y no me funciono</div>
-      <div class="obj-raiz">Raiz: confunden conocer con implementar. El contenido gratuito y el programa son cosas fundamentalmente distintas.</div>
-    </div>
-    <div class="obj-body">
-      <div class="obj-pregunta">
-        <div class="obj-pregunta-l">Paso 1 — Clarifica que intento</div>
-        <div class="obj-pregunta-txt">Cuentame: cuando dices que no te funciono, que fue exactamente lo que intentaste aplicar? Quiero entender si el contenido no era lo que necesitabas o si era la forma de aplicarlo.</div>
-      </div>
-      <div class="obj-ramas">
-        <div class="obj-rama v1">
-          <div class="obj-rama-cond">Si responde → "Vi los videos pero no lo aplique bien"</div>
-          <div class="obj-rama-resp">Exactamente. Esa es la diferencia. Ver un video de como nadar no te ensennia a nadar. En Maquina tienes 12 sesiones donde alguien revisa como estas aplicando en TU negocio y te corrige. El conocimiento es el mismo — la diferencia es el acompanamiento para que lo implementes correctamente.</div>
-        </div>
-        <div class="obj-rama v2">
-          <div class="obj-rama-cond">Si responde → "Lo aplique pero no vi resultados"</div>
-          <div class="obj-rama-resp">Si lo aplicaste y no viste resultados, hay dos posibilidades: o lo aplicaste en el orden equivocado, o habia algo especifico de tu negocio que necesitaba ajuste. Para eso existe exactamente el Analisis de Negocio Personalizado — para que alguien que conoce el sistema revise TU caso y diga donde exactamente esta el problema. Sin eso, puedes estar aplicando las cosas correctas en el orden incorrecto.</div>
-          <div class="obj-rama-tip">Esta respuesta transforma la experiencia negativa en argumento a favor del programa.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="rule"><div class="rule-l">Regla de Oro de Objeciones</div><div class="rule-t">Nunca respondas la superficie. Primero pregunta la raiz. La objecion que dice no es la real.</div></div>
 </div>
 
 </main>
-<footer>Closer Consultivo · Luque Academy · Script + Sistemas + Bonos + Objeciones</footer>
+<footer>Luque Academy · Script de Ventas · Jose Pena</footer>
 
 <script>
+function go(name,btn){
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+  document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on');});
+  document.getElementById('pg-'+name).classList.add('on');
+  btn.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 function cp(btn,id){
   var txt=document.getElementById(id).textContent;
   if(navigator.clipboard&&navigator.clipboard.writeText){
     navigator.clipboard.writeText(txt).then(function(){
-      btn.textContent='Copiado!';btn.classList.add('done');
-      setTimeout(function(){btn.textContent='Copiar';btn.classList.remove('done');},1800);
+      btn.textContent='Copiado';btn.classList.add('ok');
+      setTimeout(function(){btn.textContent='Copiar';btn.classList.remove('ok');},1800);
     });
   } else {
     var ta=document.createElement('textarea');
     ta.value=txt;document.body.appendChild(ta);ta.select();
     document.execCommand('copy');document.body.removeChild(ta);
-    btn.textContent='Copiado!';btn.classList.add('done');
-    setTimeout(function(){btn.textContent='Copiar';btn.classList.remove('done');},1800);
+    btn.textContent='Copiado';btn.classList.add('ok');
+    setTimeout(function(){btn.textContent='Copiar';btn.classList.remove('ok');},1800);
   }
-}
-function go(name,btn){
-  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
-  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('on');});
-  document.getElementById('pg-'+name).classList.add('on');
-  btn.classList.add('on');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function pt(name,btn){
-  // find parent pg and reset psec inside it
-  var pg = btn.closest('.pg');
-  pg.querySelectorAll('.psec').forEach(function(p){p.classList.remove('on');});
-  pg.querySelectorAll('.ptab').forEach(function(b){b.classList.remove('on');});
-  pg.querySelector('#psec-'+name).classList.add('on');
-  btn.classList.add('on');
 }
 </script>
 </body>
